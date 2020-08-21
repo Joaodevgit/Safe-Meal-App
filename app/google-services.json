@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "94954619276",
+    "firebase_url": "https://covid-resolve-food.firebaseio.com",
+    "project_id": "covid-resolve-food",
+    "storage_bucket": "covid-resolve-food.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:94954619276:android:bacac48a33770e44d756a9",
+        "android_client_info": {
+          "package_name": "pt.ipp.estg.covidresolvefoodapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "94954619276-jv25ph4r6pusa9pm6un9c1q697fhmgoh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "pt.ipp.estg.covidresolvefoodapp",
+            "certificate_hash": "8beb86abaed9c5a8f65d5a5b2b5ce97d966ad47c"
+          }
+        },
+        {
+          "client_id": "94954619276-f7tau5rjad7j0aj0l7mmm47ctbm19r7k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA_CZzU0qYWgIq4tYEpBeZUqpborW7wEbg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "94954619276-f7tau5rjad7j0aj0l7mmm47ctbm19r7k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
