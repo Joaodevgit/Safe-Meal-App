@@ -1,0 +1,15 @@
+3. Tema do Trabalho
+COVID 19- deslocamento reduzido por causa da pandemia e restauranção
+
+- Pesquisar restaurantes e verificar o menu antes da deslocação
+- Escolha do tipo de restaurantes/patros para o agrade do utilizador
+- Regista o seu restaurante preferido
+- Historico dos estabelecimentos/restaurantes já frequentou
+- Pontuação fornecida de cumprimento de normas de saude por causa do COVID !?
+- Conseguir visualizar todos os restaurantes já visitados, os seusfavoritos e todos em 
+que se pretende efetuar  uma  refeição  considerando  a  distância  do  utilizador  ao  estabelecimento
+- Classificação do restaurante e numero de frequencia que o utilizador frequentou esse restaurante
+- A  aplicação  deve automaticamente detetar quando um utilizador se encontra perto de um restaurante favorito,    
+e automaticamente lançar uma notificação sugerindo uma refeição nesse estabelecimento, mesmo quando a aplicação se encontra em background
+
+Recurso: API Zomato que nós dá toda a informação dessa para nossa aplicação
