@@ -1,4 +1,4 @@
-package pt.ipp.estg.covidresolvefoodapp;
+package pt.ipp.estg.covidresolvefoodapp.Fragment;
 
 import android.app.Activity;
 import android.content.Context;
@@ -22,6 +22,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import pt.ipp.estg.covidresolvefoodapp.R;
 
 public class LogIn extends Fragment {
 
@@ -120,7 +122,7 @@ public class LogIn extends Fragment {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithEmail:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
+//                            FirebaseUser user = mAuth.getCurrentUser();
 
                             mListener.onFragmentLogInInteraction();
                         } else {

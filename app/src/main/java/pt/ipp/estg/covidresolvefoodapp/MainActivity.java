@@ -5,20 +5,23 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
+import pt.ipp.estg.covidresolvefoodapp.Fragment.CreateAccount;
+import pt.ipp.estg.covidresolvefoodapp.Fragment.LogIn;
 
 public class MainActivity extends AppCompatActivity implements LogIn.OnFragmentLogInInteractionListener,
-        CreateAccount.OnFragmentCreateAccountInteractionListener, PrincipalPage.onButtonMainMenuClickListener,
-        UserProfile.onFragmentUserProfileInteractionListener, RestaurantSearch.onFragmentRestaurantSearchInteractionListener,
-        RestaurantMap.onFragmentRestaurantMapInteractionListener
-{
+        CreateAccount.OnFragmentCreateAccountInteractionListener, PrincipalPage.onButtonMainMenuClickListener {
 
     private FirebaseAuth mAuth;
+    private Toolbar myToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,9 +36,8 @@ public class MainActivity extends AppCompatActivity implements LogIn.OnFragmentL
         fragmentTransaction.replace(R.id.fragment_container, logIn);
         fragmentTransaction.commit();
 
-        Toolbar myToolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(myToolbar);
-
+        this.myToolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(this.myToolbar);
     }
 
     @Override
@@ -61,20 +63,29 @@ public class MainActivity extends AppCompatActivity implements LogIn.OnFragmentL
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_settings:
-
-                UserProfile userProf = new UserProfile();
-                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.fragment_container, userProf);
-                fragmentTransaction.commit();
+                Intent intent = new Intent(this, UserProfile.class);
+                startActivity(intent);
 
                 // CÓDIGO RELATIVO À ACTIVITY DEFINICOES
                 Toast.makeText(getApplicationContext(), "Clicaste em perfil!", Toast.LENGTH_SHORT).show();
+                break;
+
             case R.id.action_logout:
+                this.mAuth.signOut();
+
+                LogIn logIn = new LogIn();
+                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.fragment_container, logIn);
+                fragmentTransaction.commit();
                 // CÓDIGO RELATIVO AO LOGOUT
                 Toast.makeText(getApplicationContext(), "Clicaste em logout!", Toast.LENGTH_SHORT).show();
+                break;
+
             default:
                 return super.onOptionsItemSelected(item);
         }
+
+        return true;
     }
 
     @Override
@@ -106,24 +117,13 @@ public class MainActivity extends AppCompatActivity implements LogIn.OnFragmentL
 
     @Override
     public void onButtonRestaurantSearchClick() {
-        RestaurantSearch restaurantSearch = new RestaurantSearch();
-
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.fragment_container, restaurantSearch);
-        fragmentTransaction.commit();
-
-        Toast.makeText(getApplicationContext(), "Clicaste em Pesquisar Restaurantes!", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this, RestaurantSearch.class);
+        startActivity(intent);
     }
 
     @Override
     public void onButtonRestaurantMapClick() {
-        RestaurantMap restaurantMap = new RestaurantMap();
-
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.fragment_container, restaurantMap);
-        fragmentTransaction.commit();
-
-        Toast.makeText(getApplicationContext(), "Clicaste em Restaurantes Perto De Si!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "Para ir ao mapa", Toast.LENGTH_SHORT).show();
     }
 
 }
