@@ -6,4 +6,10 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="restaurantes_perto_de_si">Restaurantes Perto De Si</string>
     <string name="pesquisar_restaurantes">Pesquisar Restaurantes</string>
+    <string name="userprofile">UserProfile</string>
+    <string name="restaurantes_favoritos">Restaurantes Favoritos</string>
+    <string name="user_email">User Email</string>
+    <string name="restaurantes_visitados">Restaurantes Visitados</string>
+    <string name="reviews">Reviews</string>
+    <string name="textview">TextView</string>
 </resources>

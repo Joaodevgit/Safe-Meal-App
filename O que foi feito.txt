@@ -1,0 +1,68 @@
+25/08/2020 HH:MM Autor: João Pereira Mensagem do Commit: "Criação da atividade Perfil do Utilizador"
+
+O que foi feito neste commit:
+
+- Criação do layout "activity_user_profile" (Perfil do Utilizador) e associação dos componentes
+do layout na classe "UserProfile.java"
+
+- Instalação de um plugin "Dimenify" que irá ajudar na adaptação dos layouts criados
+às diferentes dimensões dos ecrãs
+-
+
+O que fazer para o próximo commit:
+
+- Ver como adaptar o layout a qualquer dimensão de ecrã de qualquer dispositivo
+móvel.
+
+- Criar novas atividades que irão estar associadas aos botões do Perfil do Utilizador
+
+Decisões da implementação/projeto a serem tomadas:
+
+- No registo da conta deveremos guardar mais informações do utilizador (nome, DOB,etc)
+ou devemos ficar apenas pelo email?
+------------------------------------------------------------------------------
+DD/MM/YYYY HH:MM Autor:  Mensagem do Commit: " "
+
+O que foi feito neste commit:
+
+-
+
+O que fazer para o próximo commit:
+
+-
+
+Decisões da implementação/projeto a serem tomadas:
+
+-
+
+------------------------------------------------------------------------------
+DD/MM/YYYY HH:MM Autor:  Mensagem do Commit: " "
+
+O que foi feito neste commit:
+
+-
+
+O que fazer para o próximo commit:
+
+-
+
+Decisões da implementação/projeto a serem tomadas:
+
+-
+
+------------------------------------------------------------------------------
+DD/MM/YYYY HH:MM Autor:  Mensagem do Commit: " "
+
+O que foi feito neste commit:
+
+-
+
+O que fazer para o próximo commit:
+
+-
+
+Decisões da implementação/projeto a serem tomadas:
+
+-
+
+------------------------------------------------------------------------------
