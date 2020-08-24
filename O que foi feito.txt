@@ -1,4 +1,4 @@
-25/08/2020 HH:MM Autor: João Pereira Mensagem do Commit: "Criação da atividade Perfil do Utilizador"
+25/08/2020 00:33 Autor: João Pereira Mensagem do Commit: "Criação da atividade Perfil do Utilizador"
 
 O que foi feito neste commit:
 
@@ -7,7 +7,6 @@ do layout na classe "UserProfile.java"
 
 - Instalação de um plugin "Dimenify" que irá ajudar na adaptação dos layouts criados
 às diferentes dimensões dos ecrãs
--
 
 O que fazer para o próximo commit:
 
