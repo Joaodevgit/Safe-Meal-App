@@ -4,4 +4,6 @@
     <string name="signed_out">Saiu :(</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="restaurantes_perto_de_si">Restaurantes Perto De Si</string>
+    <string name="pesquisar_restaurantes">Pesquisar Restaurantes</string>
 </resources>
