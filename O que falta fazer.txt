@@ -25,6 +25,10 @@ Secção "Pesquisa restaurantes":
   estabelecimentos, restaurantes favoritos).
 
 - Recycler view com as informações associadas à categoria escolhida.
+
+- Para obtermos a imagem do restaurante é o atributo "thumb"
+
+- Categories é a categoria do restaurante (se é )
 ------------------------------------------------------------------------------------------------------------------------------
 Página associada ao restaurante:
 
@@ -68,3 +72,9 @@ Implementações opcionais:
 - Navbar lateral da aplicação
 
 - Na informação do restaurante quando se clicar no botão "Marcação da refeição" esta marcação deve ficar marcada no calendário
+
+- Preferências (darkmode, tradução, ...)
+------------------------------------------------------------------------------------------------------------------------------
+Implementações a serem feitas:
+
+- 
