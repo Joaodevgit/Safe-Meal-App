@@ -15,8 +15,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".RestaurantSearch"></activity>
-        <activity android:name=".UserProfile" />
+        <activity android:name=".UserReviewActivity"></activity>
+        <activity android:name=".UserVisResActivity" />
+        <activity android:name=".UserFavResActivity" />
+        <activity android:name=".RestaurantSearch" />
+        <activity android:name=".UserProfileActivity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").

@@ -2,48 +2,40 @@ package pt.ipp.estg.covidresolvefoodapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 
-public class UserProfileAct extends AppCompatActivity {
+import pt.ipp.estg.covidresolvefoodapp.Fragment.UserFavResFragment;
+import pt.ipp.estg.covidresolvefoodapp.Fragment.UserProfileFragment;
+import pt.ipp.estg.covidresolvefoodapp.Fragment.UserReviewFragment;
 
-    private FirebaseAuth mAuth;
+public class UserProfileActivity extends AppCompatActivity implements UserProfileFragment.OnFragmentUserProfileInteractionListener {
+
     private Toolbar myToolbar;
-    private TextView userNameTxtView;
-    private ImageView profileImg;
-    private TextView totalUserMeals;
+    private FirebaseAuth mAuth;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
-
-        mAuth = FirebaseAuth.getInstance();
-
-        // Text Views
-        userNameTxtView = findViewById(R.id.userEmail);
-        //Toast.makeText(getApplicationContext(), FirebaseAuth.getInstance().getCurrentUser().getEmail(), Toast.LENGTH_SHORT).show();
-        userNameTxtView.setText("Email: " + mAuth.getCurrentUser().getEmail());
-
-        totalUserMeals = findViewById(R.id.textViewTotalMeals);
-        // Falta fazer a contagem das refeições efetuadas pelo cliente
-        totalUserMeals.setText("Nº total de refeições efetuadas: 6");
-
-        // Image Views
-        profileImg = findViewById(R.id.imageViewProfile);
-        profileImg.setImageResource(R.drawable.ic_user_profile_img);
-
+        this.mAuth = FirebaseAuth.getInstance();
 
         this.myToolbar = findViewById(R.id.toolbarUser);
         setSupportActionBar(this.myToolbar);
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        UserProfileFragment userProfileFragment = new UserProfileFragment();
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.fragment_user_profile_container, userProfileFragment);
+        fragmentTransaction.commit();
 
     }
 
@@ -51,5 +43,31 @@ public class UserProfileAct extends AppCompatActivity {
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
+    }
+
+    @Override
+    public void onFragmentFavoriteRestaurantClick() {
+        Intent favResInt = new Intent(getApplicationContext(),UserFavResActivity.class);
+        startActivity(favResInt);
+        //Toast.makeText(getApplicationContext(), "Clicaste em Restaurantes Favoritos", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onFragmentVisitedRestaurantClick() {
+        Intent visResInt = new Intent(getApplicationContext(),UserVisResActivity.class);
+        startActivity(visResInt);
+        //Toast.makeText(getApplicationContext(), "Clicaste em Restaurantes Visitados", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onFragmentUserReviewClick() {
+        Intent userRevInt = new Intent(getApplicationContext(), UserReviewActivity.class);
+        startActivity(userRevInt);
+        //Toast.makeText(getApplicationContext(), "Clicaste em Reviews", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public String onFragmentUserName() {
+        return "Email: " + mAuth.getCurrentUser().getEmail();
     }
 }

@@ -8,8 +8,11 @@
     <string name="pesquisar_restaurantes">Pesquisar Restaurantes</string>
     <string name="userprofile">UserProfile</string>
     <string name="restaurantes_favoritos">Restaurantes Favoritos</string>
-    <string name="user_email">User Email</string>
     <string name="restaurantes_visitados">Restaurantes Visitados</string>
     <string name="reviews">Reviews</string>
     <string name="textview">TextView</string>
+    <string name="delete_button">Apagar</string>
+    <string name="restaurant_name">Restaurant Name</string>
+    <string name="user_email">User Email</string>
+    <string name="rating">Rating</string>
 </resources>

@@ -20,20 +20,28 @@ Decisões da implementação/projeto a serem tomadas:
 - No registo da conta deveremos guardar mais informações do utilizador (nome, DOB,etc)
 ou devemos ficar apenas pelo email?
 ------------------------------------------------------------------------------
-DD/MM/YYYY HH:MM Autor:  Mensagem do Commit: " "
+25/08/2020 23:37 Autor: João Pereira Mensagem do Commit: "Criação das atividades do Perfil do utilizador "
 
 O que foi feito neste commit:
 
--
+- Criação dos fragmentos, atividades e layouts relativos ao Perfil do Utilizador, Restaurantes Favoritos,
+Restaurantes Visitados e User Reviews.
+
+- Criação das pastas Adapter e Model
 
 O que fazer para o próximo commit:
 
--
+- Obter latitude e longitude dos distritos que são possíveis usar para a pesquisa de
+restaurantes
+
+- Perceber como é que os mapas funcionam
+
+- Perceber como é que o livedata funciona
 
 Decisões da implementação/projeto a serem tomadas:
 
--
-
+- Na lista de restaurantes visitados acedemos a esse restaurante através do clique
+num botão "Visitar" ou simplesmente clicamos no item? (R: Para já não é necessário)
 ------------------------------------------------------------------------------
 DD/MM/YYYY HH:MM Autor:  Mensagem do Commit: " "
 
@@ -50,6 +58,7 @@ Decisões da implementação/projeto a serem tomadas:
 -
 
 ------------------------------------------------------------------------------
+
 DD/MM/YYYY HH:MM Autor:  Mensagem do Commit: " "
 
 O que foi feito neste commit:

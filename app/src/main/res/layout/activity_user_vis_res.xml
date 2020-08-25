@@ -19,23 +19,25 @@
             android:theme="@style/AppTheme.AppBarOverlay">
 
             <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbarUser"
+                android:id="@+id/toolbarUserVisRes"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:background="@color/colorPrimary"
                 app:popupTheme="@style/AppTheme.PopupOverlay"
-                app:title="Perfil Utilizador" />
+                app:title="Restaurantes Visitados" />
         </com.google.android.material.appbar.AppBarLayout>
+
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:baselineAligned="false">
 
         <FrameLayout
-            android:id="@+id/fragment_user_profile_container"
-            android:layout_width="match_parent"
+            android:id="@+id/fragment_user_vis_res_container"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="2" />
     </LinearLayout>

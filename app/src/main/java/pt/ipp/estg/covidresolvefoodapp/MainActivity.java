@@ -12,7 +12,6 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 import pt.ipp.estg.covidresolvefoodapp.Fragment.CreateAccount;
 import pt.ipp.estg.covidresolvefoodapp.Fragment.LogIn;
@@ -63,7 +62,7 @@ public class MainActivity extends AppCompatActivity implements LogIn.OnFragmentL
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_settings:
-                Intent intent = new Intent(this, UserProfile.class);
+                Intent intent = new Intent(this, UserProfileActivity.class);
                 startActivity(intent);
 
                 // CÓDIGO RELATIVO À ACTIVITY DEFINICOES
