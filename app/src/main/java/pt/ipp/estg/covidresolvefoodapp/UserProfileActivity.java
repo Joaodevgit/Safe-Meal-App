@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 
-public class UserProfile extends AppCompatActivity {
+public class UserProfileAct extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private Toolbar myToolbar;
