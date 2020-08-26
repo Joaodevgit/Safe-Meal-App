@@ -1,35 +1,29 @@
-package pt.ipp.estg.covidresolvefoodapp;
-
-import android.os.Bundle;
+package pt.ipp.estg.covidresolvefoodapp.PerfilUser;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.google.firebase.auth.FirebaseAuth;
+import android.os.Bundle;
 
-import pt.ipp.estg.covidresolvefoodapp.Fragment.UserVisResFragment;
+import pt.ipp.estg.covidresolvefoodapp.R;
 
-public class UserVisResActivity extends AppCompatActivity implements UserVisResFragment.OnFragmentUserVisResInteractionListener {
+public class UserReviewActivity extends AppCompatActivity implements UserReviewFragment.OnFragmentUserReviewInteractionListener {
 
     private Toolbar myToolbar;
-    private FirebaseAuth mAuth;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_vis_res);
+        setContentView(R.layout.activity_user_review);
 
-        this.mAuth = FirebaseAuth.getInstance();
-
-        UserVisResFragment userVisResFragment = new UserVisResFragment();
+        UserReviewFragment userReviewFragment = new UserReviewFragment();
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.fragment_user_vis_res_container, userVisResFragment);
+        fragmentTransaction.replace(R.id.fragment_user_reviews_container, userReviewFragment);
         fragmentTransaction.commit();
 
-        this.myToolbar = findViewById(R.id.toolbarUserVisRes);
+        this.myToolbar = findViewById(R.id.toolbarUserReviews);
         setSupportActionBar(this.myToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
@@ -52,6 +46,5 @@ public class UserVisResActivity extends AppCompatActivity implements UserVisResF
             getSupportFragmentManager().popBackStack();
         }
     }
-
 
 }

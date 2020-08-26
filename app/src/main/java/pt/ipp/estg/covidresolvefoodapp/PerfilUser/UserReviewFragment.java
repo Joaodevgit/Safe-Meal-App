@@ -1,4 +1,4 @@
-package pt.ipp.estg.covidresolvefoodapp.Fragment;
+package pt.ipp.estg.covidresolvefoodapp.PerfilUser;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -11,12 +11,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.firebase.auth.FirebaseAuth;
-
 import java.util.ArrayList;
 
 import pt.ipp.estg.covidresolvefoodapp.Adapter.UserReviewAdapter;
-import pt.ipp.estg.covidresolvefoodapp.Model.Restaurant;
 import pt.ipp.estg.covidresolvefoodapp.Model.User;
 import pt.ipp.estg.covidresolvefoodapp.R;
 

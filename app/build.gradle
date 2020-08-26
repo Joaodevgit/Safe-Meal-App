@@ -43,4 +43,8 @@ dependencies {
     implementation "androidx.recyclerview:recyclerview:1.1.0"
     // For control over item selection of both touch and mouse driven selection
     implementation "androidx.recyclerview:recyclerview-selection:1.1.0-rc01"
+
+    //Retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.5.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
 }

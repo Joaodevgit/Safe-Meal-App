@@ -1,4 +1,4 @@
-package pt.ipp.estg.covidresolvefoodapp.Fragment;
+package pt.ipp.estg.covidresolvefoodapp.PerfilUser;
 
 import android.content.Context;
 import android.os.Bundle;

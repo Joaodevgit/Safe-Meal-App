@@ -1,4 +1,4 @@
-package pt.ipp.estg.covidresolvefoodapp.Fragment;
+package pt.ipp.estg.covidresolvefoodapp.MainActivity;
 
 import android.app.Activity;
 import android.content.Context;

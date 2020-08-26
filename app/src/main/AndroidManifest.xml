@@ -14,12 +14,14 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".UserReviewActivity"></activity>
-        <activity android:name=".UserVisResActivity" />
-        <activity android:name=".UserFavResActivity" />
-        <activity android:name=".RestaurantSearch" />
-        <activity android:name=".UserProfileActivity" />
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
+
+        <activity android:name=".PerfilUser.UserReviewActivity"></activity>
+        <activity android:name=".PerfilUser.UserVisResActivity" />
+        <activity android:name=".PerfilUser.UserFavResActivity" />
+        <activity android:name=".SearchRestaurant.RestaurantSearch" />
+        <activity android:name=".PerfilUser.UserProfileActivity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -33,7 +35,7 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".MainActivity"
+            android:name=".MainActivity.MainActivity"
             android:launchMode="standard">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

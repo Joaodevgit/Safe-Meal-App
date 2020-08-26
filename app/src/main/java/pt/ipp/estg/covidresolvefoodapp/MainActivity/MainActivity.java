@@ -1,9 +1,4 @@
-package pt.ipp.estg.covidresolvefoodapp;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.FragmentTransaction;
+package pt.ipp.estg.covidresolvefoodapp.MainActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,10 +6,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.FragmentTransaction;
+
 import com.google.firebase.auth.FirebaseAuth;
 
-import pt.ipp.estg.covidresolvefoodapp.Fragment.CreateAccount;
-import pt.ipp.estg.covidresolvefoodapp.Fragment.LogIn;
+import pt.ipp.estg.covidresolvefoodapp.PerfilUser.UserProfileActivity;
+import pt.ipp.estg.covidresolvefoodapp.R;
+import pt.ipp.estg.covidresolvefoodapp.SearchRestaurant.RestaurantSearch;
 
 public class MainActivity extends AppCompatActivity implements LogIn.OnFragmentLogInInteractionListener,
         CreateAccount.OnFragmentCreateAccountInteractionListener, PrincipalPage.onButtonMainMenuClickListener {

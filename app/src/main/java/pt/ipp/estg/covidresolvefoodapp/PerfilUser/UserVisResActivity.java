@@ -1,16 +1,16 @@
-package pt.ipp.estg.covidresolvefoodapp;
+package pt.ipp.estg.covidresolvefoodapp.PerfilUser;
+
+import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.os.Bundle;
-
 import com.google.firebase.auth.FirebaseAuth;
 
-import pt.ipp.estg.covidresolvefoodapp.Fragment.UserFavResFragment;
+import pt.ipp.estg.covidresolvefoodapp.R;
 
-public class UserFavResActivity extends AppCompatActivity implements UserFavResFragment.OnFragmentUserFavResInteractionListener {
+public class UserVisResActivity extends AppCompatActivity implements UserVisResFragment.OnFragmentUserVisResInteractionListener {
 
     private Toolbar myToolbar;
     private FirebaseAuth mAuth;
@@ -19,17 +19,17 @@ public class UserFavResActivity extends AppCompatActivity implements UserFavResF
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_fav_res);
+        setContentView(R.layout.activity_user_vis_res);
 
         this.mAuth = FirebaseAuth.getInstance();
 
-        UserFavResFragment userFavResFragment = new UserFavResFragment();
+        UserVisResFragment userVisResFragment = new UserVisResFragment();
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.fragment_user_fav_res_container, userFavResFragment);
+        fragmentTransaction.replace(R.id.fragment_user_vis_res_container, userVisResFragment);
         fragmentTransaction.commit();
 
-        this.myToolbar = findViewById(R.id.toolbarUserFavRes);
+        this.myToolbar = findViewById(R.id.toolbarUserVisRes);
         setSupportActionBar(this.myToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }

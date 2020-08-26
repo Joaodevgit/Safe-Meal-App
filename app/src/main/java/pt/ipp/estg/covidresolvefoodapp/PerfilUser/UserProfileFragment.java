@@ -1,9 +1,8 @@
-package pt.ipp.estg.covidresolvefoodapp.Fragment;
+package pt.ipp.estg.covidresolvefoodapp.PerfilUser;
 
 import android.content.Context;
 import android.os.Bundle;
 
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;

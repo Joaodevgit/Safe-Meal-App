@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SearchRestaurant.SearchRestaurantFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/title_estabelecimento"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="15dp"
+            android:lines="1"
+            android:text="Estabelecimento"
+            android:textSize="20dp"
+            app:autoSizeMaxTextSize="20sp"
+            app:autoSizeMinTextSize="16sp"
+            app:autoSizeTextType="uniform" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:lines="1"
+            android:text="(Escolha um estabelecimento)"
+            app:autoSizeMaxTextSize="10sp"
+            app:autoSizeMinTextSize="8sp"
+            app:autoSizeTextType="uniform" />
+
+        <RadioGroup
+            android:id="@+id/radio_group_estabelicimento"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp">
+
+            <RadioButton
+                android:id="@+id/check_casual_dining"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Casual Dining" />
+
+            <RadioButton
+                android:id="@+id/check_cafeteria"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cafeteria" />
+
+            <RadioButton
+                android:id="@+id/check_cafe"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Café" />
+
+            <RadioButton
+                android:id="@+id/check_bakery"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Bakery" />
+
+            <RadioButton
+                android:id="@+id/check_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Bar" />
+
+            <RadioButton
+                android:id="@+id/check_kiosk"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Kiosk" />
+
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/title_cidade"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:lines="1"
+            android:text="Cidade"
+            android:textSize="20dp"
+            app:autoSizeMaxTextSize="20sp"
+            app:autoSizeMinTextSize="16sp"
+            app:autoSizeTextType="uniform" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:lines="1"
+            android:text="(Escolha uma cidade)"
+            app:autoSizeMaxTextSize="10sp"
+            app:autoSizeMinTextSize="8sp"
+            app:autoSizeTextType="uniform" />
+
+        <RadioGroup
+            android:id="@+id/radio_group_cidade"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/check_braga"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="Braga" />
+
+            <RadioButton
+                android:id="@+id/check_porto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="Porto" />
+
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/title_cuisine"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:lines="1"
+            android:text="Cozinha"
+            android:textSize="20dp"
+            app:autoSizeMaxTextSize="20sp"
+            app:autoSizeMinTextSize="16sp"
+            app:autoSizeTextType="uniform" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:lines="1"
+            android:text="(Escolha um ou mais cozinhas)"
+            app:autoSizeMaxTextSize="10sp"
+            app:autoSizeMinTextSize="8sp"
+            app:autoSizeTextType="uniform" />
+
+        <RadioGroup
+            android:id="@+id/radio_group_cuzinha"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:text="Chinese" />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:text="Burger" />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:text="Brazilian" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:text="Fast Food" />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:text="Pizza" />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:text="Portuguese" />
+
+            </LinearLayout>
+
+        </RadioGroup>
+
+        <Button
+            android:id="@+id/search_restaurants"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Pesquisar" />
+
+    </LinearLayout>
+
+</FrameLayout>

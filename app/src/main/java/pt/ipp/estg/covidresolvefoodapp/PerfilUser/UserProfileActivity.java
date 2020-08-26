@@ -1,4 +1,4 @@
-package pt.ipp.estg.covidresolvefoodapp;
+package pt.ipp.estg.covidresolvefoodapp.PerfilUser;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -6,15 +6,10 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 
-import pt.ipp.estg.covidresolvefoodapp.Fragment.UserFavResFragment;
-import pt.ipp.estg.covidresolvefoodapp.Fragment.UserProfileFragment;
-import pt.ipp.estg.covidresolvefoodapp.Fragment.UserReviewFragment;
+import pt.ipp.estg.covidresolvefoodapp.R;
 
 public class UserProfileActivity extends AppCompatActivity implements UserProfileFragment.OnFragmentUserProfileInteractionListener {
 
