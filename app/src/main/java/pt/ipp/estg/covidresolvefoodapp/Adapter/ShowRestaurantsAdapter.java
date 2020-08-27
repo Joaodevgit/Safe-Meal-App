@@ -6,12 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
-import org.w3c.dom.Text;
-
-import java.util.List;
 
 import pt.ipp.estg.covidresolvefoodapp.R;
 import pt.ipp.estg.covidresolvefoodapp.Retrofit.RestaurantInfoRetro;
@@ -27,9 +22,8 @@ public class ShowRestaurantsAdapter extends RecyclerView.Adapter<ShowRestaurants
         this.mRestaurants = mRestaurants;
     }
 
-    @NonNull
     @Override
-    public ShowRestaurantsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ShowRestaurantsViewHolder onCreateViewHolder( ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
 
@@ -39,7 +33,7 @@ public class ShowRestaurantsAdapter extends RecyclerView.Adapter<ShowRestaurants
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ShowRestaurantsViewHolder viewHolder, int position) {
+    public void onBindViewHolder(ShowRestaurantsViewHolder viewHolder, int position) {
         final RestaurantInfoRetro restaurant = this.mRestaurants.getRestaurants().get(position).getRestaurant();
 
         TextView textView = viewHolder.nameRestaurant;
@@ -55,7 +49,7 @@ public class ShowRestaurantsAdapter extends RecyclerView.Adapter<ShowRestaurants
 
         public TextView nameRestaurant;
 
-        public ShowRestaurantsViewHolder(@NonNull View itemView) {
+        public ShowRestaurantsViewHolder(View itemView) {
             super(itemView);
 
             this.nameRestaurant = itemView.findViewById(R.id.restaurant_name);

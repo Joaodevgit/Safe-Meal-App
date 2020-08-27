@@ -53,12 +53,19 @@ public class RestaurantShowFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_restaurant_show, container, false);
 
-        System.out.println("lat: " + this.contentQueryLatCity);
-        System.out.println("lon: " + this.contentQueryLonCity);
-        System.out.println("Cuisines: " + this.contentQueryCuisines);
-        System.out.println("Estabelecimento: " + this.contentQueryEstablishment);
+//        System.out.println("lat: " + this.contentQueryLatCity);
+//        System.out.println("lon: " + this.contentQueryLonCity);
+//        System.out.println("Cuisines: " + this.contentQueryCuisines);
+//        System.out.println("Estabelecimento: " + this.contentQueryEstablishment);
 
         this.mRecyclerView = view.findViewById(R.id.mRecyclerview_show_restaurants);
+
+        //Set decoration line
+        RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
+        this.mRecyclerView.addItemDecoration(itemDecoration);
+
+        // Set LayoutManager
+        this.mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         this.getAPIZomato().searchRestaurants(this.contentQueryLatCity, this.contentQueryLonCity, this.contentQueryCuisines, this.contentQueryEstablishment)
                 .enqueue(new Callback<RestaurantsRetro>() {
@@ -74,13 +81,6 @@ public class RestaurantShowFragment extends Fragment {
                         System.out.println(call.request());
                     }
                 });
-
-        //Set decoration line
-        RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
-        this.mRecyclerView.addItemDecoration(itemDecoration);
-
-        // Set LayoutManager
-        this.mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         return view;
     }
