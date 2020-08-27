@@ -15,6 +15,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import pt.ipp.estg.covidresolvefoodapp.PerfilUser.UserProfileActivity;
 import pt.ipp.estg.covidresolvefoodapp.R;
+import pt.ipp.estg.covidresolvefoodapp.RestaurantMap.RestaurantMapActivity;
 import pt.ipp.estg.covidresolvefoodapp.SearchRestaurant.RestaurantSearch;
 
 public class MainActivity extends AppCompatActivity implements LogIn.OnFragmentLogInInteractionListener,
@@ -123,7 +124,9 @@ public class MainActivity extends AppCompatActivity implements LogIn.OnFragmentL
 
     @Override
     public void onButtonRestaurantMapClick() {
-        Toast.makeText(getApplicationContext(), "Para ir ao mapa", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this, RestaurantMapActivity.class);
+        startActivity(intent);
+        //Toast.makeText(getApplicationContext(), "Para ir ao mapa", Toast.LENGTH_SHORT).show();
     }
 
 }

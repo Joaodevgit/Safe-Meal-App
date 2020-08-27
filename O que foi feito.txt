@@ -43,20 +43,19 @@ Decisões da implementação/projeto a serem tomadas:
 - Na lista de restaurantes visitados acedemos a esse restaurante através do clique
 num botão "Visitar" ou simplesmente clicamos no item? (R: Para já não é necessário)
 ------------------------------------------------------------------------------
-DD/MM/YYYY HH:MM Autor:  Mensagem do Commit: " "
+27/08/2020 22:34 Autor: João Pereira  Mensagem do Commit: "Mapas Inicializacao"
 
 O que foi feito neste commit:
 
--
+- Criação da atividade relativa ao mapa e criação de markers para os pontos no mapa
 
 O que fazer para o próximo commit:
 
--
+- Perceber como é que o livedata funciona
 
 Decisões da implementação/projeto a serem tomadas:
 
--
-
+- Nada a assinalar
 ------------------------------------------------------------------------------
 
 DD/MM/YYYY HH:MM Autor:  Mensagem do Commit: " "
