@@ -11,7 +11,7 @@ public interface ZomatoAPI {
     @GET("search")
     Call<RestaurantsRetro> searchRestaurants(@Query("lat") double latitude,
                                              @Query("lon") double longitude,
-                                             @Query("1") String cuisines,
+                                             @Query("cuisines") String cuisines,
                                              @Query("establishment_type") String estabelecimento);
 
 }

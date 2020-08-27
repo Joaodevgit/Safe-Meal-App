@@ -20,7 +20,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RestaurantShowFragment extends Fragment {
 
-    private TextView mTextView;
+    private String contentQueryEstablishment;
+    private double contentQueryLatCity;
+    private double contentQueryLonCity;
+    private String contentQueryCuisines;
 
     public RestaurantShowFragment() {
         // Required empty public constructor
@@ -29,6 +32,12 @@ public class RestaurantShowFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            this.contentQueryLatCity = getArguments().getDouble("lat");
+            this.contentQueryLonCity = getArguments().getDouble("lon");
+            this.contentQueryCuisines = getArguments().getString("cuisines");
+            this.contentQueryEstablishment = getArguments().getString("establishment");
+        }
     }
 
     @Override
@@ -37,13 +46,16 @@ public class RestaurantShowFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_restaurant_show, container, false);
 
-        this.mTextView = view.findViewById(R.id.result_show);
+        System.out.println("lat: " + this.contentQueryLatCity);
+        System.out.println("lon: " + this.contentQueryLonCity);
+        System.out.println("Cuisines: " + this.contentQueryCuisines);
+        System.out.println("Estabelecimento: " + this.contentQueryEstablishment);
 
-        this.getAPIZomato().searchRestaurants(41.157944, -8.629105, "1", "16")
+        this.getAPIZomato().searchRestaurants(this.contentQueryLatCity, this.contentQueryLonCity, this.contentQueryCuisines, this.contentQueryEstablishment)
                 .enqueue(new Callback<RestaurantsRetro>() {
                     @Override
                     public void onResponse(Call<RestaurantsRetro> call, Response<RestaurantsRetro> response) {
-                        mTextView.setText(response.body().toString());
+                        //TODO: Adapters e Recycler Views
                     }
 
                     @Override

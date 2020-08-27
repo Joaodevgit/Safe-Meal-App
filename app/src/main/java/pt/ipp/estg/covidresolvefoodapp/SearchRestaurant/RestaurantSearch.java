@@ -41,8 +41,14 @@ public class RestaurantSearch extends AppCompatActivity implements SearchRestaur
     }
 
     @Override
-    public void onFragmentShowRestaurants() {
+    public void onFragmentShowRestaurants(double lat, double lon, String cuisines, String estabelecimento) {
         RestaurantShowFragment restaurantShowFragment = new RestaurantShowFragment();
+        Bundle bundle = new Bundle();
+        bundle.putDouble("lat", lat);
+        bundle.putDouble("lon", lon);
+        bundle.putString("cuisines", cuisines);
+        bundle.putString("establishment", estabelecimento);
+        restaurantShowFragment.setArguments(bundle);
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.fragment_container_restaurant_search, restaurantShowFragment);

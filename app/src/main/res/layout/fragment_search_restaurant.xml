@@ -47,10 +47,10 @@
                 android:text="Casual Dining" />
 
             <RadioButton
-                android:id="@+id/check_cafeteria"
+                android:id="@+id/check_snack_bar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Cafeteria" />
+                android:text="Snack Bar" />
 
             <RadioButton
                 android:id="@+id/check_cafe"
@@ -104,21 +104,43 @@
             android:id="@+id/radio_group_cidade"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
             android:orientation="horizontal">
 
             <RadioButton
                 android:id="@+id/check_braga"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
+                android:layout_weight="1"
                 android:text="Braga" />
 
             <RadioButton
                 android:id="@+id/check_porto"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
+                android:layout_weight="1"
                 android:text="Porto" />
+
+            <RadioButton
+                android:id="@+id/check_lisbon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Lisboa" />
+
+            <RadioButton
+                android:id="@+id/check_algarve"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Algarve" />
+
+            <RadioButton
+                android:id="@+id/check_santarem"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Santarém" />
 
         </RadioGroup>
 
@@ -144,62 +166,61 @@
             app:autoSizeMinTextSize="8sp"
             app:autoSizeTextType="uniform" />
 
-        <RadioGroup
-            android:id="@+id/radio_group_cuzinha"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <CheckBox
+                android:id="@+id/check_cozinha_chinese"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_weight="1"
+                android:text="Chinese" />
 
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:text="Chinese" />
-
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:text="Burger" />
-
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:text="Brazilian" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
+            <CheckBox
+                android:id="@+id/check_cozinha_burger"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_weight="1"
+                android:text="Burger" />
 
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:text="Fast Food" />
+            <CheckBox
+                android:id="@+id/check_cozinha_brazilian"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Brazilian" />
 
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:text="Pizza" />
+        </LinearLayout>
 
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:text="Portuguese" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-            </LinearLayout>
+            <CheckBox
+                android:id="@+id/check_cozinha_fast_food"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Fast Food" />
 
-        </RadioGroup>
+            <CheckBox
+                android:id="@+id/check_cozinha_pizza"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Pizza" />
+
+            <CheckBox
+                android:id="@+id/check_cozinha_portuguese"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Portuguese" />
+
+        </LinearLayout>
 
         <Button
             android:id="@+id/search_restaurants"
