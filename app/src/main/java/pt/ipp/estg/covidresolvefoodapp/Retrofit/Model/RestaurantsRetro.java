@@ -1,4 +1,4 @@
-package pt.ipp.estg.covidresolvefoodapp.Retrofit;
+package pt.ipp.estg.covidresolvefoodapp.Retrofit.Model;
 
 import java.util.List;
 

@@ -54,4 +54,6 @@ dependencies {
 
     //Glide (fast and efficient open source media management and image loading framework)
     implementation 'com.github.bumptech.glide:glide:3.7.0'
+
+    implementation 'com.squareup.picasso:picasso:2.71828'
 }

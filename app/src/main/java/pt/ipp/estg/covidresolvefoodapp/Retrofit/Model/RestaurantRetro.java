@@ -1,4 +1,4 @@
-package pt.ipp.estg.covidresolvefoodapp.Retrofit;
+package pt.ipp.estg.covidresolvefoodapp.Retrofit.Model;
 
 public class RestaurantRetro {
 
