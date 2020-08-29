@@ -27,7 +27,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
-        android:text="Nome:" />
+        android:text="Nome: " />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -37,8 +37,8 @@
 
         <ImageView
             android:id="@+id/restaurant_image_info"
-            android:layout_width="100dp"
-            android:layout_height="100dp" />
+            android:layout_width="150dp"
+            android:layout_height="150dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -49,12 +49,14 @@
                 android:id="@+id/restaurant_city_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
                 android:text="Cidade: " />
 
             <TextView
                 android:id="@+id/restaurant_establishment_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
                 android:text="Estabelecimento: " />
 
             <LinearLayout
@@ -69,7 +71,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:numStars="5" />
+                    android:numStars="5"
+                    android:theme="@style/RatingBar" />
 
                 <TextView
                     android:id="@+id/nota_info"
@@ -89,14 +92,16 @@
     <TextView
         android:id="@+id/adress_info"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginBottom="10dp"
         android:paddingLeft="5dp"
         android:text="Endereço: " />
 
     <TextView
         android:id="@+id/horarios_info"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginBottom="10dp"
         android:paddingLeft="5dp"
         android:text="Horarios: " />
 
@@ -104,7 +109,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="30dp"
         android:orientation="horizontal">
 
         <TextView
