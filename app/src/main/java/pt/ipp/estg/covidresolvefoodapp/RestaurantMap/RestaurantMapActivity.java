@@ -1,6 +1,5 @@
 package pt.ipp.estg.covidresolvefoodapp.RestaurantMap;
 
-import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentActivity;
 
@@ -9,15 +8,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.os.Bundle;
-import android.os.StrictMode;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -31,26 +27,22 @@ import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import pt.ipp.estg.covidresolvefoodapp.MainActivity.MainActivity;
-import pt.ipp.estg.covidresolvefoodapp.Model.Restaurant;
 import pt.ipp.estg.covidresolvefoodapp.R;
+import pt.ipp.estg.covidresolvefoodapp.Retrofit.Model.NearbyRestaurant;
+import pt.ipp.estg.covidresolvefoodapp.Retrofit.Model.RestaurantInfoRetro;
+import pt.ipp.estg.covidresolvefoodapp.Retrofit.Model.RestaurantRetro;
 import pt.ipp.estg.covidresolvefoodapp.Retrofit.ZomatoAPI;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -95,12 +87,10 @@ public class RestaurantMapActivity extends FragmentActivity {
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         supportMapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.restaurant_map);
-        //supportMapFragment.getMapAsync(this);
 
         mLocationCallback = new LocationCallback() {
             @Override
             public void onLocationResult(LocationResult locationResult) {
-                final List<Restaurant> restaurants = new ArrayList<>();
                 if (locationResult != null) {
                     if (location == null || location.getLongitude() != locationResult.getLastLocation().getLongitude()
                             || location.getLatitude() != locationResult.getLastLocation().getLatitude()) {
@@ -108,19 +98,18 @@ public class RestaurantMapActivity extends FragmentActivity {
                         supportMapFragment.getMapAsync(new OnMapReadyCallback() {
                             @Override
                             public void onMapReady(GoogleMap googleMap) {
-                                //mMap = googleMap;
-                                restaurants.add(new Restaurant(String.valueOf(location.getLatitude()), String.valueOf(location.getLongitude()), "Estou aqui", USER_MARK_IMG));
-                                //restaurants.add(new Restaurant("41.1480179493", "-8.6077113077", "Wow1", "https://b.zmtcdn.com/data/reviews_photos/18a/75890bf38f78f8f917ed435959ec618a_1449006689.jpg?fit=around%7C200%3A200&crop=200%3A200%3B%2A%2C%2A"));
-                                //restaurants.add(new Restaurant("41.1875441294", "-8.6989925802", "Wow2", DEFAULT_RESTAURANT_IMG));
-                                addCustomMarker(restaurants, googleMap);
+                                final List<RestaurantRetro> restaurants;
+
+                                restaurants = callRestaurants(location, googleMap);
+                                System.out.println("Latitude: " + location.getLatitude() + "Longitude: " + location.getLongitude());
                                 googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                                     @Override
                                     public boolean onMarkerClick(Marker marker) {
                                         boolean found = false;
                                         int i = 0;
                                         while (!found) {
-                                            if (marker.getPosition().latitude == Double.parseDouble(restaurants.get(i).getLat()) &&
-                                                    marker.getPosition().longitude == Double.parseDouble(restaurants.get(i).getLon())) {
+                                            if (marker.getPosition().latitude == Double.parseDouble(restaurants.get(i).getRestaurant().getLocation().getLatitude()) &&
+                                                    marker.getPosition().longitude == Double.parseDouble(restaurants.get(i).getRestaurant().getLocation().getLongitude())) {
                                                 found = true;
                                                 //startActivity(new Intent(getApplicationContext(), MainActivity.class));
                                                 Toast.makeText(getApplicationContext(), "Au tocaste em:" + marker.getTitle(), Toast.LENGTH_SHORT).show();
@@ -132,7 +121,6 @@ public class RestaurantMapActivity extends FragmentActivity {
                                 });
 
                             }
-
                         });
                     }
                 }
@@ -143,36 +131,46 @@ public class RestaurantMapActivity extends FragmentActivity {
     }
 
 
+    private List<RestaurantRetro> callRestaurants(final Location userLocation, final GoogleMap googleMap) {
+        final List<RestaurantRetro> nearbyRestaurants = new ArrayList<>();
+        final List<Float> distancias = new ArrayList<>();
+        this.getAPIZomato().geocodeRestaurants(userLocation.getLatitude(), userLocation.getLongitude())
+                .enqueue(new Callback<NearbyRestaurant>() {
+                    @Override
+                    public void onResponse(Call<NearbyRestaurant> call, Response<NearbyRestaurant> response) {
+                        for (int i = 0; i < response.body().getNearby_restaurants().size(); i++) {
+                            if (distance(userLocation.getLatitude(), userLocation.getLongitude()
+                                    , Double.parseDouble(response.body().getNearby_restaurants().get(i).getRestaurant().getLocation().getLatitude()),
+                                    Double.parseDouble(response.body().getNearby_restaurants().get(i).getRestaurant().getLocation().getLongitude())) <= 3000) {
+                                nearbyRestaurants.add(response.body().getNearby_restaurants().get(i));
+                         /*   distancias.add(distance(userLocation.getLatitude(), userLocation.getLongitude()
+                                    , Double.parseDouble(response.body().getNearby_restaurants().get(i).getRestaurant().getLocation().getLatitude()),
+                                    Double.parseDouble(response.body().getNearby_restaurants().get(i).getRestaurant().getLocation().getLongitude())));*/
+                            }
+                         /*   System.out.println("Array distancias: ");
+                            for (int i = 0; i < distancias.size(); i++) {
+                                System.out.println(distancias.get(i));
+                            }*/
+                            nearbyRestaurants.add(new RestaurantRetro(new RestaurantInfoRetro("Estou aqui", USER_MARK_IMG
+                                    , new pt.ipp.estg.covidresolvefoodapp.Retrofit.Model.Location(String.valueOf(userLocation.getLatitude()),
+                                    String.valueOf(userLocation.getLongitude())))));
+                            addCustomMarker(nearbyRestaurants, googleMap);
+                        }
+                    }
 
+                    @Override
+                    public void onFailure(Call<NearbyRestaurant> call, Throwable t) {
+                        System.out.println(call.request());
+                    }
+                });
+
+        return nearbyRestaurants;
+    }
 
 
 /*    private void stopLocationUpdates() {
         mFusedLocationClient.removeLocationUpdates(mLocationCallback);
     }*/
-
-/*    private void getCurrentLocation(final List<Restaurant> restaurants) {
-
-        //Initialize task location
-        Task<Location> task = mFusedLocationClient.getLastLocation()
-                .addOnSuccessListener(new OnSuccessListener<Location>() {
-                    @Override
-                    public void onSuccess(final Location location) {
-                        if (location != null) {
-                            //Sync map
-                            supportMapFragment.getMapAsync(new OnMapReadyCallback() {
-                                @Override
-                                public void onMapReady(GoogleMap googleMap) {
-                                    //mMap = googleMap;
-                                    //MapsInitializer.initialize(getApplicationContext());
-                                    restaurants.add(new Restaurant(String.valueOf(location.getLatitude()), String.valueOf(location.getLongitude()), "Estou aqui", USER_MARK_IMG));
-                                    addCustomMarker(restaurants, googleMap);
-                                }
-                            });
-                        }
-                    }
-                });
-    }*/
-
 
     private void startLocationUpdates() {
         mFusedLocationClient.requestLocationUpdates(mLocationRequest, mLocationCallback, null);
@@ -190,45 +188,37 @@ public class RestaurantMapActivity extends FragmentActivity {
                 REQUEST_FINE_LOCATION);
     }
 
-/*    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode == 44) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                //When permission granted
-                //Call method
-                List<Restaurant> restaurants = new ArrayList<>();
-                //restaurants.add(new Restaurant("41.1480179493", "-8.6077113077", "Wow1", "https://b.zmtcdn.com/data/reviews_photos/18a/75890bf38f78f8f917ed435959ec618a_1449006689.jpg?fit=around%7C200%3A200&crop=200%3A200%3B%2A%2C%2A"));
-                //restaurants.add(new Restaurant("41.1875441294", "-8.6989925802", "Wow2", DEFAULT_RESTAURANT_IMG));
-                restaurants.add(new Restaurant(String.valueOf(location.getLatitude()), String.valueOf(location.getLongitude()), "Estou aqui", USER_MARK_IMG));
-                getCurrentLocation(restaurants);
-            }
-        }
-    }*/
-
-    private void addCustomMarker(final List<Restaurant> restaurants, final GoogleMap googleMap) {
+    private void addCustomMarker(final List<RestaurantRetro> restaurants, final GoogleMap googleMap) {
         if (googleMap == null) {
             return;
         }
 
         // adding a marker with image from URL using glide image loading library
         for (int i = 0; i < restaurants.size(); i++) {
-            final int temp = i;
-            Glide.with(getApplicationContext()).
-                    load(restaurants.get(i).getImageURL())
-                    .asBitmap()
-                    .fitCenter()
-                    .into(new SimpleTarget<Bitmap>() {
-                        @Override
-                        public void onResourceReady(Bitmap bitmap, GlideAnimation<? super Bitmap> glideAnimation) {
-                            LatLng pos = new LatLng(Double.parseDouble(restaurants.get(temp).getLat()), Double.parseDouble(restaurants.get(temp).getLon()));
-                            googleMap.addMarker(new MarkerOptions()
-                                    .position(pos)
-                                    .title(restaurants.get(temp).getTitle())
-                                    .icon(BitmapDescriptorFactory.fromBitmap(getMarkerBitmapFromView(mCustomMarkerView, bitmap))));
-                            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(pos, 18));
-                        }
-                    });
+            if (restaurants.get(i).getRestaurant().getThumb().equals("")) {
+                restaurants.get(i).getRestaurant().setThumb(DEFAULT_RESTAURANT_IMG);
+            } else {
+                final int temp = i;
+                Glide.with(getApplicationContext()).
+                        load(restaurants.get(i).getRestaurant().getThumb())
+                        .asBitmap()
+                        .fitCenter()
+                        .into(new SimpleTarget<Bitmap>() {
+                            @Override
+                            public void onResourceReady(Bitmap bitmap, GlideAnimation<? super Bitmap> glideAnimation) {
+                                LatLng pos = new LatLng(Double.parseDouble(restaurants.get(temp).getRestaurant().getLocation().getLatitude())
+                                        , Double.parseDouble(restaurants.get(temp).getRestaurant().getLocation().getLongitude()));
+
+                                googleMap.addMarker(new MarkerOptions()
+                                        .position(pos)
+                                        .title(restaurants.get(temp).getRestaurant().getName())
+                                        .icon(BitmapDescriptorFactory.fromBitmap(getMarkerBitmapFromView(mCustomMarkerView, bitmap))));
+                                googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(pos, 15));
+                            }
+                        });
+            }
         }
+
     }
 
     private Bitmap getMarkerBitmapFromView(View view, Bitmap bitmap) {
@@ -257,6 +247,19 @@ public class RestaurantMapActivity extends FragmentActivity {
 
     private ZomatoAPI getAPIZomato() {
         return this.getRetrofitZomatoAPI().create(ZomatoAPI.class);
+    }
+
+    public float distance(double lat1, double lng1, double lat2, double lng2) {
+        double earthRadius = 6371000; //meters
+        double dLat = Math.toRadians(lat2 - lat1);
+        double dLng = Math.toRadians(lng2 - lng1);
+        double a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) *
+                        Math.sin(dLng / 2) * Math.sin(dLng / 2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        float dist = (float) (earthRadius * c);
+
+        return dist;
     }
 
 }
