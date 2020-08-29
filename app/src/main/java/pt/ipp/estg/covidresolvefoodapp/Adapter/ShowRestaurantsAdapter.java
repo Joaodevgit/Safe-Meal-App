@@ -53,7 +53,6 @@ public class ShowRestaurantsAdapter extends RecyclerView.Adapter<ShowRestaurants
             Picasso.get().load("https://i.postimg.cc/zfX7My2F/tt.jpg").into(imageRestaurant);
         }
 
-
         TextView nameRestaurant = viewHolder.nameRestaurant;
         nameRestaurant.setText("Nome do restaurante: " + restaurant.getName());
 

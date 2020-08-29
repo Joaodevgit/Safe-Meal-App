@@ -11,9 +11,10 @@ public class RestaurantInfoRetro {
     private String thumb;
     private Location location;
     private UserRating user_rating;
+    private int has_table_booking;
     private List<String> establishment;
 
-    public RestaurantInfoRetro(String id, String name, String cuisines, String timings, String thumb, Location location, UserRating user_rating, List<String> establishment) {
+    public RestaurantInfoRetro(String id, String name, String cuisines, String timings, String thumb, Location location, UserRating user_rating, int has_table_booking, List<String> establishment) {
         this.id = id;
         this.name = name;
         this.cuisines = cuisines;
@@ -21,6 +22,7 @@ public class RestaurantInfoRetro {
         this.thumb = thumb;
         this.location = location;
         this.user_rating = user_rating;
+        this.has_table_booking = has_table_booking;
         this.establishment = establishment;
     }
 
@@ -56,6 +58,10 @@ public class RestaurantInfoRetro {
 
     public UserRating getUser_rating() {
         return user_rating;
+    }
+
+    public int getHas_table_booking() {
+        return has_table_booking;
     }
 
     public List<String> getEstablishment() {
