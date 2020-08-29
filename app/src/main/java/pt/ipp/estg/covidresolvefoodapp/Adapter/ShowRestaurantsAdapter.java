@@ -1,6 +1,7 @@
 package pt.ipp.estg.covidresolvefoodapp.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ import org.w3c.dom.Text;
 import pt.ipp.estg.covidresolvefoodapp.R;
 import pt.ipp.estg.covidresolvefoodapp.Retrofit.Model.RestaurantInfoRetro;
 import pt.ipp.estg.covidresolvefoodapp.Retrofit.Model.RestaurantsRetro;
+import pt.ipp.estg.covidresolvefoodapp.SearchRestaurant.InfoRestaurantActivity;
 
 public class ShowRestaurantsAdapter extends RecyclerView.Adapter<ShowRestaurantsAdapter.ShowRestaurantsViewHolder> {
 
@@ -41,7 +43,7 @@ public class ShowRestaurantsAdapter extends RecyclerView.Adapter<ShowRestaurants
     }
 
     @Override
-    public void onBindViewHolder(ShowRestaurantsViewHolder viewHolder, int position) {
+    public void onBindViewHolder(final ShowRestaurantsViewHolder viewHolder, int position) {
         final RestaurantInfoRetro restaurant = this.mRestaurants.getRestaurants().get(position).getRestaurant();
 
         ImageView imageRestaurant = viewHolder.imageRestaurant;
@@ -69,7 +71,10 @@ public class ShowRestaurantsAdapter extends RecyclerView.Adapter<ShowRestaurants
         moreInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(mContext, "Restaurante detalhado", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(mContext, InfoRestaurantActivity.class);
+                intent.putExtra("idRestaurant", restaurant.getId());
+
+                mContext.startActivity(intent);
             }
         });
     }

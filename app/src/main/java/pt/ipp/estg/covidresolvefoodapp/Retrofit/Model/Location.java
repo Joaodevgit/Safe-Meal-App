@@ -12,6 +12,11 @@ public class Location {
         this.longitude = longitude;
     }
 
+    public Location(String latitude, String longitude) {
+        this.latitude = latitude;
+        this.longitude = longitude;
+    }
+
     public String getCity() {
         return city;
     }

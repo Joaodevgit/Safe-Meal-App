@@ -1,5 +1,7 @@
 package pt.ipp.estg.covidresolvefoodapp.Retrofit.Model;
 
+import java.util.List;
+
 public class RestaurantInfoRetro {
 
     private String id;
@@ -9,8 +11,9 @@ public class RestaurantInfoRetro {
     private String thumb;
     private Location location;
     private UserRating user_rating;
+    private List<String> establishment;
 
-    public RestaurantInfoRetro(String id, String name, String cuisines, String timings, String thumb, Location location, UserRating user_rating) {
+    public RestaurantInfoRetro(String id, String name, String cuisines, String timings, String thumb, Location location, UserRating user_rating, List<String> establishment) {
         this.id = id;
         this.name = name;
         this.cuisines = cuisines;
@@ -18,6 +21,13 @@ public class RestaurantInfoRetro {
         this.thumb = thumb;
         this.location = location;
         this.user_rating = user_rating;
+        this.establishment = establishment;
+    }
+
+    public RestaurantInfoRetro(String name, String thumb, Location location) {
+        this.name = name;
+        this.thumb = thumb;
+        this.location = location;
     }
 
     public String getId() {
@@ -32,6 +42,10 @@ public class RestaurantInfoRetro {
         return cuisines;
     }
 
+    public String getTimings() {
+        return timings;
+    }
+
     public String getThumb() {
         return thumb;
     }
@@ -44,6 +58,14 @@ public class RestaurantInfoRetro {
         return user_rating;
     }
 
+    public List<String> getEstablishment() {
+        return establishment;
+    }
+
+    public void setThumb(String thumb) {
+        this.thumb = thumb;
+    }
+
     @Override
     public String toString() {
         return "RestaurantInfoRetro{" +
@@ -54,6 +76,7 @@ public class RestaurantInfoRetro {
                 ", thumb='" + thumb + '\'' +
                 ", location=" + location +
                 ", user_rating=" + user_rating +
+                ", establishment=" + establishment +
                 '}';
     }
 }
