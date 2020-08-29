@@ -1,5 +1,6 @@
 package pt.ipp.estg.covidresolvefoodapp.Retrofit;
 
+import pt.ipp.estg.covidresolvefoodapp.Retrofit.Model.NearbyRestaurant;
 import pt.ipp.estg.covidresolvefoodapp.Retrofit.Model.RestaurantsRetro;
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -15,4 +16,8 @@ public interface ZomatoAPI {
                                              @Query("cuisines") String cuisines,
                                              @Query("establishment_type") String estabelecimento);
 
+    @Headers("user-key: e11bb0aef95db8820287691d71f0e616")
+    @GET("geocode")
+    Call<NearbyRestaurant> geocodeRestaurants(@Query("lat") double latitude,
+                                              @Query("lon") double longitude);
 }
