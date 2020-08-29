@@ -1,14 +1,23 @@
 package pt.ipp.estg.covidresolvefoodapp.MainActivity;
 
+import android.Manifest;
+import android.app.Activity;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.location.LocationManager;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -119,14 +128,74 @@ public class MainActivity extends AppCompatActivity implements LogIn.OnFragmentL
     @Override
     public void onButtonRestaurantSearchClick() {
         Intent intent = new Intent(this, RestaurantSearch.class);
-        startActivity(intent);
+        verifyWifiPermission(intent);
     }
 
     @Override
     public void onButtonRestaurantMapClick() {
         Intent intent = new Intent(this, RestaurantMapActivity.class);
-        startActivity(intent);
+        verifyGPSPermission(intent);
         //Toast.makeText(getApplicationContext(), "Para ir ao mapa", Toast.LENGTH_SHORT).show();
+    }
+
+    private void verifyGPSPermission(Intent intent) {
+        LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        boolean gps_enabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
+
+        if (!gps_enabled) {
+            new AlertDialog.Builder(this)
+                    .setTitle("Permissão GPS necessária")
+                    .setMessage("Esta permissão é necessária para poder aceder ao mapa")
+                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            //Ir às definições
+                            ActivityCompat.requestPermissions(MainActivity.this,
+                                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 44);
+                            startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+                        }
+                    })
+                    .setNegativeButton("cancelar", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Toast.makeText(getApplicationContext(), "Operação cancelada", Toast.LENGTH_SHORT).show();
+                            dialog.dismiss();
+                            //request.cancel();
+                        }
+                    })
+                    .show();
+        } else {
+            startActivity(intent);
+        }
+    }
+
+    private void verifyWifiPermission(Intent intent) {
+        WifiManager wifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+        if (!wifiManager.isWifiEnabled()) {
+            new AlertDialog.Builder(this)
+                    .setTitle("Permissão Wifi necessária")
+                    .setMessage("Esta permissão é necessária para poder fazer a pesquisa")
+                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            //Ir às definições
+                            ActivityCompat.requestPermissions(MainActivity.this,
+                                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 44);
+                            startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
+                        }
+                    })
+                    .setNegativeButton("cancelar", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Toast.makeText(getApplicationContext(), "Operação cancelada", Toast.LENGTH_SHORT).show();
+                            dialog.dismiss();
+                            //request.cancel();
+                        }
+                    })
+                    .show();
+        } else {
+            startActivity(intent);
+        }
     }
 
 }

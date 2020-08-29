@@ -48,6 +48,7 @@ public class PrincipalPage extends Fragment {
         btnRestaurantMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 mListener.onButtonRestaurantMapClick();
             }
         });

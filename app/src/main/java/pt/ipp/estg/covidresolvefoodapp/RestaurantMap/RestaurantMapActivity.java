@@ -107,6 +107,8 @@ public class RestaurantMapActivity extends FragmentActivity {
             }
         };*/
 
+        getLastLocation();
+
         mCustomMarkerView = ((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.view_custom_marker, null);
         mMarkerImageView = (ImageView) mCustomMarkerView.findViewById(R.id.profile_image);
 
@@ -119,7 +121,11 @@ public class RestaurantMapActivity extends FragmentActivity {
         //supportMapFragment.getMapAsync(this);
 
         // Faltam as permissões
-        getCurrentLocation();
+        List<Restaurant> restaurants = new ArrayList<>();
+        //restaurants.add(new Restaurant("41.1480179493", "-8.6077113077", "Wow1", "https://b.zmtcdn.com/data/reviews_photos/18a/75890bf38f78f8f917ed435959ec618a_1449006689.jpg?fit=around%7C200%3A200&crop=200%3A200%3B%2A%2C%2A"));
+        //restaurants.add(new Restaurant("41.1875441294", "-8.6989925802", "Wow2", DEFAULT_RESTAURANT_IMG));
+        //restaurants.add(new Restaurant(String.valueOf(location.getLatitude()), String.valueOf(location.getLongitude()), "Estou aqui", USER_MARK_IMG));
+        getCurrentLocation(restaurants);
     }
 
 /*    private void startLocationUpdates() {
@@ -130,36 +136,26 @@ public class RestaurantMapActivity extends FragmentActivity {
         mFusedLocationClient.removeLocationUpdates(mLocationCallback);
     }*/
 
-    private void getCurrentLocation() {
+    private void getCurrentLocation(final List<Restaurant> restaurants) {
         //Initialize task location
-        Task<Location> task = mFusedLocationClient.getLastLocation();
-        task.addOnSuccessListener(new OnSuccessListener<Location>() {
-            @Override
-            public void onSuccess(final Location location) {
-                if (location != null) {
-                    //Sync map
-                    supportMapFragment.getMapAsync(new OnMapReadyCallback() {
-                        @Override
-                        public void onMapReady(GoogleMap googleMap) {
-                            //mMap = googleMap;
-                            MapsInitializer.initialize(getApplicationContext());
-                            List<Restaurant> restaurants = new ArrayList<>();
-                            restaurants.add(new Restaurant("41.1480179493", "-8.6077113077", "Wow1", "https://b.zmtcdn.com/data/reviews_photos/18a/75890bf38f78f8f917ed435959ec618a_1449006689.jpg?fit=around%7C200%3A200&crop=200%3A200%3B%2A%2C%2A"));
-                            restaurants.add(new Restaurant("41.1875441294", "-8.6989925802", "Wow2", DEFAULT_RESTAURANT_IMG));
-                            //restaurants.add(new Restaurant(String.valueOf(location.getLatitude()), String.valueOf(location.getLongitude()), "Estou aqui", USER_MARK_IMG));
-                            addCustomMarker(restaurants, googleMap);
-                            zoomToLocation(location, googleMap);
+        Task<Location> task = mFusedLocationClient.getLastLocation()
+                .addOnSuccessListener(new OnSuccessListener<Location>() {
+                    @Override
+                    public void onSuccess(final Location location) {
+                        if (location != null) {
+                            //Sync map
+                            supportMapFragment.getMapAsync(new OnMapReadyCallback() {
+                                @Override
+                                public void onMapReady(GoogleMap googleMap) {
+                                    //mMap = googleMap;
+                                    //MapsInitializer.initialize(getApplicationContext());
+                                    restaurants.add(new Restaurant(String.valueOf(location.getLatitude()), String.valueOf(location.getLongitude()), "Estou aqui", USER_MARK_IMG));
+                                    addCustomMarker(restaurants, googleMap);
+                                }
+                            });
                         }
-                    });
-                }
-            }
-        });
-    }
-
-    private void zoomToLocation(Location location, GoogleMap googleMap) {
-        LatLng userLocation = new LatLng(location.getLatitude(), location.getLongitude());
-        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(userLocation, 12);
-        googleMap.animateCamera(cameraUpdate);
+                    }
+                });
     }
 
     private void getLastLocation() {
@@ -172,6 +168,21 @@ public class RestaurantMapActivity extends FragmentActivity {
     private void requestPermissions() {
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                 REQUEST_FINE_LOCATION);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == 44) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                //When permission granted
+                //Call method
+                List<Restaurant> restaurants = new ArrayList<>();
+                //restaurants.add(new Restaurant("41.1480179493", "-8.6077113077", "Wow1", "https://b.zmtcdn.com/data/reviews_photos/18a/75890bf38f78f8f917ed435959ec618a_1449006689.jpg?fit=around%7C200%3A200&crop=200%3A200%3B%2A%2C%2A"));
+                //restaurants.add(new Restaurant("41.1875441294", "-8.6989925802", "Wow2", DEFAULT_RESTAURANT_IMG));
+                restaurants.add(new Restaurant(String.valueOf(location.getLatitude()), String.valueOf(location.getLongitude()), "Estou aqui", USER_MARK_IMG));
+                getCurrentLocation(restaurants);
+            }
+        }
     }
 
     private void addCustomMarker(final List<Restaurant> restaurants, final GoogleMap googleMap) {
