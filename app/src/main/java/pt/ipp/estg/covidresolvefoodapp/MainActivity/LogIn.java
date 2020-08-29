@@ -1,12 +1,16 @@
 package pt.ipp.estg.covidresolvefoodapp.MainActivity;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,7 +27,12 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.List;
+
 import pt.ipp.estg.covidresolvefoodapp.R;
+import pub.devrel.easypermissions.AfterPermissionGranted;
+import pub.devrel.easypermissions.AppSettingsDialog;
+import pub.devrel.easypermissions.EasyPermissions;
 
 public class LogIn extends Fragment {
 
@@ -35,6 +44,8 @@ public class LogIn extends Fragment {
     private EditText mPasswordField;
     private Button mButtonSign;
     private Button mButtonCreat;
+
+    private static final int REQUEST_WIFI_STATE = 101;
 
     // [START declare_auth]
     private FirebaseAuth mAuth;
@@ -89,6 +100,7 @@ public class LogIn extends Fragment {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         updateUI(currentUser);
 
+
         return view;
     }
 
@@ -128,7 +140,7 @@ public class LogIn extends Fragment {
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
-                            Toast.makeText(getContext(), "Authentication failed.",
+                            Toast.makeText(getContext(), "Autenticação Falhou / Sem ligação à rede.",
                                     Toast.LENGTH_SHORT).show();
                             updateUI(null);
                         }

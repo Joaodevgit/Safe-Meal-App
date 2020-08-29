@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentActivity;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -20,6 +21,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
@@ -46,8 +48,15 @@ import com.google.android.gms.tasks.Task;
 import java.util.ArrayList;
 import java.util.List;
 
+import pt.ipp.estg.covidresolvefoodapp.MainActivity.MainActivity;
 import pt.ipp.estg.covidresolvefoodapp.Model.Restaurant;
 import pt.ipp.estg.covidresolvefoodapp.R;
+import pt.ipp.estg.covidresolvefoodapp.Retrofit.ZomatoAPI;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RestaurantMapActivity extends FragmentActivity {
 
@@ -70,43 +79,6 @@ public class RestaurantMapActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restaurant_map);
 
-/*        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-
-        mFusedLocationClient.getLastLocation()
-                .addOnSuccessListener(this, new OnSuccessListener<Location>() {
-                    @Override
-                    public void onSuccess(Location location) {
-                        if (location != null) {
-                            // Sucesso
-                        }
-                    }
-                })
-                .addOnFailureListener(this, new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        // Erro
-                    }
-                });
-
-        mLocationRequest = new LocationRequest();
-        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        mLocationRequest.setInterval(5000);
-        mLocationRequest.setFastestInterval(5000);
-
-        mLocationCallback = new LocationCallback() {
-            @Override
-            public void onLocationResult(LocationResult locationResult) {
-                if (locationResult != null) {
-                    if (location == null || location.getLongitude() != locationResult.getLastLocation().getLongitude()
-                            || location.getLatitude() != locationResult.getLastLocation().getLatitude()) {
-                        location = locationResult.getLastLocation();
-                        // RetrofitAPI com os restaurantes perto
-                    }
-                }
-
-            }
-        };*/
-
         getLastLocation();
 
         mCustomMarkerView = ((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.view_custom_marker, null);
@@ -115,28 +87,71 @@ public class RestaurantMapActivity extends FragmentActivity {
         //Initialize fused location
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
+        mLocationRequest = new LocationRequest();
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        //mLocationRequest.setInterval(3000);
+        //mLocationRequest.setFastestInterval(5000);
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         supportMapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.restaurant_map);
         //supportMapFragment.getMapAsync(this);
 
-        // Faltam as permissões
-        List<Restaurant> restaurants = new ArrayList<>();
-        //restaurants.add(new Restaurant("41.1480179493", "-8.6077113077", "Wow1", "https://b.zmtcdn.com/data/reviews_photos/18a/75890bf38f78f8f917ed435959ec618a_1449006689.jpg?fit=around%7C200%3A200&crop=200%3A200%3B%2A%2C%2A"));
-        //restaurants.add(new Restaurant("41.1875441294", "-8.6989925802", "Wow2", DEFAULT_RESTAURANT_IMG));
-        //restaurants.add(new Restaurant(String.valueOf(location.getLatitude()), String.valueOf(location.getLongitude()), "Estou aqui", USER_MARK_IMG));
-        getCurrentLocation(restaurants);
+        mLocationCallback = new LocationCallback() {
+            @Override
+            public void onLocationResult(LocationResult locationResult) {
+                final List<Restaurant> restaurants = new ArrayList<>();
+                if (locationResult != null) {
+                    if (location == null || location.getLongitude() != locationResult.getLastLocation().getLongitude()
+                            || location.getLatitude() != locationResult.getLastLocation().getLatitude()) {
+                        location = locationResult.getLastLocation();
+                        supportMapFragment.getMapAsync(new OnMapReadyCallback() {
+                            @Override
+                            public void onMapReady(GoogleMap googleMap) {
+                                //mMap = googleMap;
+                                restaurants.add(new Restaurant(String.valueOf(location.getLatitude()), String.valueOf(location.getLongitude()), "Estou aqui", USER_MARK_IMG));
+                                //restaurants.add(new Restaurant("41.1480179493", "-8.6077113077", "Wow1", "https://b.zmtcdn.com/data/reviews_photos/18a/75890bf38f78f8f917ed435959ec618a_1449006689.jpg?fit=around%7C200%3A200&crop=200%3A200%3B%2A%2C%2A"));
+                                //restaurants.add(new Restaurant("41.1875441294", "-8.6989925802", "Wow2", DEFAULT_RESTAURANT_IMG));
+                                addCustomMarker(restaurants, googleMap);
+                                googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                                    @Override
+                                    public boolean onMarkerClick(Marker marker) {
+                                        boolean found = false;
+                                        int i = 0;
+                                        while (!found) {
+                                            if (marker.getPosition().latitude == Double.parseDouble(restaurants.get(i).getLat()) &&
+                                                    marker.getPosition().longitude == Double.parseDouble(restaurants.get(i).getLon())) {
+                                                found = true;
+                                                //startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                                                Toast.makeText(getApplicationContext(), "Au tocaste em:" + marker.getTitle(), Toast.LENGTH_SHORT).show();
+                                            }
+                                            i++;
+                                        }
+                                        return false;
+                                    }
+                                });
+
+                            }
+
+                        });
+                    }
+                }
+            }
+
+        };
+        startLocationUpdates();
     }
 
-/*    private void startLocationUpdates() {
-        mFusedLocationClient.requestLocationUpdates(mLocationRequest, mLocationCallback, null);
-    }*/
+
+
+
 
 /*    private void stopLocationUpdates() {
         mFusedLocationClient.removeLocationUpdates(mLocationCallback);
     }*/
 
-    private void getCurrentLocation(final List<Restaurant> restaurants) {
+/*    private void getCurrentLocation(final List<Restaurant> restaurants) {
+
         //Initialize task location
         Task<Location> task = mFusedLocationClient.getLastLocation()
                 .addOnSuccessListener(new OnSuccessListener<Location>() {
@@ -156,6 +171,11 @@ public class RestaurantMapActivity extends FragmentActivity {
                         }
                     }
                 });
+    }*/
+
+
+    private void startLocationUpdates() {
+        mFusedLocationClient.requestLocationUpdates(mLocationRequest, mLocationCallback, null);
     }
 
     private void getLastLocation() {
@@ -170,7 +190,7 @@ public class RestaurantMapActivity extends FragmentActivity {
                 REQUEST_FINE_LOCATION);
     }
 
-    @Override
+/*    @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == 44) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
@@ -183,7 +203,7 @@ public class RestaurantMapActivity extends FragmentActivity {
                 getCurrentLocation(restaurants);
             }
         }
-    }
+    }*/
 
     private void addCustomMarker(final List<Restaurant> restaurants, final GoogleMap googleMap) {
         if (googleMap == null) {
@@ -226,6 +246,17 @@ public class RestaurantMapActivity extends FragmentActivity {
             drawable.draw(canvas);
         view.draw(canvas);
         return returnedBitmap;
+    }
+
+    private Retrofit getRetrofitZomatoAPI() {
+        return new Retrofit.Builder()
+                .baseUrl("https://developers.zomato.com/api/v2.1/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+    }
+
+    private ZomatoAPI getAPIZomato() {
+        return this.getRetrofitZomatoAPI().create(ZomatoAPI.class);
     }
 
 }

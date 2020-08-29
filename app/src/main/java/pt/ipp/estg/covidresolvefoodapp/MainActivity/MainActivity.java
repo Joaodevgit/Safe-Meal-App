@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -22,10 +23,15 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.List;
+
 import pt.ipp.estg.covidresolvefoodapp.PerfilUser.UserProfileActivity;
 import pt.ipp.estg.covidresolvefoodapp.R;
 import pt.ipp.estg.covidresolvefoodapp.RestaurantMap.RestaurantMapActivity;
 import pt.ipp.estg.covidresolvefoodapp.SearchRestaurant.RestaurantSearch;
+import pub.devrel.easypermissions.AfterPermissionGranted;
+import pub.devrel.easypermissions.AppSettingsDialog;
+import pub.devrel.easypermissions.EasyPermissions;
 
 public class MainActivity extends AppCompatActivity implements LogIn.OnFragmentLogInInteractionListener,
         CreateAccount.OnFragmentCreateAccountInteractionListener, PrincipalPage.onButtonMainMenuClickListener {
@@ -127,15 +133,12 @@ public class MainActivity extends AppCompatActivity implements LogIn.OnFragmentL
 
     @Override
     public void onButtonRestaurantSearchClick() {
-        Intent intent = new Intent(this, RestaurantSearch.class);
-        verifyWifiPermission(intent);
+        verifyWifiPermission(new Intent(this, RestaurantSearch.class));
     }
 
     @Override
     public void onButtonRestaurantMapClick() {
-        Intent intent = new Intent(this, RestaurantMapActivity.class);
-        verifyGPSPermission(intent);
-        //Toast.makeText(getApplicationContext(), "Para ir ao mapa", Toast.LENGTH_SHORT).show();
+        verifyGPSPermission(new Intent(this, RestaurantMapActivity.class));
     }
 
     private void verifyGPSPermission(Intent intent) {
@@ -170,7 +173,9 @@ public class MainActivity extends AppCompatActivity implements LogIn.OnFragmentL
     }
 
     private void verifyWifiPermission(Intent intent) {
+
         WifiManager wifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+
         if (!wifiManager.isWifiEnabled()) {
             new AlertDialog.Builder(this)
                     .setTitle("Permissão Wifi necessária")
@@ -180,7 +185,7 @@ public class MainActivity extends AppCompatActivity implements LogIn.OnFragmentL
                         public void onClick(DialogInterface dialog, int which) {
                             //Ir às definições
                             ActivityCompat.requestPermissions(MainActivity.this,
-                                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 44);
+                                    new String[]{Manifest.permission.ACCESS_WIFI_STATE}, 44);
                             startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
                         }
                     })
@@ -189,7 +194,6 @@ public class MainActivity extends AppCompatActivity implements LogIn.OnFragmentL
                         public void onClick(DialogInterface dialog, int which) {
                             Toast.makeText(getApplicationContext(), "Operação cancelada", Toast.LENGTH_SHORT).show();
                             dialog.dismiss();
-                            //request.cancel();
                         }
                     })
                     .show();
