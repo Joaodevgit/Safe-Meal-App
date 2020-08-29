@@ -58,18 +58,20 @@ Decisões da implementação/projeto a serem tomadas:
 - Nada a assinalar
 ------------------------------------------------------------------------------
 
-DD/MM/YYYY HH:MM Autor:  Mensagem do Commit: " "
+29/08/2020 01:11 Autor: João Pereira  Mensagem do Commit: "Permissoes Wifi GPS Menu Principal"
 
 O que foi feito neste commit:
 
--
+- Criação de permissões de wifi (pesquisa de restaurantes) e de gps (mapa restaurantes)
 
 O que fazer para o próximo commit:
 
--
+- Perceber como é que o livedata funciona
+
+- Preencher os recyclers views com os dados obtidos através do retrofit
 
 Decisões da implementação/projeto a serem tomadas:
 
--
+- Nada a assinalar
 
 ------------------------------------------------------------------------------
