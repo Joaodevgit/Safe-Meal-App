@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import pt.ipp.estg.covidresolvefoodapp.Adapter.ShowRestaurantsAdapter;
 import pt.ipp.estg.covidresolvefoodapp.R;
@@ -24,6 +25,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RestaurantShowFragment extends Fragment {
 
     private RecyclerView mRecyclerView;
+
+    private TextView mTextView;
 
     private ShowRestaurantsAdapter mShowRestaurantsAdapter;
 
@@ -60,6 +63,8 @@ public class RestaurantShowFragment extends Fragment {
 
         this.mRecyclerView = view.findViewById(R.id.mRecyclerview_show_restaurants);
 
+        this.mTextView = view.findViewById(R.id.message_not_found);
+
         //Set decoration line
         RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
         this.mRecyclerView.addItemDecoration(itemDecoration);
@@ -71,11 +76,14 @@ public class RestaurantShowFragment extends Fragment {
                 .enqueue(new Callback<RestaurantsRetro>() {
                     @Override
                     public void onResponse(Call<RestaurantsRetro> call, Response<RestaurantsRetro> response) {
-//                        System.out.println("Lista: " + response.body().toString());
+                        if (!response.body().getRestaurants().isEmpty()) {
+                            mShowRestaurantsAdapter = new ShowRestaurantsAdapter(getContext(), response.body());
 
-                        mShowRestaurantsAdapter = new ShowRestaurantsAdapter(getContext(), response.body());
-
-                        mRecyclerView.setAdapter(mShowRestaurantsAdapter);
+                            mRecyclerView.setAdapter(mShowRestaurantsAdapter);
+                        } else {
+                            mRecyclerView.setVisibility(View.INVISIBLE);
+                            mTextView.setVisibility(View.VISIBLE);
+                        }
                     }
 
                     @Override

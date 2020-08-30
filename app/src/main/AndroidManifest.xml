@@ -42,7 +42,9 @@
         <activity android:name=".PerfilUser.UserReviewActivity" />
         <activity android:name=".PerfilUser.UserVisResActivity" />
         <activity android:name=".PerfilUser.UserFavResActivity" />
-        <activity android:name=".SearchRestaurant.RestaurantSearch" />
+        <activity
+            android:name=".SearchRestaurant.RestaurantSearch"
+            android:configChanges="keyboardHidden|orientation" />
         <activity android:name=".PerfilUser.UserProfileActivity" />
         <activity android:name=".SearchRestaurant.InfoRestaurantActivity" />
         <activity
