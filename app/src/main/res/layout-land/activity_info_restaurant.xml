@@ -33,6 +33,7 @@
         app:autoSizeMinTextSize="12sp"
         app:autoSizeTextType="uniform" />
 
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -41,8 +42,9 @@
 
         <ImageView
             android:id="@+id/restaurant_image_info"
-            android:layout_width="150dp"
-            android:layout_height="150dp" />
+            android:layout_width="158dp"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/todo" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -54,8 +56,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:lines="1"
-                android:paddingLeft="5dp"
-                android:text="Cidade: "
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:text="@string/cidade"
                 app:autoSizeMaxTextSize="14sp"
                 app:autoSizeMinTextSize="12sp"
                 app:autoSizeTextType="uniform" />
@@ -65,16 +68,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:lines="1"
-                android:paddingLeft="5dp"
-                android:text="Estabelecimento: "
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:text="@string/estabelecimento"
                 app:autoSizeMaxTextSize="14sp"
                 app:autoSizeMinTextSize="12sp"
                 app:autoSizeTextType="uniform" />
 
-
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="63dp"
                 android:gravity="center_horizontal"
                 android:orientation="horizontal">
 
@@ -92,13 +95,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center|end"
-                    android:layout_marginLeft="5dp"
+                    android:layout_marginStart="5dp"
+                    android:text="@string/_4_6"
                     android:lines="1"
-                    android:text="(4.6)"
-                    app:autoSizeMaxTextSize="12sp"
+                    app:autoSizeMaxTextSize="14sp"
                     app:autoSizeMinTextSize="8sp"
                     app:autoSizeTextType="uniform" />
-
 
             </LinearLayout>
 
@@ -109,11 +111,12 @@
     <TextView
         android:id="@+id/adress_info"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
         android:lines="1"
-        android:paddingLeft="5dp"
-        android:text="Endereço: "
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
+        android:text="@string/endere_o"
         app:autoSizeMaxTextSize="14sp"
         app:autoSizeMinTextSize="12sp"
         app:autoSizeTextType="uniform" />
@@ -121,11 +124,12 @@
     <TextView
         android:id="@+id/horarios_info"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
         android:lines="1"
-        android:paddingLeft="5dp"
-        android:text="Horarios: "
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
+        android:text="@string/horarios"
         app:autoSizeMaxTextSize="14sp"
         app:autoSizeMinTextSize="12sp"
         app:autoSizeTextType="uniform" />
@@ -134,7 +138,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="30dp"
+        android:layout_marginBottom="10dp"
         android:orientation="horizontal">
 
         <TextView
@@ -142,8 +146,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:lines="1"
-            android:paddingLeft="5dp"
-            android:text="Possibilidade De Marcações: "
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
+            android:text="@string/possibilidade_de_marca_es"
             app:autoSizeMaxTextSize="14sp"
             app:autoSizeMinTextSize="12sp"
             app:autoSizeTextType="uniform" />
@@ -151,19 +156,32 @@
         <ImageView
             android:id="@+id/yes_no_booking"
             android:layout_width="20dp"
-            android:layout_height="20dp" />
+            android:layout_height="20dp"
+            android:contentDescription="@string/todo" />
     </LinearLayout>
 
-    <Button
-        android:id="@+id/button_review_restaurant"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Review" />
+        android:orientation="horizontal">
 
-    <Button
-        android:id="@+id/button_booking_restaurant"
+        <Button
+            android:id="@+id/button_review_restaurant"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/review" />
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Marcação" />
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/button_booking_restaurant"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/marca_o" />
+    </LinearLayout>
 
 </LinearLayout>

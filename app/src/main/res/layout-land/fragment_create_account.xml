@@ -8,17 +8,16 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/textView"
             android:layout_width="match_parent"
-            android:layout_height="42dp"
+            android:layout_height="52dp"
             android:gravity="center"
             android:lines="1"
             android:text="Criação de uma conta"
-            android:textAlignment="center"
             app:autoSizeMaxTextSize="40sp"
             app:autoSizeMinTextSize="30sp"
             app:autoSizeTextType="uniform" />
@@ -36,11 +35,7 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="Email"
-                android:inputType="textPersonName"
-                android:lines="1"
-                app:autoSizeMaxTextSize="20sp"
-                app:autoSizeMinTextSize="16sp"
-                app:autoSizeTextType="uniform" />
+                android:inputType="textPersonName" />
 
             <EditText
                 android:id="@+id/newUserPassword"
@@ -48,11 +43,7 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="Password"
-                android:inputType="textPassword"
-                android:lines="1"
-                app:autoSizeMaxTextSize="14sp"
-                app:autoSizeMinTextSize="12sp"
-                app:autoSizeTextType="uniform" />
+                android:inputType="textPassword" />
         </LinearLayout>
 
         <Button
@@ -60,12 +51,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Registar" />
-
-        <Button
-            android:id="@+id/buttonCancel"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Cancelar" />
 
     </LinearLayout>
 

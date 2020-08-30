@@ -16,4 +16,14 @@
     <string name="user_email">User Email</string>
     <string name="rating">Rating</string>
     <string name="title_activity_restaurant_map">Map</string>
+    <string name="nome">Nome:</string>
+    <string name="cidade">Cidade:</string>
+    <string name="_4_6">(4.6)</string>
+    <string name="endere_o">Endereço:</string>
+    <string name="horarios">Horarios:</string>
+    <string name="review">Review</string>
+    <string name="marca_o">Marcação</string>
+    <string name="possibilidade_de_marca_es">Possibilidade De Marcações:</string>
+    <string name="estabelecimento">Estabelecimento:</string>
+    <string name="todo">TODO</string>
 </resources>

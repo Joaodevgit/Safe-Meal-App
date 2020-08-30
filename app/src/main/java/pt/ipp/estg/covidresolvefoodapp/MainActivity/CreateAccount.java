@@ -3,10 +3,6 @@ package pt.ipp.estg.covidresolvefoodapp.MainActivity;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,6 +11,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -31,6 +30,7 @@ public class CreateAccount extends Fragment {
     private EditText mNewUserEmail;
     private EditText mNewUserPassword;
     private Button mCreatNewUser;
+    private Button mCancelRegistry;
 
     private OnFragmentCreateAccountInteractionListener mListener;
 
@@ -61,6 +61,7 @@ public class CreateAccount extends Fragment {
         this.mNewUserEmail = view.findViewById(R.id.newUserEmail);
         this.mNewUserPassword = view.findViewById(R.id.newUserPassword);
         this.mCreatNewUser = view.findViewById(R.id.creatNewUser);
+        this.mCancelRegistry = view.findViewById(R.id.buttonCancel);
 
         // [START initialize_auth]
         // Initialize Firebase Auth
@@ -72,6 +73,13 @@ public class CreateAccount extends Fragment {
             @Override
             public void onClick(View v) {
                 createAccount(mNewUserEmail.getText().toString(), mNewUserPassword.getText().toString());
+            }
+        });
+
+        this.mCancelRegistry.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mListener.onFragmentCancelAccountRegistryInteractionMenu();
             }
         });
 
@@ -149,5 +157,7 @@ public class CreateAccount extends Fragment {
 
     public interface OnFragmentCreateAccountInteractionListener {
         void onFragmentCreateAccountInteractionMenu();
+
+        void onFragmentCancelAccountRegistryInteractionMenu();
     }
 }

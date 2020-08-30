@@ -132,6 +132,15 @@ public class MainActivity extends AppCompatActivity implements LogIn.OnFragmentL
     }
 
     @Override
+    public void onFragmentCancelAccountRegistryInteractionMenu() {
+        LogIn logIn = new LogIn();
+
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.fragment_container, logIn);
+        fragmentTransaction.commit();
+    }
+
+    @Override
     public void onButtonRestaurantSearchClick() {
         verifyWifiPermission(new Intent(this, RestaurantSearch.class));
     }
