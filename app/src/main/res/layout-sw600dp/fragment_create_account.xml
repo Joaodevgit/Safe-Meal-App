@@ -33,7 +33,7 @@
             <EditText
                 android:id="@+id/newUserEmail"
                 android:layout_width="match_parent"
-                android:layout_height="86dp"
+                android:layout_height="80dp"
                 android:ems="10"
                 android:hint="Email"
                 android:inputType="textPersonName" />
@@ -41,7 +41,7 @@
             <EditText
                 android:id="@+id/newUserPassword"
                 android:layout_width="match_parent"
-                android:layout_height="92dp"
+                android:layout_height="80dp"
                 android:ems="10"
                 android:hint="Password"
                 android:inputType="textPassword" />
@@ -56,6 +56,16 @@
             app:autoSizeMaxTextSize="22sp"
             app:autoSizeMinTextSize="18sp"
             app:autoSizeTextType="uniform"/>
+
+        <Button
+            android:id="@+id/buttonCancel"
+            android:layout_width="match_parent"
+            android:layout_height="91dp"
+            android:lines="1"
+            android:text="Cancelar"
+            app:autoSizeMaxTextSize="22sp"
+            app:autoSizeMinTextSize="18sp"
+            app:autoSizeTextType="uniform" />
 
     </LinearLayout>
 

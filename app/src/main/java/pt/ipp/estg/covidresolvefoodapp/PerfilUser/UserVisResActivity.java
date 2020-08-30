@@ -47,7 +47,6 @@ public class UserVisResActivity extends AppCompatActivity implements UserVisResF
 
         if (count == 0) {
             super.onBackPressed();
-            //additional code
         } else {
             getSupportFragmentManager().popBackStack();
         }

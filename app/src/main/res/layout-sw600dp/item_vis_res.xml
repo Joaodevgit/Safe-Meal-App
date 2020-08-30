@@ -14,15 +14,15 @@
         <TextView
             android:id="@+id/visResName"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="47dp"
             android:layout_marginStart="10dp"
             android:layout_weight="1"
             android:lines="1"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
             android:text="@string/restaurant_name"
-            app:autoSizeMaxTextSize="20sp"
-            app:autoSizeMinTextSize="16sp"
+            app:autoSizeMaxTextSize="24sp"
+            app:autoSizeMinTextSize="20sp"
             app:autoSizeTextType="uniform" />
 
     </LinearLayout>

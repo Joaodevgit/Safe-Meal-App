@@ -59,4 +59,7 @@ dependencies {
 
     //EasyPermissions (EasyPermissions is a wrapper library to simplify basic system permissions logic when targeting Android M or higher.)
     implementation 'pub.devrel:easypermissions:3.0.0'
+
+    //Cloud Firestore (Firebase)
+    implementation 'com.google.firebase:firebase-firestore:21.2.1'
 }

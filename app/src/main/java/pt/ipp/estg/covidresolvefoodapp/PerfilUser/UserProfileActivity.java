@@ -31,7 +31,6 @@ public class UserProfileActivity extends AppCompatActivity implements UserProfil
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.fragment_user_profile_container, userProfileFragment);
         fragmentTransaction.commit();
-
     }
 
     @Override
@@ -44,21 +43,18 @@ public class UserProfileActivity extends AppCompatActivity implements UserProfil
     public void onFragmentFavoriteRestaurantClick() {
         Intent favResInt = new Intent(getApplicationContext(),UserFavResActivity.class);
         startActivity(favResInt);
-        //Toast.makeText(getApplicationContext(), "Clicaste em Restaurantes Favoritos", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onFragmentVisitedRestaurantClick() {
         Intent visResInt = new Intent(getApplicationContext(),UserVisResActivity.class);
         startActivity(visResInt);
-        //Toast.makeText(getApplicationContext(), "Clicaste em Restaurantes Visitados", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onFragmentUserReviewClick() {
         Intent userRevInt = new Intent(getApplicationContext(), UserReviewActivity.class);
         startActivity(userRevInt);
-        //Toast.makeText(getApplicationContext(), "Clicaste em Reviews", Toast.LENGTH_SHORT).show();
     }
 
     @Override

@@ -41,7 +41,6 @@ public class UserReviewActivity extends AppCompatActivity implements UserReviewF
 
         if (count == 0) {
             super.onBackPressed();
-            //additional code
         } else {
             getSupportFragmentManager().popBackStack();
         }

@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -51,21 +52,34 @@ public class FavResAdapter extends RecyclerView.Adapter<FavResAdapter.FavResView
         TextView textView = viewHolder.favResNameTxtView;
         textView.setText(favRes.getName());
 
+        //Set image
+        ImageView imageView = viewHolder.favResImageView;
+        imageView.setImageResource(R.drawable.restaurant_default);
     }
 
     public class FavResViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView favResNameTxtView;
-        public Button deleteButton;
+        private TextView favResNameTxtView;
+        private ImageView favResImageView;
+        private Button deleteButton;
+        private Button moreInfoButton;
 
         public FavResViewHolder(View itemView) {
             super(itemView);
             favResNameTxtView = itemView.findViewById(R.id.favResName);
+            favResImageView = itemView.findViewById(R.id.imageViewRes);
             deleteButton = itemView.findViewById(R.id.buttonDelete);
             deleteButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Toast.makeText(mContext, "Apagaste Restaurante", Toast.LENGTH_SHORT).show();
+                }
+            });
+            moreInfoButton = itemView.findViewById(R.id.buttonMoreInfo);
+            moreInfoButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(mContext, "Mais Info Restaurante", Toast.LENGTH_SHORT).show();
                 }
             });
         }

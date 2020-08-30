@@ -17,12 +17,12 @@
         <TextView
             android:id="@+id/userReviewEmail"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:layout_weight="1"
             android:lines="1"
             android:text="@string/user_email"
-            app:autoSizeMaxTextSize="20sp"
-            app:autoSizeMinTextSize="16sp"
+            app:autoSizeMaxTextSize="24sp"
+            app:autoSizeMinTextSize="20sp"
             app:autoSizeTextType="uniform" />
 
         <LinearLayout
@@ -33,13 +33,12 @@
 
             <TextView
                 android:id="@+id/userReviewRating"
-                android:layout_width="190dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
+                android:layout_width="217dp"
+                android:layout_height="40dp"
                 android:lines="1"
                 android:text="@string/rating"
-                app:autoSizeMaxTextSize="20sp"
-                app:autoSizeMinTextSize="16sp"
+                app:autoSizeMaxTextSize="24sp"
+                app:autoSizeMinTextSize="20sp"
                 app:autoSizeTextType="uniform" />
 
             <RatingBar

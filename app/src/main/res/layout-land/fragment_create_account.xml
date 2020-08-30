@@ -52,6 +52,12 @@
             android:layout_height="wrap_content"
             android:text="Registar" />
 
+        <Button
+            android:id="@+id/buttonCancel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Cancelar" />
+
     </LinearLayout>
 
 </FrameLayout>

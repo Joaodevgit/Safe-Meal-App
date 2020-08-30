@@ -21,8 +21,8 @@
             android:text="Estabelecimento"
             android:textSize="20dp"
             android:textStyle="bold"
-            app:autoSizeMaxTextSize="20sp"
-            app:autoSizeMinTextSize="16sp"
+            app:autoSizeMaxTextSize="28sp"
+            app:autoSizeMinTextSize="24sp"
             app:autoSizeTextType="uniform" />
 
         <TextView
@@ -31,74 +31,74 @@
             android:layout_marginLeft="10dp"
             android:lines="1"
             android:text="(Escolha um estabelecimento)"
-            app:autoSizeMaxTextSize="10sp"
-            app:autoSizeMinTextSize="8sp"
+            app:autoSizeMaxTextSize="14sp"
+            app:autoSizeMinTextSize="12sp"
             app:autoSizeTextType="uniform" />
 
         <RadioGroup
             android:id="@+id/radio_group_estabelicimento"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp">
 
             <RadioButton
                 android:id="@+id/check_casual_dining"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:lines="1"
                 android:text="Casual Dining"
-                app:autoSizeMaxTextSize="14sp"
-                app:autoSizeMinTextSize="10sp"
+                app:autoSizeMaxTextSize="20sp"
+                app:autoSizeMinTextSize="18sp"
                 app:autoSizeTextType="uniform" />
 
             <RadioButton
                 android:id="@+id/check_snack_bar"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:lines="1"
                 android:text="Snack Bar"
-                app:autoSizeMaxTextSize="14sp"
-                app:autoSizeMinTextSize="10sp"
+                app:autoSizeMaxTextSize="20sp"
+                app:autoSizeMinTextSize="16sp"
                 app:autoSizeTextType="uniform" />
 
             <RadioButton
                 android:id="@+id/check_cafe"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:lines="1"
                 android:text="Café"
-                app:autoSizeMaxTextSize="14sp"
-                app:autoSizeMinTextSize="10sp"
+                app:autoSizeMaxTextSize="20sp"
+                app:autoSizeMinTextSize="18sp"
                 app:autoSizeTextType="uniform" />
 
             <RadioButton
                 android:id="@+id/check_bakery"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:lines="1"
                 android:text="Bakery"
-                app:autoSizeMaxTextSize="14sp"
-                app:autoSizeMinTextSize="10sp"
+                app:autoSizeMaxTextSize="20sp"
+                app:autoSizeMinTextSize="18sp"
                 app:autoSizeTextType="uniform" />
 
             <RadioButton
                 android:id="@+id/check_bar"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:lines="1"
                 android:text="Bar"
-                app:autoSizeMaxTextSize="14sp"
-                app:autoSizeMinTextSize="10sp"
+                app:autoSizeMaxTextSize="20sp"
+                app:autoSizeMinTextSize="18sp"
                 app:autoSizeTextType="uniform" />
 
             <RadioButton
                 android:id="@+id/check_kiosk"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:lines="1"
                 android:text="Kiosk"
-                app:autoSizeMaxTextSize="14sp"
-                app:autoSizeMinTextSize="10sp"
+                app:autoSizeMaxTextSize="20sp"
+                app:autoSizeMinTextSize="18sp"
                 app:autoSizeTextType="uniform" />
 
         </RadioGroup>
@@ -112,8 +112,8 @@
             android:text="Cidade"
             android:textSize="20dp"
             android:textStyle="bold"
-            app:autoSizeMaxTextSize="20sp"
-            app:autoSizeMinTextSize="16sp"
+            app:autoSizeMaxTextSize="28sp"
+            app:autoSizeMinTextSize="24sp"
             app:autoSizeTextType="uniform" />
 
         <TextView
@@ -122,8 +122,8 @@
             android:layout_marginLeft="10dp"
             android:lines="1"
             android:text="(Escolha uma cidade)"
-            app:autoSizeMaxTextSize="10sp"
-            app:autoSizeMinTextSize="8sp"
+            app:autoSizeMaxTextSize="14sp"
+            app:autoSizeMinTextSize="12sp"
             app:autoSizeTextType="uniform" />
 
         <RadioGroup
@@ -131,8 +131,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:layout_marginEnd="10dp"
-            android:gravity="center_horizontal"
             android:orientation="horizontal">
 
             <RadioButton
@@ -142,8 +140,8 @@
                 android:layout_weight="1"
                 android:lines="1"
                 android:text="Braga"
-                app:autoSizeMaxTextSize="14sp"
-                app:autoSizeMinTextSize="8sp"
+                app:autoSizeMaxTextSize="20sp"
+                app:autoSizeMinTextSize="18sp"
                 app:autoSizeTextType="uniform" />
 
             <RadioButton
@@ -153,8 +151,8 @@
                 android:layout_weight="1"
                 android:lines="1"
                 android:text="Porto"
-                app:autoSizeMaxTextSize="14sp"
-                app:autoSizeMinTextSize="8sp"
+                app:autoSizeMaxTextSize="20sp"
+                app:autoSizeMinTextSize="18sp"
                 app:autoSizeTextType="uniform" />
 
             <RadioButton
@@ -164,8 +162,8 @@
                 android:layout_weight="1"
                 android:lines="1"
                 android:text="Lisboa"
-                app:autoSizeMaxTextSize="14sp"
-                app:autoSizeMinTextSize="8sp"
+                app:autoSizeMaxTextSize="20sp"
+                app:autoSizeMinTextSize="18sp"
                 app:autoSizeTextType="uniform" />
 
             <RadioButton
@@ -175,8 +173,8 @@
                 android:layout_weight="1"
                 android:lines="1"
                 android:text="Algarve"
-                app:autoSizeMaxTextSize="14sp"
-                app:autoSizeMinTextSize="8sp"
+                app:autoSizeMaxTextSize="20sp"
+                app:autoSizeMinTextSize="18sp"
                 app:autoSizeTextType="uniform" />
 
             <RadioButton
@@ -186,8 +184,8 @@
                 android:layout_weight="1"
                 android:lines="1"
                 android:text="Santarém"
-                app:autoSizeMaxTextSize="14sp"
-                app:autoSizeMinTextSize="8sp"
+                app:autoSizeMaxTextSize="20sp"
+                app:autoSizeMinTextSize="18sp"
                 app:autoSizeTextType="uniform" />
 
         </RadioGroup>
@@ -201,8 +199,8 @@
             android:text="Cozinha"
             android:textSize="20dp"
             android:textStyle="bold"
-            app:autoSizeMaxTextSize="20sp"
-            app:autoSizeMinTextSize="16sp"
+            app:autoSizeMaxTextSize="28sp"
+            app:autoSizeMinTextSize="24sp"
             app:autoSizeTextType="uniform" />
 
         <TextView
@@ -211,8 +209,8 @@
             android:layout_marginLeft="10dp"
             android:lines="1"
             android:text="(Escolha um ou mais cozinhas)"
-            app:autoSizeMaxTextSize="10sp"
-            app:autoSizeMinTextSize="8sp"
+            app:autoSizeMaxTextSize="14sp"
+            app:autoSizeMinTextSize="12sp"
             app:autoSizeTextType="uniform" />
 
         <LinearLayout
@@ -229,8 +227,8 @@
                 android:layout_weight="1"
                 android:lines="1"
                 android:text="Chinese"
-                app:autoSizeMaxTextSize="14sp"
-                app:autoSizeMinTextSize="8sp"
+                app:autoSizeMaxTextSize="20sp"
+                app:autoSizeMinTextSize="18sp"
                 app:autoSizeTextType="uniform" />
 
             <CheckBox
@@ -240,8 +238,8 @@
                 android:layout_weight="1"
                 android:lines="1"
                 android:text="Burger"
-                app:autoSizeMaxTextSize="14sp"
-                app:autoSizeMinTextSize="8sp"
+                app:autoSizeMaxTextSize="20sp"
+                app:autoSizeMinTextSize="18sp"
                 app:autoSizeTextType="uniform" />
 
             <CheckBox
@@ -251,8 +249,8 @@
                 android:layout_weight="1"
                 android:lines="1"
                 android:text="Brazilian"
-                app:autoSizeMaxTextSize="14sp"
-                app:autoSizeMinTextSize="8sp"
+                app:autoSizeMaxTextSize="20sp"
+                app:autoSizeMinTextSize="18sp"
                 app:autoSizeTextType="uniform" />
 
         </LinearLayout>
@@ -271,8 +269,8 @@
                 android:layout_weight="1"
                 android:lines="1"
                 android:text="Fast Food"
-                app:autoSizeMaxTextSize="14sp"
-                app:autoSizeMinTextSize="8sp"
+                app:autoSizeMaxTextSize="20sp"
+                app:autoSizeMinTextSize="18sp"
                 app:autoSizeTextType="uniform" />
 
             <CheckBox
@@ -282,8 +280,8 @@
                 android:layout_weight="1"
                 android:lines="1"
                 android:text="Pizza"
-                app:autoSizeMaxTextSize="14sp"
-                app:autoSizeMinTextSize="8sp"
+                app:autoSizeMaxTextSize="20sp"
+                app:autoSizeMinTextSize="18sp"
                 app:autoSizeTextType="uniform" />
 
             <CheckBox
@@ -293,8 +291,8 @@
                 android:layout_weight="1"
                 android:lines="1"
                 android:text="Portuguese"
-                app:autoSizeMaxTextSize="14sp"
-                app:autoSizeMinTextSize="8sp"
+                app:autoSizeMaxTextSize="20sp"
+                app:autoSizeMinTextSize="18sp"
                 app:autoSizeTextType="uniform" />
 
         </LinearLayout>
