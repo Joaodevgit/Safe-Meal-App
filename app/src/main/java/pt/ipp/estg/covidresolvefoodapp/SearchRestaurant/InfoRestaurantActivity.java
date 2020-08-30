@@ -1,14 +1,24 @@
 package pt.ipp.estg.covidresolvefoodapp.SearchRestaurant;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
 
 import java.util.Iterator;
@@ -24,7 +34,15 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class InfoRestaurantActivity extends AppCompatActivity {
 
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+    //TODO: Associa-las Porque senão temos 0-0
+    private CollectionReference userRef = db.collection("User");
+    private CollectionReference reviewRef = db.collection("Review");
+
     private Toolbar myToolbar;
+
+    private RecyclerView mRecyclerView;
 
     private TextView mTextName;
     private TextView mTextCity;
@@ -67,6 +85,23 @@ public class InfoRestaurantActivity extends AppCompatActivity {
 
         this.mButtonReview = findViewById(R.id.button_review_restaurant);
         this.mButtonBooking = findViewById(R.id.button_booking_restaurant);
+
+        //TODO: Fazer o adapter
+        this.mRecyclerView = findViewById(R.id.mRecyclerview_show_reviews);
+
+        this.reviewRef.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                if (queryDocumentSnapshots.size() > 0) {
+                    mButtonReview.setVisibility(View.INVISIBLE);
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(getApplicationContext(), "Document Problem", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         this.getAPIZomato().getRestaurant(idRestaurant).enqueue(new Callback<RestaurantInfoRetro>() {
             @Override

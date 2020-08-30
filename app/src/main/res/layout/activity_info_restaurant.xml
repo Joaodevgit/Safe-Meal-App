@@ -109,7 +109,7 @@
     <TextView
         android:id="@+id/adress_info"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="30dp"
         android:layout_marginBottom="10dp"
         android:lines="1"
         android:paddingLeft="5dp"
@@ -121,7 +121,7 @@
     <TextView
         android:id="@+id/horarios_info"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="30dp"
         android:layout_marginBottom="10dp"
         android:lines="1"
         android:paddingLeft="5dp"
@@ -153,6 +153,12 @@
             android:layout_width="20dp"
             android:layout_height="20dp" />
     </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/mRecyclerview_show_reviews"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp" />
 
     <Button
         android:id="@+id/button_review_restaurant"
