@@ -61,7 +61,9 @@ dependencies {
     implementation 'pub.devrel:easypermissions:3.0.0'
 
     //Cloud Firestore (Firebase)
-    implementation 'com.google.firebase:firebase-firestore:21.2.1'
-    implementation "com.firebaseui:firebase-ui-auth:3.0.0"
-    implementation "com.firebaseui:firebase-ui-firestore:3.0.0"
+    // FirebaseUI for Cloud Firestore
+    implementation 'com.firebaseui:firebase-ui-firestore:6.3.0'
+
+    // FirebaseUI for Firebase Auth
+    implementation 'com.firebaseui:firebase-ui-auth:6.3.0'
 }
