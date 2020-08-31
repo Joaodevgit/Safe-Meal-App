@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -21,7 +22,13 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.appbar.AppBarLayout;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.List;
 
@@ -36,8 +43,13 @@ import pub.devrel.easypermissions.EasyPermissions;
 public class MainActivity extends AppCompatActivity implements LogIn.OnFragmentLogInInteractionListener,
         CreateAccount.OnFragmentCreateAccountInteractionListener, PrincipalPage.onButtonMainMenuClickListener {
 
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+    private CollectionReference userRef = db.collection("User");
+
     private FirebaseAuth mAuth;
     private Toolbar myToolbar;
+    private AppBarLayout mAppBarLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +58,19 @@ public class MainActivity extends AppCompatActivity implements LogIn.OnFragmentL
 
         this.mAuth = FirebaseAuth.getInstance();
 
+        this.userRef.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+
+            }
+        });
+
+
         LogIn logIn = new LogIn();
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
@@ -53,6 +78,10 @@ public class MainActivity extends AppCompatActivity implements LogIn.OnFragmentL
         fragmentTransaction.commit();
 
         this.myToolbar = findViewById(R.id.toolbar);
+
+        this.mAppBarLayout = findViewById(R.id.appBarLayout);
+        this.mAppBarLayout.setVisibility(View.INVISIBLE);
+
         setSupportActionBar(this.myToolbar);
     }
 
@@ -89,6 +118,8 @@ public class MainActivity extends AppCompatActivity implements LogIn.OnFragmentL
             case R.id.action_logout:
                 this.mAuth.signOut();
 
+                this.mAppBarLayout.setVisibility(View.INVISIBLE);
+
                 LogIn logIn = new LogIn();
                 FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.fragment_container, logIn);
@@ -106,6 +137,8 @@ public class MainActivity extends AppCompatActivity implements LogIn.OnFragmentL
 
     @Override
     public void onFragmentLogInInteraction() {
+        this.mAppBarLayout.setVisibility(View.VISIBLE);
+
         PrincipalPage principalPage = new PrincipalPage();
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
@@ -124,6 +157,8 @@ public class MainActivity extends AppCompatActivity implements LogIn.OnFragmentL
 
     @Override
     public void onFragmentCreateAccountInteractionMenu() {
+        this.mAppBarLayout.setVisibility(View.VISIBLE);
+
         PrincipalPage principalPage = new PrincipalPage();
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();

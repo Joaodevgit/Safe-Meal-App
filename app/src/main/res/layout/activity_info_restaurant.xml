@@ -111,7 +111,7 @@
         <TextView
             android:id="@+id/adress_info"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="30dp"
             android:layout_marginStart="5dp"
             android:layout_marginBottom="10dp"
             android:lines="1"
@@ -125,7 +125,7 @@
         <TextView
             android:id="@+id/horarios_info"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="30dp"
             android:layout_marginStart="5dp"
             android:layout_marginBottom="10dp"
             android:lines="1"
@@ -164,46 +164,19 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="150dp"
+            android:layout_marginBottom="30dp"
+            android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/textViewReviews"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginBottom="20dp"
-                android:lines="1"
-                android:paddingStart="5dp"
-                android:paddingEnd="5dp"
-                android:text="Reviews:"
-                app:autoSizeMaxTextSize="14sp"
-                app:autoSizeMinTextSize="12sp"
-                app:autoSizeTextType="uniform" />
-
-        </LinearLayout>
-
-        <FrameLayout
-            android:id="@+id/fragment_reviews_info_res_container"
-            android:layout_width="match_parent"
-            android:layout_height="150dp">
-
-            <LinearLayout
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/mRecyclerview_show_reviews"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
-                android:layout_marginBottom="30dp"
-                android:orientation="vertical">
+                android:layout_margin="5dp">
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/mRecyclerViewReviews"
-                    android:layout_width="match_parent"
-                    android:layout_height="150dp"
-                    android:layout_margin="5dp">
+            </androidx.recyclerview.widget.RecyclerView>
 
-                </androidx.recyclerview.widget.RecyclerView>
-
-            </LinearLayout>
-        </FrameLayout>
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"

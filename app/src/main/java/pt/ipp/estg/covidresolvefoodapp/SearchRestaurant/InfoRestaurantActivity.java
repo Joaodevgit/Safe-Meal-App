@@ -89,7 +89,7 @@ public class InfoRestaurantActivity extends AppCompatActivity implements UserRev
         this.mButtonBooking = findViewById(R.id.button_booking_restaurant);
 
         //TODO: Fazer o adapter
-        //this.mRecyclerView = findViewById(R.id.mRecyclerview_show_reviews);
+        this.mRecyclerView = findViewById(R.id.mRecyclerview_show_reviews);
 
         UserReviewFragment userReviewFragment = new UserReviewFragment();
 

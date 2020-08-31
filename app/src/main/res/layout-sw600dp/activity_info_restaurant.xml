@@ -111,7 +111,7 @@
         <TextView
             android:id="@+id/adress_info"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="30dp"
             android:layout_marginStart="5dp"
             android:layout_marginBottom="10dp"
             android:lines="1"
@@ -125,7 +125,7 @@
         <TextView
             android:id="@+id/horarios_info"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="30dp"
             android:layout_marginStart="5dp"
             android:layout_marginBottom="10dp"
             android:lines="1"
