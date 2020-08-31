@@ -122,26 +122,6 @@ public class MainActivity extends AppCompatActivity implements LogIn.OnFragmentL
 
     @Override
     public void onFragmentLogInInteraction() {
-
-//        userRef.whereEqualTo("userEmail", this.mAuth.getCurrentUser().getEmail())
-//                .get()
-//                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-//                    @Override
-//                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-//                        if (queryDocumentSnapshots.isEmpty()) {
-//                            System.out.println("Não existe este user");
-//                        } else {
-//                            System.out.println("Existe este user");
-//                        }
-//                    }
-//                })
-//                .addOnFailureListener(new OnFailureListener() {
-//                    @Override
-//                    public void onFailure(@NonNull Exception e) {
-//                        System.out.println(e);
-//                    }
-//                });
-
         this.mAppBarLayout.setVisibility(View.VISIBLE);
 
         PrincipalPage principalPage = new PrincipalPage();
@@ -154,6 +134,7 @@ public class MainActivity extends AppCompatActivity implements LogIn.OnFragmentL
     @Override
     public void onFragmentCreateAccountInteractionLogIn() {
         CreateAccount createAccount = new CreateAccount();
+
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.fragment_container, createAccount);
         fragmentTransaction.commit();

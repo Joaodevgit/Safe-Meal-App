@@ -1,69 +1,90 @@
 package pt.ipp.estg.covidresolvefoodapp.Adapter;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
-import androidx.core.widget.TextViewCompat;
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.List;
+import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
-import pt.ipp.estg.covidresolvefoodapp.Model.User;
+import pt.ipp.estg.covidresolvefoodapp.Model.ReviewFirestore;
 import pt.ipp.estg.covidresolvefoodapp.R;
 
-public class UserReviewAdapter extends RecyclerView.Adapter<UserReviewAdapter.UserReviewViewHolder> {
+public class UserReviewAdapter extends FirestoreRecyclerAdapter<ReviewFirestore, UserReviewAdapter.UserReviewViewHolder> {
 
-    private Context mContext;
-    private List<User> mUserReviews;
+    private FirebaseAuth mAuth;
 
-    public UserReviewAdapter(Context mContext, List<User> mUserReviews) {
-        this.mContext = mContext;
-        this.mUserReviews = mUserReviews;
-    }
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-    public int getItemCount() {
-        return mUserReviews.size();
-    }
+    private CollectionReference userRef = db.collection("User");
 
-    @Override
-    public UserReviewAdapter.UserReviewViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        // Get layout inflater from context
-        Context context = parent.getContext();
-        LayoutInflater inflater = LayoutInflater.from(context);
-
-        // Inflate layout
-        View userReviewViewHolder = inflater.inflate(R.layout.item_user_review, parent, false);
-
-        // Return a new holder instance
-        return new UserReviewAdapter.UserReviewViewHolder(userReviewViewHolder);
+    public UserReviewAdapter(FirestoreRecyclerOptions<ReviewFirestore> options) {
+        super(options);
     }
 
     @Override
-    public void onBindViewHolder(UserReviewAdapter.UserReviewViewHolder viewHolder, int position) {
-        // Get the data model based on position
-        User userReviews = mUserReviews.get(position);
+    protected void onBindViewHolder(UserReviewViewHolder userReviewViewHolder, int i, ReviewFirestore reviewFirestore) {
+        this.mAuth = FirebaseAuth.getInstance();
 
-        // Set name
-        TextView userEmail = viewHolder.userReviewEmail;
-        userEmail.setText(userReviews.getEmail());
-        TextView userRating = viewHolder.userReviewRating;
-        userRating.setText(Double.toString(userReviews.getRating()));
+        final TextView mAnonimousUser = userReviewViewHolder.mAnonimousUser;
 
+//        this.userRef.whereEqualTo("idUser", this.mAuth.getCurrentUser().getUid())
+//                .get()
+//                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+//                    @Override
+//                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+//                        //TODO: Fazer a actualização só do nome
+//                    }
+//                })
+//                .addOnFailureListener(new OnFailureListener() {
+//                    @Override
+//                    public void onFailure(@NonNull Exception e) {
+//                        System.out.println(e);
+//                    }
+//                });
+
+        RatingBar mRatingBar = userReviewViewHolder.mRatingBar;
+        mRatingBar.setRating(reviewFirestore.getAvaliation());
+
+        TextView mNotaReview = userReviewViewHolder.mNotaReview;
+        mNotaReview.setText(String.valueOf(reviewFirestore.getAvaliation()));
+
+        TextView mContentMessage = userReviewViewHolder.mContentMessage;
+        mContentMessage.setText(reviewFirestore.getContentReview());
+    }
+
+    @NonNull
+    @Override
+    public UserReviewViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_user_review, parent, false);
+        return new UserReviewViewHolder(v);
     }
 
     public class UserReviewViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView userReviewEmail;
-        public TextView userReviewRating;
+        public TextView mAnonimousUser;
+        public RatingBar mRatingBar;
+        public TextView mNotaReview;
+        public TextView mContentMessage;
 
         public UserReviewViewHolder(View itemView) {
             super(itemView);
-            userReviewEmail = itemView.findViewById(R.id.userReviewEmail);
-            userReviewRating = itemView.findViewById(R.id.userReviewRating);
 
+            this.mAnonimousUser = itemView.findViewById(R.id.anonymous_review);
+            this.mRatingBar = itemView.findViewById(R.id.estrelas_review);
+            this.mNotaReview = itemView.findViewById(R.id.nota_review);
+            this.mContentMessage = itemView.findViewById(R.id.content_message_review);
         }
     }
 

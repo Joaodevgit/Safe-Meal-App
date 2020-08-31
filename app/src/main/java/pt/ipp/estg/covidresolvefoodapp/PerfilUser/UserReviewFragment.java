@@ -20,7 +20,7 @@ import pt.ipp.estg.covidresolvefoodapp.R;
 public class UserReviewFragment extends Fragment {
 
     private RecyclerView mRecyclerViewUserReview;
-    private UserReviewAdapter mResAdapter;
+//    private UserReviewAdapter mResAdapter;
     private OnFragmentUserReviewInteractionListener mListener;
 
 
@@ -43,11 +43,11 @@ public class UserReviewFragment extends Fragment {
         ArrayList<User> users = createUsersList(20);
 
         // Create contacts adapter
-        mResAdapter = new UserReviewAdapter(getContext(), users);
-
-        // Set RecyclerView adapter
-        mRecyclerViewUserReview = view.findViewById(R.id.mRecyclerViewUserReview);
-        mRecyclerViewUserReview.setAdapter(mResAdapter);
+//        mResAdapter = new UserReviewAdapter(getContext(), users);
+//
+//        // Set RecyclerView adapter
+//        mRecyclerViewUserReview = view.findViewById(R.id.mRecyclerViewUserReview);
+//        mRecyclerViewUserReview.setAdapter(mResAdapter);
 
         // Set LayoutManager
         mRecyclerViewUserReview.setLayoutManager(new LinearLayoutManager(getContext()));

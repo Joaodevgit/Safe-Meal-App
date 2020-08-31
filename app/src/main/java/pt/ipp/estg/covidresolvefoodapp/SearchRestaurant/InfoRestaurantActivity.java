@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
@@ -14,16 +15,20 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
 
 import java.util.Iterator;
 
+import pt.ipp.estg.covidresolvefoodapp.Adapter.UserReviewAdapter;
+import pt.ipp.estg.covidresolvefoodapp.Model.ReviewFirestore;
 import pt.ipp.estg.covidresolvefoodapp.PerfilUser.UserReviewFragment;
 import pt.ipp.estg.covidresolvefoodapp.R;
 import pt.ipp.estg.covidresolvefoodapp.Retrofit.Model.RestaurantInfoRetro;
@@ -38,11 +43,11 @@ public class InfoRestaurantActivity extends AppCompatActivity implements UserRev
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-    //TODO: Associa-las Porque senão temos 0-0
-    private CollectionReference userRef = db.collection("User");
     private CollectionReference reviewRef = db.collection("Review");
 
     private Toolbar myToolbar;
+
+    private UserReviewAdapter mAdapter;
 
     private RecyclerView mRecyclerView;
 
@@ -88,28 +93,19 @@ public class InfoRestaurantActivity extends AppCompatActivity implements UserRev
         this.mButtonReview = findViewById(R.id.button_review_restaurant);
         this.mButtonBooking = findViewById(R.id.button_booking_restaurant);
 
-        //TODO: Fazer o adapter
+        Query query = this.reviewRef.whereEqualTo("idRestaurant", idRestaurant).orderBy("timestamp", Query.Direction.ASCENDING);
+
+        FirestoreRecyclerOptions<ReviewFirestore> options = new FirestoreRecyclerOptions.Builder<ReviewFirestore>()
+                .setQuery(query, ReviewFirestore.class)
+                .build();
+
+        this.mAdapter = new UserReviewAdapter(options);
+
         this.mRecyclerView = findViewById(R.id.mRecyclerview_show_reviews);
+        this.mRecyclerView.setHasFixedSize(true);
+        this.mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        UserReviewFragment userReviewFragment = new UserReviewFragment();
-
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.fragment_reviews_info_res_container, userReviewFragment);
-        fragmentTransaction.commit();
-
-        this.reviewRef.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-            @Override
-            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                if (queryDocumentSnapshots.size() > 0) {
-                    mButtonReview.setVisibility(View.INVISIBLE);
-                }
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(getApplicationContext(), "Document Problem", Toast.LENGTH_SHORT).show();
-            }
-        });
+        this.mRecyclerView.setAdapter(this.mAdapter);
 
         this.getAPIZomato().getRestaurant(idRestaurant).enqueue(new Callback<RestaurantInfoRetro>() {
             @Override
@@ -159,6 +155,18 @@ public class InfoRestaurantActivity extends AppCompatActivity implements UserRev
 
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        this.mAdapter.startListening();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        this.mAdapter.stopListening();
     }
 
     @Override
