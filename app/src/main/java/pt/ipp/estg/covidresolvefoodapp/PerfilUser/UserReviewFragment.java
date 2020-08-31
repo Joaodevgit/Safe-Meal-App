@@ -40,7 +40,7 @@ public class UserReviewFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_user_review, container, false);
 
         // Create contact list
-        ArrayList<User> users = createUsersList(5);
+        ArrayList<User> users = createUsersList(20);
 
         // Create contacts adapter
         mResAdapter = new UserReviewAdapter(getContext(), users);

@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fadeScrollbars="false"
+    android:scrollbarAlwaysDrawHorizontalTrack="false"
     tools:context=".SearchRestaurant.SearchRestaurantFragment">
 
     <LinearLayout
@@ -131,8 +133,8 @@
             android:id="@+id/radio_group_cidade"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
             android:layout_margin="10dp"
+            android:gravity="center_horizontal"
             android:orientation="horizontal">
 
             <RadioButton
@@ -140,11 +142,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Braga"
                 android:lines="1"
+                android:text="Braga"
                 app:autoSizeMaxTextSize="14sp"
                 app:autoSizeMinTextSize="8sp"
-                app:autoSizeTextType="uniform"/>
+                app:autoSizeTextType="uniform" />
 
             <RadioButton
                 android:id="@+id/check_porto"
@@ -219,6 +221,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
             android:orientation="horizontal">
 
@@ -310,4 +313,4 @@
 
     </LinearLayout>
 
-</FrameLayout>
+</ScrollView>

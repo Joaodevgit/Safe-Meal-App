@@ -2,6 +2,7 @@ package pt.ipp.estg.covidresolvefoodapp.SearchRestaurant;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 import android.widget.Button;
@@ -13,6 +14,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.Iterator;
 
+import pt.ipp.estg.covidresolvefoodapp.PerfilUser.UserReviewFragment;
 import pt.ipp.estg.covidresolvefoodapp.R;
 import pt.ipp.estg.covidresolvefoodapp.Retrofit.Model.RestaurantInfoRetro;
 import pt.ipp.estg.covidresolvefoodapp.Retrofit.ZomatoAPI;
@@ -22,7 +24,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class InfoRestaurantActivity extends AppCompatActivity {
+public class InfoRestaurantActivity extends AppCompatActivity implements UserReviewFragment.OnFragmentUserReviewInteractionListener {
 
     private Toolbar myToolbar;
 
@@ -67,6 +69,12 @@ public class InfoRestaurantActivity extends AppCompatActivity {
 
         this.mButtonReview = findViewById(R.id.button_review_restaurant);
         this.mButtonBooking = findViewById(R.id.button_booking_restaurant);
+
+        UserReviewFragment userReviewFragment = new UserReviewFragment();
+
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.fragment_reviews_info_res_container, userReviewFragment);
+        fragmentTransaction.commit();
 
         this.getAPIZomato().getRestaurant(idRestaurant).enqueue(new Callback<RestaurantInfoRetro>() {
             @Override
