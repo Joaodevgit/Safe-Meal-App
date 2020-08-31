@@ -3,6 +3,7 @@ package pt.ipp.estg.covidresolvefoodapp.SearchRestaurant;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
@@ -88,7 +89,13 @@ public class InfoRestaurantActivity extends AppCompatActivity implements UserRev
         this.mButtonBooking = findViewById(R.id.button_booking_restaurant);
 
         //TODO: Fazer o adapter
-        this.mRecyclerView = findViewById(R.id.mRecyclerview_show_reviews);
+        //this.mRecyclerView = findViewById(R.id.mRecyclerview_show_reviews);
+
+        UserReviewFragment userReviewFragment = new UserReviewFragment();
+
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.fragment_reviews_info_res_container, userReviewFragment);
+        fragmentTransaction.commit();
 
         this.reviewRef.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
