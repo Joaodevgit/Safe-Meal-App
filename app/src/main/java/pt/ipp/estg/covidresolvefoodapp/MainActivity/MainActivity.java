@@ -1,7 +1,6 @@
 package pt.ipp.estg.covidresolvefoodapp.MainActivity;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -15,7 +14,6 @@ import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -27,18 +25,18 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.util.List;
+import java.util.Random;
 
+import pt.ipp.estg.covidresolvefoodapp.Model.UserFirestore;
 import pt.ipp.estg.covidresolvefoodapp.PerfilUser.UserProfileActivity;
 import pt.ipp.estg.covidresolvefoodapp.R;
 import pt.ipp.estg.covidresolvefoodapp.RestaurantMap.RestaurantMapActivity;
 import pt.ipp.estg.covidresolvefoodapp.SearchRestaurant.RestaurantSearch;
-import pub.devrel.easypermissions.AfterPermissionGranted;
-import pub.devrel.easypermissions.AppSettingsDialog;
-import pub.devrel.easypermissions.EasyPermissions;
 
 public class MainActivity extends AppCompatActivity implements LogIn.OnFragmentLogInInteractionListener,
         CreateAccount.OnFragmentCreateAccountInteractionListener, PrincipalPage.onButtonMainMenuClickListener {
@@ -57,19 +55,6 @@ public class MainActivity extends AppCompatActivity implements LogIn.OnFragmentL
         setContentView(R.layout.activity_main);
 
         this.mAuth = FirebaseAuth.getInstance();
-
-        this.userRef.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-            @Override
-            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-
-            }
-        });
-
 
         LogIn logIn = new LogIn();
 
@@ -137,6 +122,26 @@ public class MainActivity extends AppCompatActivity implements LogIn.OnFragmentL
 
     @Override
     public void onFragmentLogInInteraction() {
+
+//        userRef.whereEqualTo("userEmail", this.mAuth.getCurrentUser().getEmail())
+//                .get()
+//                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+//                    @Override
+//                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+//                        if (queryDocumentSnapshots.isEmpty()) {
+//                            System.out.println("Não existe este user");
+//                        } else {
+//                            System.out.println("Existe este user");
+//                        }
+//                    }
+//                })
+//                .addOnFailureListener(new OnFailureListener() {
+//                    @Override
+//                    public void onFailure(@NonNull Exception e) {
+//                        System.out.println(e);
+//                    }
+//                });
+
         this.mAppBarLayout.setVisibility(View.VISIBLE);
 
         PrincipalPage principalPage = new PrincipalPage();
@@ -149,7 +154,6 @@ public class MainActivity extends AppCompatActivity implements LogIn.OnFragmentL
     @Override
     public void onFragmentCreateAccountInteractionLogIn() {
         CreateAccount createAccount = new CreateAccount();
-
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.fragment_container, createAccount);
         fragmentTransaction.commit();
@@ -158,6 +162,22 @@ public class MainActivity extends AppCompatActivity implements LogIn.OnFragmentL
     @Override
     public void onFragmentCreateAccountInteractionMenu() {
         this.mAppBarLayout.setVisibility(View.VISIBLE);
+
+        String anonymous = "Anonymous" + this.mAuth.getCurrentUser().getUid().substring(0, 4);
+
+        UserFirestore userFirestore = new UserFirestore(this.mAuth.getCurrentUser().getUid(), anonymous, this.mAuth.getCurrentUser().getEmail());
+
+        userRef.add(userFirestore).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+            @Override
+            public void onSuccess(DocumentReference documentReference) {
+                Toast.makeText(getApplicationContext(), "Acabou de ser adicionado", Toast.LENGTH_SHORT).show();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                System.out.println(e);
+            }
+        });
 
         PrincipalPage principalPage = new PrincipalPage();
 
