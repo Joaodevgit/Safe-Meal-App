@@ -1,5 +1,6 @@
 package pt.ipp.estg.covidresolvefoodapp.Adapter;
 
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,9 +17,11 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import pt.ipp.estg.covidresolvefoodapp.Model.ReviewFirestore;
+import pt.ipp.estg.covidresolvefoodapp.Model.UserFirestore;
 import pt.ipp.estg.covidresolvefoodapp.R;
 
 public class UserReviewAdapter extends FirestoreRecyclerAdapter<ReviewFirestore, UserReviewAdapter.UserReviewViewHolder> {
@@ -39,20 +42,46 @@ public class UserReviewAdapter extends FirestoreRecyclerAdapter<ReviewFirestore,
 
         final TextView mAnonimousUser = userReviewViewHolder.mAnonimousUser;
 
-//        this.userRef.whereEqualTo("idUser", this.mAuth.getCurrentUser().getUid())
-//                .get()
-//                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-//                    @Override
-//                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-//                        //TODO: Fazer a actualização só do nome
-//                    }
-//                })
-//                .addOnFailureListener(new OnFailureListener() {
-//                    @Override
-//                    public void onFailure(@NonNull Exception e) {
-//                        System.out.println(e);
-//                    }
-//                });
+        if (this.mAuth.getCurrentUser().getUid() == reviewFirestore.getIdUser()) {
+            this.userRef.whereEqualTo("idUser", this.mAuth.getCurrentUser().getUid())
+                    .get()
+                    .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                        @Override
+                        public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                            for (QueryDocumentSnapshot queryDocumentSnapshot : queryDocumentSnapshots) {
+                                UserFirestore user = queryDocumentSnapshot.toObject(UserFirestore.class);
+
+                                mAnonimousUser.setText(user.getUserEmail());
+                                mAnonimousUser.setTextColor(Color.RED);
+                            }
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            System.out.println(e);
+                        }
+                    });
+        } else {
+            this.userRef.whereEqualTo("idUser", reviewFirestore.getIdUser())
+                    .get()
+                    .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                        @Override
+                        public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                            for (QueryDocumentSnapshot queryDocumentSnapshot : queryDocumentSnapshots) {
+                                UserFirestore user = queryDocumentSnapshot.toObject(UserFirestore.class);
+
+                                mAnonimousUser.setText(user.getAnonymous());
+                            }
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            System.out.println(e);
+                        }
+                    });
+        }
 
         RatingBar mRatingBar = userReviewViewHolder.mRatingBar;
         mRatingBar.setRating(reviewFirestore.getAvaliation());

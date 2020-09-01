@@ -1,5 +1,8 @@
 package pt.ipp.estg.covidresolvefoodapp.Model;
 
+import androidx.annotation.Keep;
+
+@Keep
 public class User {
 
     private String email;

@@ -8,6 +8,9 @@ public class UserFirestore {
     private String anonymous;
     private String userEmail;
 
+    public UserFirestore() {
+    }
+
     public UserFirestore(String idUser, String anonymous, String userEmail) {
         this.idUser = idUser;
         this.anonymous = anonymous;
