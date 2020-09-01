@@ -1,7 +1,9 @@
 package pt.ipp.estg.covidresolvefoodapp.SearchRestaurant;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -11,6 +13,7 @@ import android.widget.TextView;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -26,6 +29,8 @@ import java.util.Iterator;
 
 import pt.ipp.estg.covidresolvefoodapp.Adapter.UserReviewAdapter;
 import pt.ipp.estg.covidresolvefoodapp.AlertDialog.AlertDialogReview;
+import pt.ipp.estg.covidresolvefoodapp.DatabaseModels.Restaurant;
+import pt.ipp.estg.covidresolvefoodapp.DatabaseModels.RestaurantViewModel;
 import pt.ipp.estg.covidresolvefoodapp.Model.ReviewFirestore;
 import pt.ipp.estg.covidresolvefoodapp.PerfilUser.UserReviewFragment;
 import pt.ipp.estg.covidresolvefoodapp.R;
@@ -38,6 +43,15 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class InfoRestaurantActivity extends AppCompatActivity implements UserReviewFragment.OnFragmentUserReviewInteractionListener, AlertDialogReview.DialogListener {
+
+    public static final String EXTRA_RES_NAME =
+            "pt.ipp.estg.covidresolvefoodapp.SearchRestaurant.EXTRA_RES_NAME";
+    public static final String EXTRA_CITY =
+            "pt.ipp.estg.covidresolvefoodapp.SearchRestaurant.EXTRA_CITY";
+    public static final String EXTRA_ADDRESS =
+            "pt.ipp.estg.covidresolvefoodapp.SearchRestaurant.EXTRA_ADDRESS";
+    public static final String EXTRA_IMAGE =
+            "pt.ipp.estg.covidresolvefoodapp.SearchRestaurant.EXTRA_IMAGE";
 
     private FirebaseAuth mAuth;
 
@@ -69,12 +83,23 @@ public class InfoRestaurantActivity extends AppCompatActivity implements UserRev
     private Button mButtonReview;
     private Button mButtonBooking;
 
+    private String visResName;
+    private String visResCity;
+    private String visResAddress;
+    private String visResImgStr;
+
+    private RestaurantViewModel restaurantViewModel;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_info_restaurant);
 
         this.mAuth = FirebaseAuth.getInstance();
+
+        restaurantViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory
+                .getInstance(this.getApplication())).get(RestaurantViewModel.class);
 
         this.idRestaurant = Integer.parseInt(getIntent().getStringExtra("idRestaurant"));
 
@@ -125,6 +150,17 @@ public class InfoRestaurantActivity extends AppCompatActivity implements UserRev
             public void onResponse(Call<RestaurantInfoRetro> call, Response<RestaurantInfoRetro> response) {
                 RestaurantInfoRetro restaurant = response.body();
 
+                visResName = restaurant.getName();
+                visResCity = restaurant.getLocation().getCity();
+                visResAddress = restaurant.getLocation().getAddress();
+                visResImgStr = restaurant.getThumb();
+
+                Restaurant newRestaurant = new Restaurant(visResName,mAuth.getCurrentUser().getEmail(),visResCity,visResAddress,visResImgStr);
+
+                restaurantViewModel.insert(newRestaurant);
+                // Método que irá guardar o restaurante visitado
+                //saveRestaurant(visResName, visResCity, visResAddress, visResImgStr);
+
                 mTextName.setText("Nome: " + restaurant.getName());
 
                 if (!restaurant.getThumb().equals("")) {
@@ -168,6 +204,20 @@ public class InfoRestaurantActivity extends AppCompatActivity implements UserRev
 
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+
+    private void saveRestaurant(String resName, String city, String address, String resImg) {
+
+        Intent data = new Intent();
+        data.putExtra(EXTRA_RES_NAME, resName);
+        data.putExtra(EXTRA_CITY, city);
+        data.putExtra(EXTRA_ADDRESS, address);
+        data.putExtra(EXTRA_IMAGE, resImg);
+
+        // Indica se o input teve sucesso ou não (se não guardou não teve sucesso)
+        setResult(RESULT_OK, data);
+        //finish();
     }
 
     @Override

@@ -11,12 +11,14 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
 
+import pt.ipp.estg.covidresolvefoodapp.DatabaseModels.RestaurantViewModel;
 import pt.ipp.estg.covidresolvefoodapp.R;
 import pt.ipp.estg.covidresolvefoodapp.Retrofit.Model.RestaurantInfoRetro;
 import pt.ipp.estg.covidresolvefoodapp.Retrofit.Model.RestaurantsRetro;

@@ -26,4 +26,6 @@
     <string name="possibilidade_de_marca_es">Possibilidade De Marcações:</string>
     <string name="estabelecimento">Estabelecimento:</string>
     <string name="todo">TODO</string>
+    <string name="city">City</string>
+    <string name="address">Address</string>
 </resources>

@@ -4,30 +4,25 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import pt.ipp.estg.covidresolvefoodapp.Model.Restaurant;
+import pt.ipp.estg.covidresolvefoodapp.DatabaseModels.Restaurant;
 import pt.ipp.estg.covidresolvefoodapp.R;
 
 public class VisResAdapter extends RecyclerView.Adapter<VisResAdapter.VisResViewHolder> {
 
     private Context mContext;
-    private List<Restaurant> mVisRes;
+    private List<Restaurant> visitedRestaurants = new ArrayList<>();
 
-    public VisResAdapter(Context mContext, List<Restaurant> mVisRes) {
+/*    public VisResAdapter(Context mContext, List<Restaurant> visitedRestaurants) {
         this.mContext = mContext;
-        this.mVisRes = mVisRes;
-    }
-
-    public int getItemCount() {
-        return mVisRes.size();
-    }
+        this.visitedRestaurants = visitedRestaurants;
+    }*/
 
     @Override
     public VisResViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -45,21 +40,38 @@ public class VisResAdapter extends RecyclerView.Adapter<VisResAdapter.VisResView
     @Override
     public void onBindViewHolder(VisResViewHolder viewHolder, int position) {
         // Get the data model based on position
-        Restaurant visRes = mVisRes.get(position);
+        Restaurant currentVisRes = visitedRestaurants.get(position);
+        viewHolder.visResNameTxtView.setText(currentVisRes.getName());
+        viewHolder.visResCityTxtView.setText(currentVisRes.getCity());
+        viewHolder.visResAddressTxtView.setText(currentVisRes.getAddress());
 
-        // Set name
-        TextView textView = viewHolder.visResNameTxtView;
-        textView.setText(visRes.getName());
+    }
 
+    public int getItemCount() {
+        return visitedRestaurants.size();
+    }
+
+    public void setRestaurants(List<Restaurant> visitedRestaurants) {
+        this.visitedRestaurants = visitedRestaurants;
+        notifyDataSetChanged();
+    }
+
+    public Restaurant getRestaurantAt(int position) {
+        return visitedRestaurants.get(position);
     }
 
     public class VisResViewHolder extends RecyclerView.ViewHolder {
 
         public TextView visResNameTxtView;
+        public TextView visResCityTxtView;
+        public TextView visResAddressTxtView;
 
         public VisResViewHolder(View itemView) {
             super(itemView);
-            visResNameTxtView = itemView.findViewById(R.id.visResName);
+
+            visResNameTxtView = itemView.findViewById(R.id.vis_res_name);
+            visResCityTxtView = itemView.findViewById(R.id.vis_res_city);
+            visResAddressTxtView = itemView.findViewById(R.id.vis_res_address);
         }
     }
 }

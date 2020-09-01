@@ -9,20 +9,46 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <TextView
-            android:id="@+id/visResName"
-            android:layout_width="0dp"
+            android:id="@+id/vis_res_name"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
             android:layout_weight="1"
             android:lines="1"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
             android:text="@string/restaurant_name"
             app:autoSizeMaxTextSize="20sp"
             app:autoSizeMinTextSize="16sp"
+            app:autoSizeTextType="uniform" />
+
+        <TextView
+            android:id="@+id/vis_res_city"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="1"
+            android:lines="1"
+            android:text="@string/city"
+            app:autoSizeMaxTextSize="16sp"
+            app:autoSizeMinTextSize="14sp"
+            app:autoSizeTextType="uniform" />
+
+        <TextView
+            android:id="@+id/vis_res_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="1"
+            android:lines="1"
+            android:text="@string/address"
+            app:autoSizeMaxTextSize="16sp"
+            app:autoSizeMinTextSize="14sp"
             app:autoSizeTextType="uniform" />
 
     </LinearLayout>

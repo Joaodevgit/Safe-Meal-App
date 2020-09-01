@@ -47,6 +47,7 @@ public class UserFavResFragment extends Fragment {
         mRecyclerViewFavRes = view.findViewById(R.id.mRecyclerViewFavRes);
         mRecyclerViewFavRes.setAdapter(mResAdapter);
 
+
         // Set LayoutManager
         mRecyclerViewFavRes.setLayoutManager(new LinearLayoutManager(getContext()));
 
