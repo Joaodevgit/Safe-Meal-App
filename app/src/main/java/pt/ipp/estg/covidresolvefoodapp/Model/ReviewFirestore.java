@@ -1,16 +1,23 @@
 package pt.ipp.estg.covidresolvefoodapp.Model;
 
-import java.sql.Timestamp;
+
+import com.google.firebase.Timestamp;
+
+import java.time.Instant;
 
 public class ReviewFirestore {
 
-    private int avaliation;
+    private float avaliation;
     private String idUser;
     private int idRestaurant;
     private String contentReview;
     private Timestamp timestamp;
 
-    public ReviewFirestore(int avaliation, String idUser, int idRestaurant, String contentReview, Timestamp timestamp) {
+    public ReviewFirestore() {
+
+    }
+
+    public ReviewFirestore(float avaliation, String idUser, int idRestaurant, String contentReview, Timestamp timestamp) {
         this.avaliation = avaliation;
         this.idUser = idUser;
         this.idRestaurant = idRestaurant;
@@ -18,11 +25,11 @@ public class ReviewFirestore {
         this.timestamp = timestamp;
     }
 
-    public int getAvaliation() {
+    public float getAvaliation() {
         return avaliation;
     }
 
-    public void setAvaliation(int avaliation) {
+    public void setAvaliation(float avaliation) {
         this.avaliation = avaliation;
     }
 

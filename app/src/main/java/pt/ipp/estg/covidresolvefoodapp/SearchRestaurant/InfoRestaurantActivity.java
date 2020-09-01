@@ -1,33 +1,31 @@
 package pt.ipp.estg.covidresolvefoodapp.SearchRestaurant;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
 
 import java.util.Iterator;
 
 import pt.ipp.estg.covidresolvefoodapp.Adapter.UserReviewAdapter;
+import pt.ipp.estg.covidresolvefoodapp.AlertDialog.AlertDialogReview;
 import pt.ipp.estg.covidresolvefoodapp.Model.ReviewFirestore;
 import pt.ipp.estg.covidresolvefoodapp.PerfilUser.UserReviewFragment;
 import pt.ipp.estg.covidresolvefoodapp.R;
@@ -39,11 +37,15 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class InfoRestaurantActivity extends AppCompatActivity implements UserReviewFragment.OnFragmentUserReviewInteractionListener {
+public class InfoRestaurantActivity extends AppCompatActivity implements UserReviewFragment.OnFragmentUserReviewInteractionListener, AlertDialogReview.DialogListener {
+
+    private FirebaseAuth mAuth;
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     private CollectionReference reviewRef = db.collection("Review");
+
+    private int idRestaurant;
 
     private Toolbar myToolbar;
 
@@ -72,7 +74,9 @@ public class InfoRestaurantActivity extends AppCompatActivity implements UserRev
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_info_restaurant);
 
-        int idRestaurant = Integer.parseInt(getIntent().getStringExtra("idRestaurant"));
+        this.mAuth = FirebaseAuth.getInstance();
+
+        this.idRestaurant = Integer.parseInt(getIntent().getStringExtra("idRestaurant"));
 
         this.myToolbar = findViewById(R.id.toolbar_restaurant_show);
         setSupportActionBar(this.myToolbar);
@@ -92,6 +96,15 @@ public class InfoRestaurantActivity extends AppCompatActivity implements UserRev
 
         this.mButtonReview = findViewById(R.id.button_review_restaurant);
         this.mButtonBooking = findViewById(R.id.button_booking_restaurant);
+
+        this.mButtonReview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialogReview alertDialogReview = new AlertDialogReview();
+
+                alertDialogReview.show(getSupportFragmentManager(), "dialog");
+            }
+        });
 
         Query query = this.reviewRef.whereEqualTo("idRestaurant", idRestaurant).orderBy("timestamp", Query.Direction.ASCENDING);
 
@@ -186,4 +199,13 @@ public class InfoRestaurantActivity extends AppCompatActivity implements UserRev
         return this.getRetrofitZomatoAPI().create(ZomatoAPI.class);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    @Override
+    public void addReview(float maxNotation, String contentMessage) {
+        Timestamp timestamp = Timestamp.now();
+
+        ReviewFirestore reviewFirestore = new ReviewFirestore(maxNotation, this.mAuth.getCurrentUser().getUid(), this.idRestaurant, contentMessage, timestamp);
+
+        this.reviewRef.add(reviewFirestore);
+    }
 }
