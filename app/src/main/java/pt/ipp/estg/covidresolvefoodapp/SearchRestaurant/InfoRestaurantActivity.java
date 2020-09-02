@@ -50,6 +50,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.squareup.picasso.Picasso;
 
+import java.text.DecimalFormat;
 import java.util.Iterator;
 import java.util.List;
 
@@ -96,6 +97,7 @@ public class InfoRestaurantActivity extends AppCompatActivity implements UserRev
     private TextView mTextAdress;
     private TextView mTextHorarios;
     private TextView mTextIsTableBoooking;
+    private TextView mDistanceRes;
 
     private ImageView mImageViewRestaurant;
     private ImageView mImageViewIsBooking;
@@ -143,6 +145,7 @@ public class InfoRestaurantActivity extends AppCompatActivity implements UserRev
                     if (userLocation == null || userLocation.getLongitude() != locationResult.getLastLocation().getLongitude()
                             || userLocation.getLatitude() != locationResult.getLastLocation().getLatitude()) {
                         userLocation = locationResult.getLastLocation();
+
                     }
                 }
             }
@@ -162,6 +165,7 @@ public class InfoRestaurantActivity extends AppCompatActivity implements UserRev
         this.mTextHorarios = findViewById(R.id.horarios_info);
         this.mTextIsTableBoooking = findViewById(R.id.is_table_booking);
         this.mTextEstab = findViewById(R.id.restaurant_establishment_info);
+        this.mDistanceRes = findViewById(R.id.distance_res);
 
         this.mRatingBar = findViewById(R.id.estrelas_info);
 
@@ -170,27 +174,6 @@ public class InfoRestaurantActivity extends AppCompatActivity implements UserRev
 
         this.mButtonReview = findViewById(R.id.button_review_restaurant);
         this.mButtonBooking = findViewById(R.id.button_booking_restaurant);
-
-
-
-        this.mButtonReview.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                AlertDialogReview alertDialogReview = new AlertDialogReview();
-
-                alertDialogReview.show(getSupportFragmentManager(), "dialogReview");
-            }
-        });
-
-        this.mButtonBooking.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                AlertDialogBooking alertDialogBooking = new AlertDialogBooking();
-
-                alertDialogBooking.show(getSupportFragmentManager(), "dialogBooking");
-            }
-        });
-
 
         Query query = this.reviewRef.whereEqualTo("idRestaurant", idRestaurant).orderBy("timestamp", Query.Direction.DESCENDING);
 
@@ -218,11 +201,18 @@ public class InfoRestaurantActivity extends AppCompatActivity implements UserRev
 
                 mTextName.setText("Nome: " + restaurant.getName());
 
+                double atualDistance = distance(userLocation.getLatitude(), userLocation.getLongitude(), Double.parseDouble(restaurant.getLocation().getLatitude()),
+                        Double.parseDouble(restaurant.getLocation().getLongitude())) * 0.001;
+
+                mDistanceRes.setText("Distância: " + Math.round(atualDistance * 100.0) / 100.0 + " km")
+                ;
+
                 if (!restaurant.getThumb().equals("")) {
                     Picasso.get().load(restaurant.getThumb()).into(mImageViewRestaurant);
                 } else {
                     Picasso.get().load("https://i.postimg.cc/zfX7My2F/tt.jpg").into(mImageViewRestaurant);
                 }
+
 
                 mTextCity.setText("Cidade: " + restaurant.getLocation().getCity());
 
@@ -265,7 +255,7 @@ public class InfoRestaurantActivity extends AppCompatActivity implements UserRev
                 } else {
                     System.out.println("Lat" + restaurantLocation.getLatitude() + "Lon" + restaurantLocation.getLongitude());
                     if (distance(userLocation.getLatitude(), userLocation.getLongitude(), Double.parseDouble(restaurantLocation.getLatitude()),
-                            Double.parseDouble(restaurantLocation.getLongitude())) <= 3000) {
+                            Double.parseDouble(restaurantLocation.getLongitude())) <= 1000) {
                         AlertDialogReview alertDialogReview = new AlertDialogReview();
                         alertDialogReview.show(getSupportFragmentManager(), "dialog");
                     } else {
@@ -274,6 +264,16 @@ public class InfoRestaurantActivity extends AppCompatActivity implements UserRev
                 }
             }
         });
+
+        this.mButtonBooking.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialogBooking alertDialogBooking = new AlertDialogBooking();
+
+                alertDialogBooking.show(getSupportFragmentManager(), "dialogBooking");
+            }
+        });
+
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         startLocationUpdates();
