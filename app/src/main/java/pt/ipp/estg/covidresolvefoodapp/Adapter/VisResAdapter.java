@@ -5,9 +5,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +42,13 @@ public class VisResAdapter extends RecyclerView.Adapter<VisResAdapter.VisResView
         viewHolder.visResNameTxtView.setText(currentVisRes.getName());
         viewHolder.visResCityTxtView.setText(currentVisRes.getCity());
         viewHolder.visResAddressTxtView.setText(currentVisRes.getAddress());
+
+
+        if (!currentVisRes.getImage().equals("")) {
+            Picasso.get().load(currentVisRes.getImage()).into(viewHolder.visResImgView);
+        } else {
+            Picasso.get().load("https://i.postimg.cc/zfX7My2F/tt.jpg").into(viewHolder.visResImgView);
+        }
     }
 
     public int getItemCount() {
@@ -59,6 +69,7 @@ public class VisResAdapter extends RecyclerView.Adapter<VisResAdapter.VisResView
         public TextView visResNameTxtView;
         public TextView visResCityTxtView;
         public TextView visResAddressTxtView;
+        public ImageView visResImgView;
 
         public VisResViewHolder(View itemView) {
             super(itemView);
@@ -66,6 +77,7 @@ public class VisResAdapter extends RecyclerView.Adapter<VisResAdapter.VisResView
             visResNameTxtView = itemView.findViewById(R.id.vis_res_name);
             visResCityTxtView = itemView.findViewById(R.id.vis_res_city);
             visResAddressTxtView = itemView.findViewById(R.id.vis_res_address);
+            visResImgView = itemView.findViewById(R.id.vis_res_img);
         }
     }
 }

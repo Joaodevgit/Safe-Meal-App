@@ -45,7 +45,8 @@
         <activity
             android:name=".SearchRestaurant.RestaurantSearch"
             android:configChanges="keyboardHidden|orientation" />
-        <activity android:name=".PerfilUser.UserProfileActivity" />
+        <activity android:name=".PerfilUser.UserProfileActivity"
+            android:configChanges="keyboardHidden|orientation"/>
         <activity android:name=".SearchRestaurant.InfoRestaurantActivity"
             android:configChanges="keyboardHidden|orientation"/>
         <activity
