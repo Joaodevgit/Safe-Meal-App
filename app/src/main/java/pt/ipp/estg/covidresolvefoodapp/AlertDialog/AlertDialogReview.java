@@ -1,5 +1,6 @@
 package pt.ipp.estg.covidresolvefoodapp.AlertDialog;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -25,6 +26,7 @@ public class AlertDialogReview extends AppCompatDialogFragment {
 
     private DialogListener listener;
 
+    @SuppressLint("ClickableViewAccessibility")
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
