@@ -1,6 +1,7 @@
 package pt.ipp.estg.covidresolvefoodapp.Adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,13 +17,7 @@ import pt.ipp.estg.covidresolvefoodapp.R;
 
 public class VisResAdapter extends RecyclerView.Adapter<VisResAdapter.VisResViewHolder> {
 
-    private Context mContext;
     private List<Restaurant> visitedRestaurants = new ArrayList<>();
-
-/*    public VisResAdapter(Context mContext, List<Restaurant> visitedRestaurants) {
-        this.mContext = mContext;
-        this.visitedRestaurants = visitedRestaurants;
-    }*/
 
     @Override
     public VisResViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -44,7 +39,6 @@ public class VisResAdapter extends RecyclerView.Adapter<VisResAdapter.VisResView
         viewHolder.visResNameTxtView.setText(currentVisRes.getName());
         viewHolder.visResCityTxtView.setText(currentVisRes.getCity());
         viewHolder.visResAddressTxtView.setText(currentVisRes.getAddress());
-
     }
 
     public int getItemCount() {

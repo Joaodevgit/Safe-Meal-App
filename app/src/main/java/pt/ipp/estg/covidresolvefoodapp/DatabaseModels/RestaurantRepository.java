@@ -1,7 +1,7 @@
 package pt.ipp.estg.covidresolvefoodapp.DatabaseModels;
 
 import android.app.Application;
-import android.os.AsyncTask;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 
@@ -29,70 +29,21 @@ public class RestaurantRepository {
         RestauranteDB.databaseWriteExecutor.execute(() -> {
             restaurantDao.insert(restaurant);
         });
-        //new InsertRestaurantAsyncTask(restaurantDao).execute(restaurant);
     }
 
     public void delete(Restaurant restaurant) {
         RestauranteDB.databaseWriteExecutor.execute(() -> {
             restaurantDao.deleteRestaurant(restaurant);
         });
-        //new DeleteRestaurantAsyncTask(restaurantDao).execute(restaurant);
     }
 
     public void deleteAllVisitedRestaurants() {
         RestauranteDB.databaseWriteExecutor.execute(() -> {
             restaurantDao.deleteAllRestaurants(mAuth.getCurrentUser().getEmail());
         });
-        //new DeleteAllRestaurantsAsyncTask(restaurantDao).execute();
     }
 
     public LiveData<List<Restaurant>> getAllVisitedRestaurants() {
         return allVisitedRestaurants;
     }
-
-
-   /* private static class InsertRestaurantAsyncTask extends AsyncTask<Restaurant, Void, Void> {
-
-        private RestaurantDao restaurantDao;
-
-        private InsertRestaurantAsyncTask(RestaurantDao restaurantDao) {
-            this.restaurantDao = restaurantDao;
-        }
-
-        @Override
-        protected Void doInBackground(Restaurant... restaurants) {
-            restaurantDao.insert(restaurants[0]);
-            return null;
-        }
-    }
-
-    private static class DeleteRestaurantAsyncTask extends AsyncTask<Restaurant, Void, Void> {
-        private RestaurantDao restaurantDao;
-
-        public DeleteRestaurantAsyncTask(RestaurantDao restaurantDao) {
-            this.restaurantDao = restaurantDao;
-        }
-
-        @Override
-        protected Void doInBackground(Restaurant... restaurants) {
-            restaurantDao.deleteRestaurant(restaurants[0]);
-            return null;
-        }
-    }
-
-    private static class DeleteAllRestaurantsAsyncTask extends AsyncTask<Void, Void, Void> {
-        private RestaurantDao restaurantDao;
-        private FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        //private AuthViewModelBase mAuth;
-
-        private DeleteAllRestaurantsAsyncTask(RestaurantDao restaurantDao) {
-            this.restaurantDao = restaurantDao;
-        }
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            restaurantDao.deleteAllRestaurants(mAuth.getCurrentUser().getEmail());
-            return null;
-        }
-    }*/
 }

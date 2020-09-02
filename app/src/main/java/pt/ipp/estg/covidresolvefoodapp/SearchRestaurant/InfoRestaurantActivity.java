@@ -44,15 +44,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class InfoRestaurantActivity extends AppCompatActivity implements UserReviewFragment.OnFragmentUserReviewInteractionListener, AlertDialogReview.DialogListener {
 
-    public static final String EXTRA_RES_NAME =
-            "pt.ipp.estg.covidresolvefoodapp.SearchRestaurant.EXTRA_RES_NAME";
-    public static final String EXTRA_CITY =
-            "pt.ipp.estg.covidresolvefoodapp.SearchRestaurant.EXTRA_CITY";
-    public static final String EXTRA_ADDRESS =
-            "pt.ipp.estg.covidresolvefoodapp.SearchRestaurant.EXTRA_ADDRESS";
-    public static final String EXTRA_IMAGE =
-            "pt.ipp.estg.covidresolvefoodapp.SearchRestaurant.EXTRA_IMAGE";
-
     private FirebaseAuth mAuth;
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -158,8 +149,6 @@ public class InfoRestaurantActivity extends AppCompatActivity implements UserRev
                 Restaurant newRestaurant = new Restaurant(visResName,mAuth.getCurrentUser().getEmail(),visResCity,visResAddress,visResImgStr);
 
                 restaurantViewModel.insert(newRestaurant);
-                // Método que irá guardar o restaurante visitado
-                //saveRestaurant(visResName, visResCity, visResAddress, visResImgStr);
 
                 mTextName.setText("Nome: " + restaurant.getName());
 
@@ -204,20 +193,6 @@ public class InfoRestaurantActivity extends AppCompatActivity implements UserRev
 
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-    }
-
-
-    private void saveRestaurant(String resName, String city, String address, String resImg) {
-
-        Intent data = new Intent();
-        data.putExtra(EXTRA_RES_NAME, resName);
-        data.putExtra(EXTRA_CITY, city);
-        data.putExtra(EXTRA_ADDRESS, address);
-        data.putExtra(EXTRA_IMAGE, resImg);
-
-        // Indica se o input teve sucesso ou não (se não guardou não teve sucesso)
-        setResult(RESULT_OK, data);
-        //finish();
     }
 
     @Override

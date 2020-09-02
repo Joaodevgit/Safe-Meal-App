@@ -15,7 +15,7 @@ import java.util.concurrent.Executors;
 import pt.ipp.estg.covidresolvefoodapp.DatabaseModels.Restaurant;
 import pt.ipp.estg.covidresolvefoodapp.DatabaseModels.RestaurantDao;
 
-@Database(entities = {Restaurant.class}, version = 1, exportSchema = false)
+@Database(entities = {Restaurant.class}, version = 2, exportSchema = false)
 public abstract class RestauranteDB extends RoomDatabase {
 
     private static final int NUMBER_OF_THREADS=4;
@@ -31,6 +31,7 @@ public abstract class RestauranteDB extends RoomDatabase {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                             RestauranteDB.class, "restaurant_database")
+                            .fallbackToDestructiveMigration()
                             .build();
                 }
             }

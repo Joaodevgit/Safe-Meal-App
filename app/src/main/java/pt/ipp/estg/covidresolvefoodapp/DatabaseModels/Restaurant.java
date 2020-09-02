@@ -4,11 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "restaurant_table")
+@Entity(tableName = "restaurant_table", primaryKeys = {"userName", "address"})
 public class Restaurant {
-
-    @PrimaryKey(autoGenerate = true)
-    private int id;
 
     @NonNull
     private String name;
@@ -20,6 +17,7 @@ public class Restaurant {
     private String city;
 
     @NonNull
+
     private String address;
 
     private String image;
@@ -30,14 +28,6 @@ public class Restaurant {
         this.city = city;
         this.address = address;
         this.image = image;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getId() {
-        return id;
     }
 
     @NonNull
@@ -63,7 +53,6 @@ public class Restaurant {
     public String getImage() {
         return image;
     }
-
 
 }
 

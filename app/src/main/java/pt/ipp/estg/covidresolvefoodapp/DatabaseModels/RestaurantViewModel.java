@@ -1,6 +1,7 @@
 package pt.ipp.estg.covidresolvefoodapp.DatabaseModels;
 
 import android.app.Application;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;

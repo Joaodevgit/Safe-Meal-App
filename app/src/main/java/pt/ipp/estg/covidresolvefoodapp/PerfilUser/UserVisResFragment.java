@@ -17,21 +17,16 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.firebase.auth.FirebaseAuth;
-
 import java.util.List;
+import java.util.stream.Collectors;
 
 import pt.ipp.estg.covidresolvefoodapp.Adapter.VisResAdapter;
 import pt.ipp.estg.covidresolvefoodapp.DatabaseModels.Restaurant;
 import pt.ipp.estg.covidresolvefoodapp.DatabaseModels.RestaurantViewModel;
 import pt.ipp.estg.covidresolvefoodapp.R;
-import pt.ipp.estg.covidresolvefoodapp.SearchRestaurant.InfoRestaurantActivity;
 
-import static android.app.Activity.RESULT_OK;
 
 public class UserVisResFragment extends Fragment {
-
-    public static final int ADD_VIS_RES_REQUEST = 1;
 
     private RecyclerView mRecyclerViewVisRes;
     private VisResAdapter mResAdapter;
@@ -53,14 +48,6 @@ public class UserVisResFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_user_vis_res, container, false);
 
-/*
-        // Create contact list
-        ArrayList<Restaurant> restaurants = createRestaurantsList(5);
-*/
-
-/*        // Create contacts adapter
-        mResAdapter = new VisResAdapter(getContext(), restaurants);*/
-
         mResAdapter = new VisResAdapter();
 
         // Set RecyclerView adapter
@@ -77,7 +64,6 @@ public class UserVisResFragment extends Fragment {
 
         // Set LayoutManager
         mRecyclerViewVisRes.setLayoutManager(new LinearLayoutManager(getContext()));
-        //mRecyclerViewVisRes.setHasFixedSize(true);
 
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,
                 ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
@@ -88,7 +74,6 @@ public class UserVisResFragment extends Fragment {
 
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-
                 restaurantViewModel.delete(mResAdapter.getRestaurantAt(viewHolder.getAdapterPosition()));
                 Toast.makeText(getContext(), "Restaurante eliminado", Toast.LENGTH_SHORT).show();
             }
@@ -96,28 +81,6 @@ public class UserVisResFragment extends Fragment {
 
         return view;
     }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-
-        if (requestCode == ADD_VIS_RES_REQUEST && resultCode == RESULT_OK) {
-            String resName = data.getStringExtra(InfoRestaurantActivity.EXTRA_RES_NAME);
-            String city = data.getStringExtra(InfoRestaurantActivity.EXTRA_CITY);
-            String address = data.getStringExtra(InfoRestaurantActivity.EXTRA_ADDRESS);
-            String resImg = data.getStringExtra(InfoRestaurantActivity.EXTRA_IMAGE);
-
-            Restaurant restaurant = new Restaurant(resName, mAuth.getCurrentUser().getEmail(), city, address, resImg);
-            restaurantViewModel.insert(restaurant);
-
-            Toast.makeText(getContext(), "Restaurant guardado", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(getContext(), "Note não guardado", Toast.LENGTH_SHORT).show();
-        }
-    }
-
 
     @Override
     public void onAttach(Context context) {
