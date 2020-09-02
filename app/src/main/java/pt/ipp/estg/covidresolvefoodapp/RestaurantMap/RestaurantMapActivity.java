@@ -133,7 +133,6 @@ public class RestaurantMapActivity extends FragmentActivity {
 
     private List<RestaurantRetro> callRestaurants(final Location userLocation, final GoogleMap googleMap) {
         final List<RestaurantRetro> nearbyRestaurants = new ArrayList<>();
-        final List<Float> distancias = new ArrayList<>();
         this.getAPIZomato().geocodeRestaurants(userLocation.getLatitude(), userLocation.getLongitude())
                 .enqueue(new Callback<NearbyRestaurant>() {
                     @Override
@@ -143,19 +142,12 @@ public class RestaurantMapActivity extends FragmentActivity {
                                     , Double.parseDouble(response.body().getNearby_restaurants().get(i).getRestaurant().getLocation().getLatitude()),
                                     Double.parseDouble(response.body().getNearby_restaurants().get(i).getRestaurant().getLocation().getLongitude())) <= 3000) {
                                 nearbyRestaurants.add(response.body().getNearby_restaurants().get(i));
-                         /*   distancias.add(distance(userLocation.getLatitude(), userLocation.getLongitude()
-                                    , Double.parseDouble(response.body().getNearby_restaurants().get(i).getRestaurant().getLocation().getLatitude()),
-                                    Double.parseDouble(response.body().getNearby_restaurants().get(i).getRestaurant().getLocation().getLongitude())));*/
                             }
-                         /*   System.out.println("Array distancias: ");
-                            for (int i = 0; i < distancias.size(); i++) {
-                                System.out.println(distancias.get(i));
-                            }*/
-                            nearbyRestaurants.add(new RestaurantRetro(new RestaurantInfoRetro("Estou aqui", USER_MARK_IMG
-                                    , new pt.ipp.estg.covidresolvefoodapp.Retrofit.Model.Location(String.valueOf(userLocation.getLatitude()),
-                                    String.valueOf(userLocation.getLongitude())))));
-                            addCustomMarker(nearbyRestaurants, googleMap);
                         }
+                        nearbyRestaurants.add(new RestaurantRetro(new RestaurantInfoRetro("Estou aqui", USER_MARK_IMG
+                                , new pt.ipp.estg.covidresolvefoodapp.Retrofit.Model.Location(String.valueOf(userLocation.getLatitude()),
+                                String.valueOf(userLocation.getLongitude())))));
+                        addCustomMarker(nearbyRestaurants, googleMap);
                     }
 
                     @Override

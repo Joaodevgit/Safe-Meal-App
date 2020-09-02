@@ -1,22 +1,40 @@
 package pt.ipp.estg.covidresolvefoodapp.SearchRestaurant;
 
+import android.Manifest;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.Marker;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
@@ -25,15 +43,19 @@ import com.google.firebase.firestore.Query;
 import com.squareup.picasso.Picasso;
 
 import java.util.Iterator;
+import java.util.List;
 
 import pt.ipp.estg.covidresolvefoodapp.Adapter.UserReviewAdapter;
 import pt.ipp.estg.covidresolvefoodapp.AlertDialog.AlertDialogReview;
 import pt.ipp.estg.covidresolvefoodapp.DatabaseModels.Restaurant;
 import pt.ipp.estg.covidresolvefoodapp.DatabaseModels.RestaurantViewModel;
+import pt.ipp.estg.covidresolvefoodapp.MainActivity.MainActivity;
 import pt.ipp.estg.covidresolvefoodapp.Model.ReviewFirestore;
 import pt.ipp.estg.covidresolvefoodapp.PerfilUser.UserReviewFragment;
 import pt.ipp.estg.covidresolvefoodapp.R;
+import pt.ipp.estg.covidresolvefoodapp.Retrofit.Model.Location;
 import pt.ipp.estg.covidresolvefoodapp.Retrofit.Model.RestaurantInfoRetro;
+import pt.ipp.estg.covidresolvefoodapp.Retrofit.Model.RestaurantRetro;
 import pt.ipp.estg.covidresolvefoodapp.Retrofit.ZomatoAPI;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -75,6 +97,13 @@ public class InfoRestaurantActivity extends AppCompatActivity implements UserRev
 
     private RestaurantViewModel restaurantViewModel;
 
+    private LocationManager lm;
+
+    private android.location.Location userLocation;
+    private Location restaurantLocation;
+    private LocationRequest mLocationRequest;
+    private FusedLocationProviderClient mFusedLocationClient;
+    private LocationCallback mLocationCallback;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,6 +114,27 @@ public class InfoRestaurantActivity extends AppCompatActivity implements UserRev
 
         restaurantViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory
                 .getInstance(this.getApplication())).get(RestaurantViewModel.class);
+
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+
+        mLocationRequest = new LocationRequest();
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        mLocationRequest.setInterval(3000);
+        mLocationRequest.setFastestInterval(5000);
+
+        mLocationCallback = new LocationCallback() {
+            @Override
+            public void onLocationResult(LocationResult locationResult) {
+                if (locationResult != null) {
+                    if (userLocation == null || userLocation.getLongitude() != locationResult.getLastLocation().getLongitude()
+                            || userLocation.getLatitude() != locationResult.getLastLocation().getLatitude()) {
+                        userLocation = locationResult.getLastLocation();
+                    }
+                }
+            }
+
+        };
+
 
         this.idRestaurant = Integer.parseInt(getIntent().getStringExtra("idRestaurant"));
 
@@ -107,14 +157,6 @@ public class InfoRestaurantActivity extends AppCompatActivity implements UserRev
         this.mButtonReview = findViewById(R.id.button_review_restaurant);
         this.mButtonBooking = findViewById(R.id.button_booking_restaurant);
 
-        this.mButtonReview.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                AlertDialogReview alertDialogReview = new AlertDialogReview();
-
-                alertDialogReview.show(getSupportFragmentManager(), "dialog");
-            }
-        });
 
         Query query = this.reviewRef.whereEqualTo("idRestaurant", idRestaurant).orderBy("timestamp", Query.Direction.DESCENDING);
 
@@ -136,8 +178,9 @@ public class InfoRestaurantActivity extends AppCompatActivity implements UserRev
 
                 Restaurant newRestaurant = new Restaurant(restaurant.getName(), mAuth.getCurrentUser().getEmail(), restaurant.getLocation().getCity()
                         , restaurant.getLocation().getAddress(), restaurant.getThumb());
-
                 restaurantViewModel.insert(newRestaurant);
+
+                restaurantLocation = restaurant.getLocation();
 
                 mTextName.setText("Nome: " + restaurant.getName());
 
@@ -146,7 +189,6 @@ public class InfoRestaurantActivity extends AppCompatActivity implements UserRev
                 } else {
                     Picasso.get().load("https://i.postimg.cc/zfX7My2F/tt.jpg").into(mImageViewRestaurant);
                 }
-
 
                 mTextCity.setText("Cidade: " + restaurant.getLocation().getCity());
 
@@ -180,8 +222,27 @@ public class InfoRestaurantActivity extends AppCompatActivity implements UserRev
             }
         });
 
+        this.mButtonReview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+                if (!lm.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                    verifyGPSPermission("review");
+                } else {
+                    System.out.println("Lat" + restaurantLocation.getLatitude() + "Lon" + restaurantLocation.getLongitude());
+                    if (distance(userLocation.getLatitude(), userLocation.getLongitude(), Double.parseDouble(restaurantLocation.getLatitude()),
+                            Double.parseDouble(restaurantLocation.getLongitude())) <= 3000) {
+                        AlertDialogReview alertDialogReview = new AlertDialogReview();
+                        alertDialogReview.show(getSupportFragmentManager(), "dialog");
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Muito longe!", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        });
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        startLocationUpdates();
     }
 
     @Override
@@ -221,6 +282,46 @@ public class InfoRestaurantActivity extends AppCompatActivity implements UserRev
         ReviewFirestore reviewFirestore = new ReviewFirestore(maxNotation, this.mAuth.getCurrentUser().getUid(), this.idRestaurant, contentMessage, timestamp);
 
         this.reviewRef.add(reviewFirestore);
+    }
+
+    private void verifyGPSPermission(String purpose) {
+
+        new AlertDialog.Builder(this)
+                .setTitle("Permissão GPS necessária")
+                .setMessage("Esta permissão é necessária para poder fazer " + purpose)
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //Ir às definições
+                        ActivityCompat.requestPermissions(InfoRestaurantActivity.this,
+                                new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 44);
+                        startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+                    }
+                })
+                .setNegativeButton("cancelar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(getApplicationContext(), "Operação cancelada", Toast.LENGTH_SHORT).show();
+                        dialog.dismiss();
+                    }
+                }).show();
+    }
+
+    public float distance(double lat1, double lng1, double lat2, double lng2) {
+        double earthRadius = 6371000; //meters
+        double dLat = Math.toRadians(lat2 - lat1);
+        double dLng = Math.toRadians(lng2 - lng1);
+        double a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) *
+                        Math.sin(dLng / 2) * Math.sin(dLng / 2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        float dist = (float) (earthRadius * c);
+
+        return dist;
+    }
+
+    private void startLocationUpdates() {
+        mFusedLocationClient.requestLocationUpdates(mLocationRequest, mLocationCallback, null);
     }
 
 }
