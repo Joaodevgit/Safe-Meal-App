@@ -20,6 +20,7 @@ import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 import pt.ipp.estg.covidresolvefoodapp.R;
 
@@ -88,7 +89,6 @@ public class AlertDialogBooking extends AppCompatDialogFragment {
             }
         });
 
-        //TODO: Ver como posso ter em long essas cenas....
         this.mRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
@@ -131,7 +131,23 @@ public class AlertDialogBooking extends AppCompatDialogFragment {
                             e.printStackTrace();
                         }
 
+                        long moment = System.currentTimeMillis();
                         date = dateLong.getTime();
+
+                        System.out.println("Moment: " + moment);
+
+                        //02/09/2020 - 23:30 > 02/09/2020 - 14:00
+                        if (moment >= (date + timeEnd) && timeEnd == 50400000) {
+                            timeStart = 68400000; //19:00
+                            timeEnd = 79200000; //22:00
+                        }
+
+                        //02/09/2020 - 23:30 > 02/09/2020 - 22:00
+                        if (moment >= (date + timeEnd) && timeEnd == 79200000) {
+                            date += TimeUnit.DAYS.toMillis(1);
+                            timeStart = 43200000; //12:00
+                            timeEnd = 50400000; //14:00
+                        }
 
                         mListener.bookingReview(date, timeStart, timeEnd, eatChoice);
                     }
