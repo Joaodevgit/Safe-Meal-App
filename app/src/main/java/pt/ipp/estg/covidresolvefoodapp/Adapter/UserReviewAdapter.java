@@ -42,7 +42,7 @@ public class UserReviewAdapter extends FirestoreRecyclerAdapter<ReviewFirestore,
 
         final TextView mAnonimousUser = userReviewViewHolder.mAnonimousUser;
 
-        if (this.mAuth.getCurrentUser().getUid() == reviewFirestore.getIdUser()) {
+        if (this.mAuth.getCurrentUser().getUid().equals(reviewFirestore.getIdUser())) {
             this.userRef.whereEqualTo("idUser", this.mAuth.getCurrentUser().getUid())
                     .get()
                     .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {

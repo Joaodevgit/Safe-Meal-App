@@ -165,14 +165,13 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="150dp"
-            android:layout_marginBottom="30dp"
             android:orientation="vertical">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/mRecyclerview_show_reviews"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
-                android:layout_margin="5dp">
+                android:padding="5dp">
 
             </androidx.recyclerview.widget.RecyclerView>
 

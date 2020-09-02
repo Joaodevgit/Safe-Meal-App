@@ -131,7 +131,7 @@ public class InfoRestaurantActivity extends AppCompatActivity implements UserRev
             }
         });
 
-        Query query = this.reviewRef.whereEqualTo("idRestaurant", idRestaurant).orderBy("timestamp", Query.Direction.ASCENDING);
+        Query query = this.reviewRef.whereEqualTo("idRestaurant", idRestaurant).orderBy("timestamp", Query.Direction.DESCENDING);
 
         FirestoreRecyclerOptions<ReviewFirestore> options = new FirestoreRecyclerOptions.Builder<ReviewFirestore>()
                 .setQuery(query, ReviewFirestore.class)
