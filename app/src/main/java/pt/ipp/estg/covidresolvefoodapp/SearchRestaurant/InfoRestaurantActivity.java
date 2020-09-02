@@ -1,5 +1,6 @@
 package pt.ipp.estg.covidresolvefoodapp.SearchRestaurant;
 
+import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -72,11 +73,6 @@ public class InfoRestaurantActivity extends AppCompatActivity implements UserRev
     private Button mButtonReview;
     private Button mButtonBooking;
 
-    private String visResName;
-    private String visResCity;
-    private String visResAddress;
-    private String visResImgStr;
-
     private RestaurantViewModel restaurantViewModel;
 
 
@@ -129,7 +125,6 @@ public class InfoRestaurantActivity extends AppCompatActivity implements UserRev
         this.mAdapter = new UserReviewAdapter(options);
 
         this.mRecyclerView = findViewById(R.id.mRecyclerview_show_reviews);
-        this.mRecyclerView.setHasFixedSize(true);
         this.mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         this.mRecyclerView.setAdapter(this.mAdapter);
@@ -139,12 +134,8 @@ public class InfoRestaurantActivity extends AppCompatActivity implements UserRev
             public void onResponse(Call<RestaurantInfoRetro> call, Response<RestaurantInfoRetro> response) {
                 RestaurantInfoRetro restaurant = response.body();
 
-                visResName = restaurant.getName();
-                visResCity = restaurant.getLocation().getCity();
-                visResAddress = restaurant.getLocation().getAddress();
-                visResImgStr = restaurant.getThumb();
-
-                Restaurant newRestaurant = new Restaurant(visResName,mAuth.getCurrentUser().getEmail(),visResCity,visResAddress,visResImgStr);
+                Restaurant newRestaurant = new Restaurant(restaurant.getName(), mAuth.getCurrentUser().getEmail(), restaurant.getLocation().getCity()
+                        , restaurant.getLocation().getAddress(), restaurant.getThumb());
 
                 restaurantViewModel.insert(newRestaurant);
 
@@ -231,4 +222,5 @@ public class InfoRestaurantActivity extends AppCompatActivity implements UserRev
 
         this.reviewRef.add(reviewFirestore);
     }
+
 }
