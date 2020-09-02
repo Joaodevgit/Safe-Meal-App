@@ -1,8 +1,10 @@
 package pt.ipp.estg.covidresolvefoodapp.SearchRestaurant;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.CalendarContract;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -27,6 +29,7 @@ import com.squareup.picasso.Picasso;
 import java.util.Iterator;
 
 import pt.ipp.estg.covidresolvefoodapp.Adapter.UserReviewAdapter;
+import pt.ipp.estg.covidresolvefoodapp.AlertDialog.AlertDialogBooking;
 import pt.ipp.estg.covidresolvefoodapp.AlertDialog.AlertDialogReview;
 import pt.ipp.estg.covidresolvefoodapp.DatabaseModels.Restaurant;
 import pt.ipp.estg.covidresolvefoodapp.DatabaseModels.RestaurantViewModel;
@@ -41,7 +44,8 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class InfoRestaurantActivity extends AppCompatActivity implements UserReviewFragment.OnFragmentUserReviewInteractionListener, AlertDialogReview.DialogListener {
+public class InfoRestaurantActivity extends AppCompatActivity implements UserReviewFragment.OnFragmentUserReviewInteractionListener,
+        AlertDialogReview.DialogListener, AlertDialogBooking.DialogBookingListener {
 
     private FirebaseAuth mAuth;
 
@@ -75,6 +79,7 @@ public class InfoRestaurantActivity extends AppCompatActivity implements UserRev
 
     private RestaurantViewModel restaurantViewModel;
 
+    private RestaurantInfoRetro restaurant;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,7 +117,16 @@ public class InfoRestaurantActivity extends AppCompatActivity implements UserRev
             public void onClick(View view) {
                 AlertDialogReview alertDialogReview = new AlertDialogReview();
 
-                alertDialogReview.show(getSupportFragmentManager(), "dialog");
+                alertDialogReview.show(getSupportFragmentManager(), "dialogReview");
+            }
+        });
+
+        this.mButtonBooking.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialogBooking alertDialogBooking = new AlertDialogBooking();
+
+                alertDialogBooking.show(getSupportFragmentManager(), "dialogBooking");
             }
         });
 
@@ -132,7 +146,7 @@ public class InfoRestaurantActivity extends AppCompatActivity implements UserRev
         this.getAPIZomato().getRestaurant(idRestaurant).enqueue(new Callback<RestaurantInfoRetro>() {
             @Override
             public void onResponse(Call<RestaurantInfoRetro> call, Response<RestaurantInfoRetro> response) {
-                RestaurantInfoRetro restaurant = response.body();
+                restaurant = response.body();
 
                 Restaurant newRestaurant = new Restaurant(restaurant.getName(), mAuth.getCurrentUser().getEmail(), restaurant.getLocation().getCity()
                         , restaurant.getLocation().getAddress(), restaurant.getThumb());
@@ -223,4 +237,20 @@ public class InfoRestaurantActivity extends AppCompatActivity implements UserRev
         this.reviewRef.add(reviewFirestore);
     }
 
+    @Override
+    public void bookingReview(long date, long timeStart, long timeEnd, String description) {
+        Intent intent = new Intent(Intent.ACTION_INSERT);
+
+        System.out.println("DATE: " + date);
+
+        intent.setData(CalendarContract.Events.CONTENT_URI);
+        intent.putExtra(CalendarContract.Events.TITLE, "Booking: " + this.restaurant.getName());
+        intent.putExtra(CalendarContract.Events.EVENT_LOCATION, this.restaurant.getLocation().getAddress());
+        intent.putExtra(CalendarContract.Events.EVENT_LOCATION, this.restaurant.getLocation().getAddress());
+        intent.putExtra(CalendarContract.Events.DESCRIPTION, description + " No restaurante " + this.restaurant.getName());
+        intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, (date + timeStart));
+        intent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, (date + timeEnd));
+
+        startActivity(intent);
+    }
 }
