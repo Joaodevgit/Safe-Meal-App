@@ -1,5 +1,6 @@
 package pt.ipp.estg.covidresolvefoodapp.Adapter;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,6 +35,17 @@ public class UserReviewAdapter extends FirestoreRecyclerAdapter<ReviewFirestore,
 
     public UserReviewAdapter(FirestoreRecyclerOptions<ReviewFirestore> options) {
         super(options);
+    }
+
+    @NonNull
+    @Override
+    public UserReviewViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        // Get layout inflater from context
+        Context context = parent.getContext();
+        LayoutInflater inflater = LayoutInflater.from(context);
+
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_user_review, parent, false);
+        return new UserReviewViewHolder(v);
     }
 
     @Override
@@ -91,13 +103,6 @@ public class UserReviewAdapter extends FirestoreRecyclerAdapter<ReviewFirestore,
 
         TextView mContentMessage = userReviewViewHolder.mContentMessage;
         mContentMessage.setText(reviewFirestore.getContentReview());
-    }
-
-    @NonNull
-    @Override
-    public UserReviewViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_user_review, parent, false);
-        return new UserReviewViewHolder(v);
     }
 
     public class UserReviewViewHolder extends RecyclerView.ViewHolder {

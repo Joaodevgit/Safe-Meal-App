@@ -11,20 +11,36 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.ArrayList;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 
 import pt.ipp.estg.covidresolvefoodapp.Adapter.FavResAdapter;
-import pt.ipp.estg.covidresolvefoodapp.Model.Restaurant;
+import pt.ipp.estg.covidresolvefoodapp.Model.FavoriteFirestore;
 import pt.ipp.estg.covidresolvefoodapp.R;
 
 public class UserFavResFragment extends Fragment {
+
+    private FirebaseAuth mAuth;
 
     private RecyclerView mRecyclerViewFavRes;
     private FavResAdapter mResAdapter;
     private OnFragmentUserFavResInteractionListener mListener;
 
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+    private CollectionReference favRef = db.collection("Favorite");
+
     public UserFavResFragment() {
         // Required empty public constructor
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        this.mResAdapter.startListening();
     }
 
     @Override
@@ -35,34 +51,32 @@ public class UserFavResFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        this.mAuth = FirebaseAuth.getInstance();
+
         View view = inflater.inflate(R.layout.fragment_user_fav_res, container, false);
 
-        // Create contact list
-        ArrayList<Restaurant> restaurants = createRestaurantsList(5);
+        Query query = this.favRef.whereEqualTo("idUser", this.mAuth.getCurrentUser().getUid());
 
-        // Create contacts adapter
-        mResAdapter = new FavResAdapter(getContext(), restaurants);
+        FirestoreRecyclerOptions<FavoriteFirestore> options = new FirestoreRecyclerOptions.Builder<FavoriteFirestore>()
+                .setQuery(query, FavoriteFirestore.class)
+                .build();
 
-        // Set RecyclerView adapter
-        mRecyclerViewFavRes = view.findViewById(R.id.mRecyclerViewFavRes);
-        mRecyclerViewFavRes.setAdapter(mResAdapter);
+        this.mResAdapter = new FavResAdapter(options, getContext());
 
+        this.mRecyclerViewFavRes = view.findViewById(R.id.recyclerview_fav_res);
 
-        // Set LayoutManager
-        mRecyclerViewFavRes.setLayoutManager(new LinearLayoutManager(getContext()));
+        this.mRecyclerViewFavRes.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        this.mRecyclerViewFavRes.setAdapter(this.mResAdapter);
 
         return view;
     }
 
-
-    private ArrayList<Restaurant> createRestaurantsList(int qty) {
-        ArrayList<Restaurant> restaurants = new ArrayList<>();
-        Restaurant newRestaurant;
-        for (int i = 0; i < qty; i++) {
-            newRestaurant = new Restaurant("Restaurante " + (i + 1));
-            restaurants.add(newRestaurant);
-        }
-        return restaurants;
+    @Override
+    public void onStop() {
+        super.onStop();
+        this.mResAdapter.stopListening();
     }
 
     @Override

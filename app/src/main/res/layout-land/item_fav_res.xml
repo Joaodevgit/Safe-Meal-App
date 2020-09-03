@@ -20,7 +20,7 @@
             tools:srcCompat="@tools:sample/avatars" />
 
         <TextView
-            android:id="@+id/favResName"
+            android:id="@+id/fav_res_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -33,7 +33,7 @@
             app:autoSizeTextType="uniform" />
 
         <Button
-            android:id="@+id/buttonMoreInfo"
+            android:id="@+id/button_more_info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -46,7 +46,7 @@
             app:autoSizeTextType="uniform" />
 
         <Button
-            android:id="@+id/buttonDelete"
+            android:id="@+id/button_delete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 

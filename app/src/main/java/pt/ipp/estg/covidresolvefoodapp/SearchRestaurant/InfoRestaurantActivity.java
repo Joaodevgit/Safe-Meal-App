@@ -294,7 +294,7 @@ public class InfoRestaurantActivity extends AppCompatActivity implements UserRev
         getMenuInflater().inflate(R.menu.menu_main_fav, menu);
 
         this.favRef.whereEqualTo("idUser", this.mAuth.getCurrentUser().getUid())
-                .whereEqualTo("idRestaurant", this.idRestaurant)
+                .whereEqualTo("idRestaurant", String.valueOf(this.idRestaurant))
                 .get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
@@ -321,14 +321,15 @@ public class InfoRestaurantActivity extends AppCompatActivity implements UserRev
         switch (item.getItemId()) {
             case R.id.fav_restaurant:
                 if (!favOff) {
-//                    Toast.makeText(getApplicationContext(), "FAV", Toast.LENGTH_SHORT).show();
-                    FavoriteFirestore favoriteFirestore = new FavoriteFirestore(this.mAuth.getCurrentUser().getUid(), this.idRestaurant);
+                    Toast.makeText(getApplicationContext(), "FAV", Toast.LENGTH_SHORT).show();
+                    FavoriteFirestore favoriteFirestore = new FavoriteFirestore(this.mAuth.getCurrentUser().getUid(), String.valueOf(this.idRestaurant),
+                            this.restaurant.getName(), this.restaurant.getLocation().getCity(), this.restaurant.getCuisines(), this.restaurant.getThumb());
 
                     this.favRef.add(favoriteFirestore);
                     item.setIcon(R.drawable.ic_baseline_favorite_24);
                     favOff = true;
                 } else {
-//                    Toast.makeText(getApplicationContext(), "NOT FAV", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "NOT FAV", Toast.LENGTH_SHORT).show();
 
                     this.favRef.whereEqualTo("idUser", this.mAuth.getCurrentUser().getUid())
                             .whereEqualTo("idRestaurant", this.idRestaurant)
@@ -347,7 +348,7 @@ public class InfoRestaurantActivity extends AppCompatActivity implements UserRev
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-
+//                            System.out.println(e);
                         }
                     });
 

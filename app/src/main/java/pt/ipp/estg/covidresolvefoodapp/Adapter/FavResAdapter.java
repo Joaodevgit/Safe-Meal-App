@@ -1,6 +1,7 @@
 package pt.ipp.estg.covidresolvefoodapp.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,29 +10,53 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.List;
+import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.WriteBatch;
+import com.squareup.picasso.Picasso;
 
+import pt.ipp.estg.covidresolvefoodapp.Model.FavoriteFirestore;
 import pt.ipp.estg.covidresolvefoodapp.Model.Restaurant;
 import pt.ipp.estg.covidresolvefoodapp.R;
+import pt.ipp.estg.covidresolvefoodapp.Retrofit.Model.RestaurantInfoRetro;
+import pt.ipp.estg.covidresolvefoodapp.Retrofit.ZomatoAPI;
+import pt.ipp.estg.covidresolvefoodapp.SearchRestaurant.InfoRestaurantActivity;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
-public class FavResAdapter extends RecyclerView.Adapter<FavResAdapter.FavResViewHolder> {
+public class FavResAdapter extends FirestoreRecyclerAdapter<FavoriteFirestore, FavResAdapter.FavResViewHolder> {
 
     private Context mContext;
-    private List<Restaurant> mFavRes;
 
-    public FavResAdapter(Context mContext, List<Restaurant> mFavRes) {
-        this.mContext = mContext;
-        this.mFavRes = mFavRes;
-    }
+    private FirebaseAuth mAuth;
 
-    public int getItemCount() {
-        return mFavRes.size();
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+    private CollectionReference favRef = db.collection("Favorite");
+
+    public FavResAdapter(FirestoreRecyclerOptions<FavoriteFirestore> options, Context context) {
+        super(options);
+
+        this.mContext = context;
     }
 
     @Override
     public FavResViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        this.mAuth = FirebaseAuth.getInstance();
+
         // Get layout inflater from context
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
@@ -44,17 +69,58 @@ public class FavResAdapter extends RecyclerView.Adapter<FavResAdapter.FavResView
     }
 
     @Override
-    public void onBindViewHolder(FavResViewHolder viewHolder, int position) {
-        // Get the data model based on position
-        Restaurant favRes = mFavRes.get(position);
+    protected void onBindViewHolder(FavResViewHolder favResViewHolder, int position, FavoriteFirestore infoRetro) {
 
-        // Set name
-        TextView textView = viewHolder.favResNameTxtView;
-        textView.setText(favRes.getName());
+        TextView textView = favResViewHolder.favResNameTxtView;
+        textView.setText("Restaurante: " + infoRetro.getNameRestaurant() + "\nCidade: " + infoRetro.getCity() + "\nCozinha: " + infoRetro.getCuisines());
 
-        //Set image
-        ImageView imageView = viewHolder.favResImageView;
-        imageView.setImageResource(R.drawable.restaurant_default);
+        ImageView imageView = favResViewHolder.favResImageView;
+
+        if (!infoRetro.getThumb().equals("")) {
+            Picasso.get().load(infoRetro.getThumb()).into(imageView);
+        } else {
+            Picasso.get().load("https://i.postimg.cc/zfX7My2F/tt.jpg").into(imageView);
+        }
+
+        Button buttonInfo = favResViewHolder.moreInfoButton;
+
+        buttonInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mContext, InfoRestaurantActivity.class);
+                intent.putExtra("idRestaurant", infoRetro.getIdRestaurant());
+
+                mContext.startActivity(intent);
+            }
+        });
+
+        Button buttonRemove = favResViewHolder.deleteButton;
+
+        buttonRemove.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                favRef.whereEqualTo("idUser", mAuth.getCurrentUser().getUid())
+                        .whereEqualTo("idRestaurant", infoRetro.getIdRestaurant())
+                        .get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        WriteBatch writeBatch = db.batch();
+
+                        for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
+                            writeBatch.delete(documentSnapshot.getReference());
+                        }
+
+                        writeBatch.commit();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        System.out.println(e);
+                    }
+                });
+            }
+        });
+
     }
 
     public class FavResViewHolder extends RecyclerView.ViewHolder {
@@ -66,22 +132,11 @@ public class FavResAdapter extends RecyclerView.Adapter<FavResAdapter.FavResView
 
         public FavResViewHolder(View itemView) {
             super(itemView);
-            favResNameTxtView = itemView.findViewById(R.id.favResName);
-            favResImageView = itemView.findViewById(R.id.imageViewRes);
-            deleteButton = itemView.findViewById(R.id.buttonDelete);
-            deleteButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Toast.makeText(mContext, "Apagaste Restaurante", Toast.LENGTH_SHORT).show();
-                }
-            });
-            moreInfoButton = itemView.findViewById(R.id.buttonMoreInfo);
-            moreInfoButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Toast.makeText(mContext, "Mais Info Restaurante", Toast.LENGTH_SHORT).show();
-                }
-            });
+
+            this.favResNameTxtView = itemView.findViewById(R.id.fav_res_name);
+            this.favResImageView = itemView.findViewById(R.id.imageViewRes);
+            this.deleteButton = itemView.findViewById(R.id.button_delete);
+            this.moreInfoButton = itemView.findViewById(R.id.button_more_info);
         }
     }
 }

@@ -14,6 +14,9 @@ public class RestaurantInfoRetro {
     private int has_table_booking;
     private List<String> establishment;
 
+    public RestaurantInfoRetro() {
+    }
+
     public RestaurantInfoRetro(String id, String name, String cuisines, String timings, String thumb, Location location, UserRating user_rating, int has_table_booking, List<String> establishment) {
         this.id = id;
         this.name = name;
