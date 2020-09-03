@@ -197,9 +197,9 @@ public class InfoRestaurantActivity extends AppCompatActivity implements UserRev
             public void onResponse(Call<RestaurantInfoRetro> call, Response<RestaurantInfoRetro> response) {
                 restaurant = response.body();
 
-                Restaurant newRestaurant = new Restaurant(restaurant.getName(), mAuth.getCurrentUser().getEmail(), restaurant.getLocation().getCity()
+                /*Restaurant newRestaurant = new Restaurant(restaurant.getName(), mAuth.getCurrentUser().getEmail(), restaurant.getLocation().getCity()
                         , restaurant.getLocation().getAddress(), restaurant.getThumb());
-                restaurantViewModel.insert(newRestaurant);
+                restaurantViewModel.insert(newRestaurant);*/
 
                 restaurantLocation = restaurant.getLocation();
 
@@ -381,6 +381,10 @@ public class InfoRestaurantActivity extends AppCompatActivity implements UserRev
         intent.putExtra(CalendarContract.Events.DESCRIPTION, description + " No restaurante " + this.restaurant.getName());
         intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, (date + timeStart));
         intent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, (date + timeEnd));
+
+        Restaurant newRestaurant = new Restaurant(this.restaurant.getName(), mAuth.getCurrentUser().getEmail(), this.restaurant.getLocation().getCity()
+                , this.restaurant.getLocation().getAddress(), this.restaurant.getThumb());
+        restaurantViewModel.insert(newRestaurant);
 
         startActivity(intent);
     }
