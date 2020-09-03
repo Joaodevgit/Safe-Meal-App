@@ -10,6 +10,7 @@ import android.content.pm.PackageManager;
 import android.content.Intent;
 
 import android.content.res.Configuration;
+import android.graphics.Color;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -98,9 +99,11 @@ public class InfoRestaurantActivity extends AppCompatActivity implements UserRev
     private TextView mTextHorarios;
     private TextView mTextIsTableBoooking;
     private TextView mDistanceRes;
+    private TextView mReviewJust;
 
     private ImageView mImageViewRestaurant;
     private ImageView mImageViewIsBooking;
+    private ImageView mImageViewIsReview;
 
     private RatingBar mRatingBar;
 
@@ -135,8 +138,8 @@ public class InfoRestaurantActivity extends AppCompatActivity implements UserRev
 
         mLocationRequest = new LocationRequest();
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        mLocationRequest.setInterval(3000);
-        mLocationRequest.setFastestInterval(5000);
+        //mLocationRequest.setInterval(3000);
+        //mLocationRequest.setFastestInterval(5000);
 
         mLocationCallback = new LocationCallback() {
             @Override
@@ -145,13 +148,11 @@ public class InfoRestaurantActivity extends AppCompatActivity implements UserRev
                     if (userLocation == null || userLocation.getLongitude() != locationResult.getLastLocation().getLongitude()
                             || userLocation.getLatitude() != locationResult.getLastLocation().getLatitude()) {
                         userLocation = locationResult.getLastLocation();
-
                     }
                 }
             }
 
         };
-
 
         this.idRestaurant = Integer.parseInt(getIntent().getStringExtra("idRestaurant"));
 
@@ -165,12 +166,15 @@ public class InfoRestaurantActivity extends AppCompatActivity implements UserRev
         this.mTextHorarios = findViewById(R.id.horarios_info);
         this.mTextIsTableBoooking = findViewById(R.id.is_table_booking);
         this.mTextEstab = findViewById(R.id.restaurant_establishment_info);
-        this.mDistanceRes = findViewById(R.id.distance_res);
+        this.mDistanceRes = findViewById(R.id.distance);
+        this.mReviewJust = findViewById(R.id.review_just);
 
         this.mRatingBar = findViewById(R.id.estrelas_info);
 
         this.mImageViewIsBooking = findViewById(R.id.yes_no_booking);
+        this.mImageViewIsReview = findViewById(R.id.yes_no_review);
         this.mImageViewRestaurant = findViewById(R.id.restaurant_image_info);
+
 
         this.mButtonReview = findViewById(R.id.button_review_restaurant);
         this.mButtonBooking = findViewById(R.id.button_booking_restaurant);
@@ -201,18 +205,11 @@ public class InfoRestaurantActivity extends AppCompatActivity implements UserRev
 
                 mTextName.setText("Nome: " + restaurant.getName());
 
-                double atualDistance = distance(userLocation.getLatitude(), userLocation.getLongitude(), Double.parseDouble(restaurant.getLocation().getLatitude()),
-                        Double.parseDouble(restaurant.getLocation().getLongitude())) * 0.001;
-
-                mDistanceRes.setText("Distância: " + Math.round(atualDistance * 100.0) / 100.0 + " km")
-                ;
-
                 if (!restaurant.getThumb().equals("")) {
                     Picasso.get().load(restaurant.getThumb()).into(mImageViewRestaurant);
                 } else {
                     Picasso.get().load("https://i.postimg.cc/zfX7My2F/tt.jpg").into(mImageViewRestaurant);
                 }
-
 
                 mTextCity.setText("Cidade: " + restaurant.getLocation().getCity());
 
@@ -238,6 +235,23 @@ public class InfoRestaurantActivity extends AppCompatActivity implements UserRev
                     mImageViewIsBooking.setImageResource(R.drawable.close);
                     mButtonBooking.setEnabled(false);
                 }
+
+                // distância em km
+                double atualDistance = distance(userLocation.getLatitude(), userLocation.getLongitude(), Double.parseDouble(restaurant.getLocation().getLatitude()),
+                        Double.parseDouble(restaurant.getLocation().getLongitude())) * 0.001;
+
+                if (atualDistance <= 1) {
+                    mDistanceRes.setText("Distância: " + Math.round(atualDistance * 100.0) / 100.0 + " km");
+                    mReviewJust.setText("(Distância <= 1 km)");
+                    mReviewJust.setTextColor(Color.GREEN);
+                    mImageViewIsReview.setImageResource(R.drawable.tick);
+                } else {
+                    mDistanceRes.setText("Distância: " + Math.round(atualDistance * 100.0) / 100.0 + " km");
+                    mReviewJust.setText("(Distância > 1 km)");
+                    mReviewJust.setTextColor(Color.RED);
+                    mImageViewIsReview.setImageResource(R.drawable.close);
+                    mButtonReview.setEnabled(false);
+                }
             }
 
             @Override
@@ -253,13 +267,10 @@ public class InfoRestaurantActivity extends AppCompatActivity implements UserRev
                 if (!lm.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
                     verifyGPSPermission("review");
                 } else {
-                    System.out.println("Lat" + restaurantLocation.getLatitude() + "Lon" + restaurantLocation.getLongitude());
                     if (distance(userLocation.getLatitude(), userLocation.getLongitude(), Double.parseDouble(restaurantLocation.getLatitude()),
-                            Double.parseDouble(restaurantLocation.getLongitude())) <= 1000) {
+                            Double.parseDouble(restaurantLocation.getLongitude())) * 0.001 <= 1) {
                         AlertDialogReview alertDialogReview = new AlertDialogReview();
                         alertDialogReview.show(getSupportFragmentManager(), "dialog");
-                    } else {
-                        Toast.makeText(getApplicationContext(), "Muito longe!", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -273,7 +284,6 @@ public class InfoRestaurantActivity extends AppCompatActivity implements UserRev
                 alertDialogBooking.show(getSupportFragmentManager(), "dialogBooking");
             }
         });
-
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         startLocationUpdates();
@@ -318,7 +328,6 @@ public class InfoRestaurantActivity extends AppCompatActivity implements UserRev
         this.reviewRef.add(reviewFirestore);
     }
 
-
     private void verifyGPSPermission(String purpose) {
 
         new AlertDialog.Builder(this)
@@ -358,7 +367,6 @@ public class InfoRestaurantActivity extends AppCompatActivity implements UserRev
     private void startLocationUpdates() {
         mFusedLocationClient.requestLocationUpdates(mLocationRequest, mLocationCallback, null);
     }
-
 
     @Override
     public void bookingReview(long date, long timeStart, long timeEnd, String description) {

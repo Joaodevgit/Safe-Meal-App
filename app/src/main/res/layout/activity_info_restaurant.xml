@@ -140,7 +140,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="30dp"
+            android:layout_marginBottom="10dp"
             android:orientation="horizontal">
 
             <TextView
@@ -164,11 +164,47 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="10dp"
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/distance_res"
+                android:id="@+id/review_perm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:lines="1"
+                android:text="Possibilidade de Review: "
+                app:autoSizeMaxTextSize="14sp"
+                app:autoSizeMinTextSize="12sp"
+                app:autoSizeTextType="uniform" />
+
+            <ImageView
+                android:id="@+id/yes_no_review"
+                android:layout_width="20dp"
+                android:layout_height="20dp" />
+
+            <TextView
+                android:id="@+id/review_just"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lines="1"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                app:autoSizeMaxTextSize="14sp"
+                app:autoSizeMinTextSize="12sp"
+                app:autoSizeTextType="uniform" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/distance"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
@@ -181,11 +217,26 @@
                 app:autoSizeMinTextSize="12sp"
                 app:autoSizeTextType="uniform" />
 
+            <TextView
+                android:id="@+id/review"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginBottom="5dp"
+                android:lines="1"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:text="Reviews: "
+                app:autoSizeMaxTextSize="14sp"
+                app:autoSizeMinTextSize="12sp"
+                app:autoSizeTextType="uniform" />
+
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="150dp"
+            android:layout_margin="5dp"
             android:orientation="vertical">
 
             <androidx.recyclerview.widget.RecyclerView

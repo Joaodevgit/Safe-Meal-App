@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.LocationManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -178,73 +180,83 @@ public class MainActivity extends AppCompatActivity implements LogIn.OnFragmentL
 
     @Override
     public void onButtonRestaurantSearchClick() {
-        verifyWifiPermission(new Intent(this, RestaurantSearch.class));
+        WifiManager wifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+        LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        boolean gps_enabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        if (wifiManager.isWifiEnabled()) {
+            if (gps_enabled) {
+                startActivity(new Intent(this, RestaurantSearch.class));
+            } else {
+                verifyGPSPermission();
+            }
+        } else {
+            verifyWifiPermission();
+        }
     }
 
     @Override
     public void onButtonRestaurantMapClick() {
-        verifyGPSPermission(new Intent(this, RestaurantMapActivity.class));
-    }
-
-    private void verifyGPSPermission(Intent intent) {
+        WifiManager wifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         boolean gps_enabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
 
-        if (!gps_enabled) {
-            new AlertDialog.Builder(this)
-                    .setTitle("Permissão GPS necessária")
-                    .setMessage("Esta permissão é necessária para poder aceder ao mapa")
-                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            //Ir às definições
-                            ActivityCompat.requestPermissions(MainActivity.this,
-                                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 44);
-                            startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
-                        }
-                    })
-                    .setNegativeButton("cancelar", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            Toast.makeText(getApplicationContext(), "Operação cancelada", Toast.LENGTH_SHORT).show();
-                            dialog.dismiss();
-                            //request.cancel();
-                        }
-                    })
-                    .show();
+        if (gps_enabled) {
+            if (wifiManager.isWifiEnabled()) {
+                startActivity(new Intent(this, RestaurantMapActivity.class));
+            } else {
+                verifyWifiPermission();
+            }
         } else {
-            startActivity(intent);
+            verifyGPSPermission();
         }
     }
 
-    private void verifyWifiPermission(Intent intent) {
+    private void verifyGPSPermission() {
+        new AlertDialog.Builder(this)
+                .setTitle("Permissão GPS necessária")
+                .setMessage("Esta permissão é necessária para poder aceder ao mapa")
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //Ir às definições
+                        ActivityCompat.requestPermissions(MainActivity.this,
+                                new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 44);
+                        startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+                    }
+                })
+                .setNegativeButton("cancelar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(getApplicationContext(), "Operação cancelada", Toast.LENGTH_SHORT).show();
+                        dialog.dismiss();
+                        //request.cancel();
+                    }
+                })
+                .show();
 
-        WifiManager wifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+    }
 
-        if (!wifiManager.isWifiEnabled()) {
-            new AlertDialog.Builder(this)
-                    .setTitle("Permissão Wifi necessária")
-                    .setMessage("Esta permissão é necessária para poder fazer a pesquisa")
-                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            //Ir às definições
-                            ActivityCompat.requestPermissions(MainActivity.this,
-                                    new String[]{Manifest.permission.ACCESS_WIFI_STATE}, 44);
-                            startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
-                        }
-                    })
-                    .setNegativeButton("cancelar", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            Toast.makeText(getApplicationContext(), "Operação cancelada", Toast.LENGTH_SHORT).show();
-                            dialog.dismiss();
-                        }
-                    })
-                    .show();
-        } else {
-            startActivity(intent);
-        }
+    private void verifyWifiPermission() {
+        new AlertDialog.Builder(this)
+                .setTitle("Permissão Wifi necessária")
+                .setMessage("Esta permissão é necessária para poder fazer a pesquisa")
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //Ir às definições
+                        ActivityCompat.requestPermissions(MainActivity.this,
+                                new String[]{Manifest.permission.ACCESS_WIFI_STATE}, 44);
+                        startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
+                    }
+                })
+                .setNegativeButton("cancelar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(getApplicationContext(), "Operação cancelada", Toast.LENGTH_SHORT).show();
+                        dialog.dismiss();
+                    }
+                })
+                .show();
     }
 
 }
