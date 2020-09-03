@@ -5,11 +5,7 @@ import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 
-import android.content.Intent;
-
-import android.content.res.Configuration;
 import android.graphics.Color;
 import android.location.LocationManager;
 import android.os.Build;
@@ -19,6 +15,8 @@ import android.provider.Settings;
 
 import android.provider.CalendarContract;
 
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -26,6 +24,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -41,32 +40,31 @@ import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.WriteBatch;
 import com.squareup.picasso.Picasso;
 
-import java.text.DecimalFormat;
 import java.util.Iterator;
-import java.util.List;
 
 import pt.ipp.estg.covidresolvefoodapp.Adapter.UserReviewAdapter;
 import pt.ipp.estg.covidresolvefoodapp.AlertDialog.AlertDialogBooking;
 import pt.ipp.estg.covidresolvefoodapp.AlertDialog.AlertDialogReview;
 import pt.ipp.estg.covidresolvefoodapp.DatabaseModels.Restaurant;
 import pt.ipp.estg.covidresolvefoodapp.DatabaseModels.RestaurantViewModel;
-import pt.ipp.estg.covidresolvefoodapp.MainActivity.MainActivity;
+import pt.ipp.estg.covidresolvefoodapp.Model.FavoriteFirestore;
 import pt.ipp.estg.covidresolvefoodapp.Model.ReviewFirestore;
 import pt.ipp.estg.covidresolvefoodapp.PerfilUser.UserReviewFragment;
 import pt.ipp.estg.covidresolvefoodapp.R;
 import pt.ipp.estg.covidresolvefoodapp.Retrofit.Model.Location;
 import pt.ipp.estg.covidresolvefoodapp.Retrofit.Model.RestaurantInfoRetro;
-import pt.ipp.estg.covidresolvefoodapp.Retrofit.Model.RestaurantRetro;
 import pt.ipp.estg.covidresolvefoodapp.Retrofit.ZomatoAPI;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -82,6 +80,7 @@ public class InfoRestaurantActivity extends AppCompatActivity implements UserRev
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     private CollectionReference reviewRef = db.collection("Review");
+    private CollectionReference favRef = db.collection("Favorite");
 
     private int idRestaurant;
 
@@ -123,6 +122,7 @@ public class InfoRestaurantActivity extends AppCompatActivity implements UserRev
 
     private RestaurantInfoRetro restaurant;
 
+    private boolean favOff = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -287,6 +287,79 @@ public class InfoRestaurantActivity extends AppCompatActivity implements UserRev
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         startLocationUpdates();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main_fav, menu);
+
+        this.favRef.whereEqualTo("idUser", this.mAuth.getCurrentUser().getUid())
+                .whereEqualTo("idRestaurant", this.idRestaurant)
+                .get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                if (!queryDocumentSnapshots.isEmpty()) {
+                    MenuItem item = menu.findItem(R.id.fav_restaurant);
+
+                    item.setIcon(R.drawable.ic_baseline_favorite_24);
+
+                    favOff = true;
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                System.out.println(e);
+            }
+        });
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.fav_restaurant:
+                if (!favOff) {
+//                    Toast.makeText(getApplicationContext(), "FAV", Toast.LENGTH_SHORT).show();
+                    FavoriteFirestore favoriteFirestore = new FavoriteFirestore(this.mAuth.getCurrentUser().getUid(), this.idRestaurant);
+
+                    this.favRef.add(favoriteFirestore);
+                    item.setIcon(R.drawable.ic_baseline_favorite_24);
+                    favOff = true;
+                } else {
+//                    Toast.makeText(getApplicationContext(), "NOT FAV", Toast.LENGTH_SHORT).show();
+
+                    this.favRef.whereEqualTo("idUser", this.mAuth.getCurrentUser().getUid())
+                            .whereEqualTo("idRestaurant", this.idRestaurant)
+                            .get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                        @Override
+                        public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+
+                            WriteBatch writeBatch = db.batch();
+
+                            for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
+                                writeBatch.delete(documentSnapshot.getReference());
+                            }
+
+                            writeBatch.commit();
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+
+                        }
+                    });
+
+                    item.setIcon(R.drawable.ic_baseline_favorite_border_24_not_check);
+                    favOff = false;
+                }
+
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override

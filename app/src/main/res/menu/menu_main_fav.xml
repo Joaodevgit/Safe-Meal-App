@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/fav_restaurant"
+        android:icon="@drawable/ic_baseline_favorite_border_24_not_check"
+        android:title="Favorite"
+        app:showAsAction="always"/>
+
+    <!-- Settings, should always be in the overflow -->
+    <item
+        android:id="@+id/action_settings"
+        android:icon="@drawable/ic_settings_white_24dp"
+        android:title="Perfil"
+        app:showAsAction="withText"></item>
+
+    <item
+        android:id="@+id/action_logout"
+        android:icon="@drawable/ic_settings_white_24dp"
+        android:title="Logout"
+        app:showAsAction="withText"></item>
+
+</menu>
