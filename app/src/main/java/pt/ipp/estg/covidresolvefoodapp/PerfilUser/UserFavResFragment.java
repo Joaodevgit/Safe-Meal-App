@@ -27,7 +27,6 @@ public class UserFavResFragment extends Fragment {
 
     private RecyclerView mRecyclerViewFavRes;
     private FavResAdapter mResAdapter;
-    private OnFragmentUserFavResInteractionListener mListener;
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -79,24 +78,4 @@ public class UserFavResFragment extends Fragment {
         this.mResAdapter.stopListening();
     }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof UserFavResFragment.OnFragmentUserFavResInteractionListener) {
-            this.mListener = (UserFavResFragment.OnFragmentUserFavResInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentUserFavResInteractionListener");
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        this.mListener = null;
-    }
-
-    public interface OnFragmentUserFavResInteractionListener {
-
-    }
 }

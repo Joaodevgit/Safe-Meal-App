@@ -74,7 +74,6 @@ import pt.ipp.estg.covidresolvefoodapp.DatabaseModels.Restaurant;
 import pt.ipp.estg.covidresolvefoodapp.DatabaseModels.RestaurantViewModel;
 import pt.ipp.estg.covidresolvefoodapp.Model.FavoriteFirestore;
 import pt.ipp.estg.covidresolvefoodapp.Model.ReviewFirestore;
-import pt.ipp.estg.covidresolvefoodapp.PerfilUser.UserReviewFragment;
 import pt.ipp.estg.covidresolvefoodapp.R;
 import pt.ipp.estg.covidresolvefoodapp.Retrofit.Model.Location;
 import pt.ipp.estg.covidresolvefoodapp.Retrofit.Model.RestaurantInfoRetro;
@@ -85,8 +84,8 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class InfoRestaurantActivity extends AppCompatActivity implements UserReviewFragment.OnFragmentUserReviewInteractionListener,
-        AlertDialogReview.DialogListener, AlertDialogBooking.DialogBookingListener {
+public class InfoRestaurantActivity extends AppCompatActivity implements AlertDialogReview.DialogListener,
+        AlertDialogBooking.DialogBookingListener {
 
     private final String CHANNEL_ID = "001";
     private final int NOTIFICATION_ID = 001;
@@ -125,6 +124,7 @@ public class InfoRestaurantActivity extends AppCompatActivity implements UserRev
 
     private Button mButtonReview;
     private Button mButtonBooking;
+    private Button mButtonRefeicao;
 
     private RestaurantViewModel restaurantViewModel;
 
@@ -304,6 +304,13 @@ public class InfoRestaurantActivity extends AppCompatActivity implements UserRev
             }
         });
 
+        this.mButtonRefeicao.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                System.out.println("AH");
+            }
+        });
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         startLocationUpdates();
     }
@@ -340,7 +347,6 @@ public class InfoRestaurantActivity extends AppCompatActivity implements UserRev
         switch (item.getItemId()) {
             case R.id.fav_restaurant:
                 if (!favOff) {
-                    Toast.makeText(getApplicationContext(), "FAV", Toast.LENGTH_SHORT).show();
                     FavoriteFirestore favoriteFirestore = new FavoriteFirestore(this.mAuth.getCurrentUser().getUid(), String.valueOf(this.idRestaurant),
                             this.restaurant.getName(), this.restaurant.getLocation().getCity(), this.restaurant.getCuisines(), this.restaurant.getThumb());
 
@@ -348,10 +354,8 @@ public class InfoRestaurantActivity extends AppCompatActivity implements UserRev
                     item.setIcon(R.drawable.ic_baseline_favorite_24);
                     favOff = true;
                 } else {
-                    Toast.makeText(getApplicationContext(), "NOT FAV", Toast.LENGTH_SHORT).show();
-
                     this.favRef.whereEqualTo("idUser", this.mAuth.getCurrentUser().getUid())
-                            .whereEqualTo("idRestaurant", this.idRestaurant)
+                            .whereEqualTo("idRestaurant", String.valueOf(this.idRestaurant))
                             .get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                         @Override
                         public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
@@ -367,7 +371,7 @@ public class InfoRestaurantActivity extends AppCompatActivity implements UserRev
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-//                            System.out.println(e);
+                            System.out.println(e);
                         }
                     });
 

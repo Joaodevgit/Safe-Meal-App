@@ -10,7 +10,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import pt.ipp.estg.covidresolvefoodapp.R;
 
-public class UserFavResActivity extends AppCompatActivity implements UserFavResFragment.OnFragmentUserFavResInteractionListener {
+public class UserFavResActivity extends AppCompatActivity {
 
     private Toolbar myToolbar;
     private FirebaseAuth mAuth;

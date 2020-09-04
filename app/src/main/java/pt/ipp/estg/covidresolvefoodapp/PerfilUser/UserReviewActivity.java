@@ -8,7 +8,7 @@ import android.os.Bundle;
 
 import pt.ipp.estg.covidresolvefoodapp.R;
 
-public class UserReviewActivity extends AppCompatActivity implements UserReviewFragment.OnFragmentUserReviewInteractionListener {
+public class UserReviewActivity extends AppCompatActivity {
 
     private Toolbar myToolbar;
 

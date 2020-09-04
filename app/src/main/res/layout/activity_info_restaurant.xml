@@ -258,14 +258,21 @@
                 android:id="@+id/button_review_restaurant"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:padding="5dp"
                 android:text="Review" />
 
             <Button
                 android:id="@+id/button_booking_restaurant"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
+                android:padding="5dp"
+                android:text="Marcação" />
+
+            <Button
+                android:id="@+id/button_refeicao"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
                 android:text="Marcação" />
         </LinearLayout>
 

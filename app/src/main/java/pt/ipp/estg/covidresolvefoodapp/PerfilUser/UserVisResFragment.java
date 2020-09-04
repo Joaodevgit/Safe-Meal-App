@@ -32,7 +32,6 @@ public class UserVisResFragment extends Fragment {
     private RecyclerView mRecyclerViewVisRes;
     private VisResAdapter mResAdapter;
     private RestaurantViewModel restaurantViewModel;
-    private OnFragmentUserVisResInteractionListener mListener;
 
     public UserVisResFragment() {
         // Required empty public constructor
@@ -83,24 +82,4 @@ public class UserVisResFragment extends Fragment {
         return view;
     }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentUserVisResInteractionListener) {
-            this.mListener = (OnFragmentUserVisResInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentUserVisResInteractionListener");
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        this.mListener = null;
-    }
-
-    public interface OnFragmentUserVisResInteractionListener {
-
-    }
 }

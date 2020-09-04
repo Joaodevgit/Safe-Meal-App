@@ -17,7 +17,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import pt.ipp.estg.covidresolvefoodapp.DatabaseModels.RestaurantViewModel;
 import pt.ipp.estg.covidresolvefoodapp.R;
 
-public class UserVisResActivity extends AppCompatActivity implements UserVisResFragment.OnFragmentUserVisResInteractionListener {
+public class UserVisResActivity extends AppCompatActivity {
 
     private Toolbar myToolbar;
     private FirebaseAuth mAuth;
