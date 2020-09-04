@@ -86,11 +86,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class InfoRestaurantActivity extends AppCompatActivity implements AlertDialogReview.DialogListener,
         AlertDialogBooking.DialogBookingListener {
-
-    private final String CHANNEL_ID = "001";
-    private final int NOTIFICATION_ID = 001;
-    private NotificationManagerCompat notificationManager;
-
+    
     private FirebaseAuth mAuth;
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -147,9 +143,6 @@ public class InfoRestaurantActivity extends AppCompatActivity implements AlertDi
         setContentView(R.layout.activity_info_restaurant);
 
         this.mAuth = FirebaseAuth.getInstance();
-
-        createNotificationChannel();
-        notificationManager = NotificationManagerCompat.from(getApplicationContext());
 
         restaurantViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory
                 .getInstance(this.getApplication())).get(RestaurantViewModel.class);
@@ -268,9 +261,6 @@ public class InfoRestaurantActivity extends AppCompatActivity implements AlertDi
                     mImageViewIsReview.setImageResource(R.drawable.close);
                     mButtonReview.setEnabled(false);
                 }
-
-                new Notification(getApplicationContext(), restaurant.getName(), restaurant.getLocation().getCity(),
-                        restaurant.getThumb()).execute();
             }
 
             @Override
@@ -304,12 +294,12 @@ public class InfoRestaurantActivity extends AppCompatActivity implements AlertDi
             }
         });
 
-        this.mButtonRefeicao.setOnClickListener(new View.OnClickListener() {
+/*        this.mButtonRefeicao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 System.out.println("AH");
             }
-        });
+        });*/
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         startLocationUpdates();
@@ -486,74 +476,4 @@ public class InfoRestaurantActivity extends AppCompatActivity implements AlertDi
         startActivity(intent);
     }
 
-    private void createNotificationChannel() {
-        // Create the NotificationChannel, but only on API 26+ because
-        // the NotificationChannel class is new and not in the support library
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            CharSequence name = getString(R.string.channel_name);
-            String description = getString((R.string.channel_description));
-            int importance = NotificationManager.IMPORTANCE_DEFAULT;
-            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
-            channel.setDescription(description);
-            // Register the channel with the system; you can't change the importance
-            // or other notification behaviors after this
-            NotificationManager notificationManager = getSystemService(NotificationManager.class);
-            notificationManager.createNotificationChannel(channel);
-        }
-    }
-
-
-    class Notification extends AsyncTask<String, Void, Bitmap> {
-
-        private Context mContext;
-        private String title, message, imageUrl;
-
-        public Notification(Context context, String title, String message, String imageUrl) {
-            super();
-            this.mContext = context;
-            this.title = title;
-            this.message = message;
-            this.imageUrl = imageUrl;
-        }
-
-        @Override
-        protected Bitmap doInBackground(String... params) {
-
-            InputStream in;
-            try {
-                URL url = new URL(this.imageUrl);
-                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                connection.setDoInput(true);
-                connection.connect();
-                in = connection.getInputStream();
-                Bitmap myBitmap = BitmapFactory.decodeStream(in);
-                return myBitmap;
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-        @Override
-        protected void onPostExecute(Bitmap result) {
-            super.onPostExecute(result);
-
-            NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getApplicationContext(), CHANNEL_ID)
-                    .setSmallIcon(R.drawable.notification_icon)
-                    .setContentTitle(title)
-                    .setContentText(message)
-                    .setAutoCancel(true)
-                    .setStyle(new NotificationCompat.BigPictureStyle()
-                            .bigPicture(result)
-                            .bigLargeIcon(null))
-                    .setPriority(NotificationCompat.PRIORITY_DEFAULT);
-
-            NotificationManager notificationMgr = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-            // notificationId is a unique int for each notification that you must define
-            notificationMgr.notify(NOTIFICATION_ID, mBuilder.build());
-        }
-    }
 }
