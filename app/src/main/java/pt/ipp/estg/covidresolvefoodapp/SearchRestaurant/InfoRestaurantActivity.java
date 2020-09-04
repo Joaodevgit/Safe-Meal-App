@@ -2,12 +2,18 @@ package pt.ipp.estg.covidresolvefoodapp.SearchRestaurant;
 
 
 import android.Manifest;
+import android.annotation.TargetApi;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.location.LocationManager;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -30,6 +36,8 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -52,6 +60,11 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.WriteBatch;
 import com.squareup.picasso.Picasso;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Iterator;
 
 import pt.ipp.estg.covidresolvefoodapp.Adapter.UserReviewAdapter;
@@ -74,6 +87,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class InfoRestaurantActivity extends AppCompatActivity implements UserReviewFragment.OnFragmentUserReviewInteractionListener,
         AlertDialogReview.DialogListener, AlertDialogBooking.DialogBookingListener {
+
+    private final String CHANNEL_ID = "001";
+    private final int NOTIFICATION_ID = 001;
+    private NotificationManagerCompat notificationManager;
 
     private FirebaseAuth mAuth;
 
@@ -130,6 +147,9 @@ public class InfoRestaurantActivity extends AppCompatActivity implements UserRev
         setContentView(R.layout.activity_info_restaurant);
 
         this.mAuth = FirebaseAuth.getInstance();
+
+        createNotificationChannel();
+        notificationManager = NotificationManagerCompat.from(getApplicationContext());
 
         restaurantViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory
                 .getInstance(this.getApplication())).get(RestaurantViewModel.class);
@@ -197,10 +217,6 @@ public class InfoRestaurantActivity extends AppCompatActivity implements UserRev
             public void onResponse(Call<RestaurantInfoRetro> call, Response<RestaurantInfoRetro> response) {
                 restaurant = response.body();
 
-                /*Restaurant newRestaurant = new Restaurant(restaurant.getName(), mAuth.getCurrentUser().getEmail(), restaurant.getLocation().getCity()
-                        , restaurant.getLocation().getAddress(), restaurant.getThumb());
-                restaurantViewModel.insert(newRestaurant);*/
-
                 restaurantLocation = restaurant.getLocation();
 
                 mTextName.setText("Nome: " + restaurant.getName());
@@ -252,6 +268,9 @@ public class InfoRestaurantActivity extends AppCompatActivity implements UserRev
                     mImageViewIsReview.setImageResource(R.drawable.close);
                     mButtonReview.setEnabled(false);
                 }
+
+                new Notification(getApplicationContext(), restaurant.getName(), restaurant.getLocation().getCity(),
+                        restaurant.getThumb()).execute();
             }
 
             @Override
@@ -463,4 +482,74 @@ public class InfoRestaurantActivity extends AppCompatActivity implements UserRev
         startActivity(intent);
     }
 
+    private void createNotificationChannel() {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = getString(R.string.channel_name);
+            String description = getString((R.string.channel_description));
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
+            channel.setDescription(description);
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+    }
+
+
+    class Notification extends AsyncTask<String, Void, Bitmap> {
+
+        private Context mContext;
+        private String title, message, imageUrl;
+
+        public Notification(Context context, String title, String message, String imageUrl) {
+            super();
+            this.mContext = context;
+            this.title = title;
+            this.message = message;
+            this.imageUrl = imageUrl;
+        }
+
+        @Override
+        protected Bitmap doInBackground(String... params) {
+
+            InputStream in;
+            try {
+                URL url = new URL(this.imageUrl);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setDoInput(true);
+                connection.connect();
+                in = connection.getInputStream();
+                Bitmap myBitmap = BitmapFactory.decodeStream(in);
+                return myBitmap;
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+        @Override
+        protected void onPostExecute(Bitmap result) {
+            super.onPostExecute(result);
+
+            NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getApplicationContext(), CHANNEL_ID)
+                    .setSmallIcon(R.drawable.notification_icon)
+                    .setContentTitle(title)
+                    .setContentText(message)
+                    .setAutoCancel(true)
+                    .setStyle(new NotificationCompat.BigPictureStyle()
+                            .bigPicture(result)
+                            .bigLargeIcon(null))
+                    .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+
+            NotificationManager notificationMgr = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+            // notificationId is a unique int for each notification that you must define
+            notificationMgr.notify(NOTIFICATION_ID, mBuilder.build());
+        }
+    }
 }

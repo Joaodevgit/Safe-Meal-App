@@ -7,18 +7,6 @@
         android:icon="@drawable/ic_baseline_favorite_border_24_not_check"
         android:title="Favorite"
         app:showAsAction="always"/>
-
-    <!-- Settings, should always be in the overflow -->
-    <item
-        android:id="@+id/action_settings"
-        android:icon="@drawable/ic_settings_white_24dp"
-        android:title="Perfil"
-        app:showAsAction="withText"></item>
-
-    <item
-        android:id="@+id/action_logout"
-        android:icon="@drawable/ic_settings_white_24dp"
-        android:title="Logout"
-        app:showAsAction="withText"></item>
+    
 
 </menu>

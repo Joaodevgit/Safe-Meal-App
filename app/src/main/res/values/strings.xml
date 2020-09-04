@@ -28,4 +28,6 @@
     <string name="todo">TODO</string>
     <string name="city">City</string>
     <string name="address">Address</string>
+    <string name="channel_name">canalNotificacao</string>
+    <string name="channel_description">descricao do canal</string>
 </resources>
