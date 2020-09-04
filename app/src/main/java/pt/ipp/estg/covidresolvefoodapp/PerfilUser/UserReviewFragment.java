@@ -40,6 +40,7 @@ public class UserReviewFragment extends Fragment {
     public UserReviewFragment() {
         // Required empty public constructor
     }
+
     @Override
     public void onStart() {
         super.onStart();
@@ -49,7 +50,6 @@ public class UserReviewFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override

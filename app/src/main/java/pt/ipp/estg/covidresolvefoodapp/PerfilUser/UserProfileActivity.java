@@ -41,13 +41,13 @@ public class UserProfileActivity extends AppCompatActivity implements UserProfil
 
     @Override
     public void onFragmentFavoriteRestaurantClick() {
-        Intent favResInt = new Intent(getApplicationContext(),UserFavResActivity.class);
+        Intent favResInt = new Intent(getApplicationContext(), UserFavResActivity.class);
         startActivity(favResInt);
     }
 
     @Override
     public void onFragmentVisitedRestaurantClick() {
-        Intent visResInt = new Intent(getApplicationContext(),UserVisResActivity.class);
+        Intent visResInt = new Intent(getApplicationContext(), UserVisResActivity.class);
         startActivity(visResInt);
     }
 
@@ -55,6 +55,12 @@ public class UserProfileActivity extends AppCompatActivity implements UserProfil
     public void onFragmentUserReviewClick() {
         Intent userRevInt = new Intent(getApplicationContext(), UserReviewActivity.class);
         startActivity(userRevInt);
+    }
+
+    @Override
+    public void onFragmentMealsClick() {
+        Intent mealsResInt = new Intent(getApplicationContext(), UserMealsActivity.class);
+        startActivity(mealsResInt);
     }
 
     @Override

@@ -25,6 +25,7 @@ public class UserProfileFragment extends Fragment {
     private Button btnFavorRest;
     private Button btnVisitRest;
     private Button btnUserReview;
+    private Button mButtonMeals;
 
     private OnFragmentUserProfileInteractionListener mListener;
 
@@ -58,6 +59,7 @@ public class UserProfileFragment extends Fragment {
         btnFavorRest = view.findViewById(R.id.buttonFavoriteRestaurants);
         btnVisitRest = view.findViewById(R.id.buttonUserVisitedRestaurants);
         btnUserReview = view.findViewById(R.id.buttonUserReviews);
+        this.mButtonMeals = view.findViewById(R.id.button_user_meals);
 
         btnFavorRest.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,6 +79,13 @@ public class UserProfileFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 mListener.onFragmentUserReviewClick();
+            }
+        });
+
+        this.mButtonMeals.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mListener.onFragmentMealsClick();
             }
         });
 
@@ -106,6 +115,8 @@ public class UserProfileFragment extends Fragment {
         void onFragmentVisitedRestaurantClick();
 
         void onFragmentUserReviewClick();
+
+        void onFragmentMealsClick();
 
         String onFragmentUserName();
     }

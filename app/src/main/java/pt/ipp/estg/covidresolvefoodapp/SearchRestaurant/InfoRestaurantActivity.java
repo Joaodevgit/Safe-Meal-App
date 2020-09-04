@@ -86,7 +86,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class InfoRestaurantActivity extends AppCompatActivity implements AlertDialogReview.DialogListener,
         AlertDialogBooking.DialogBookingListener {
-    
+
     private FirebaseAuth mAuth;
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -191,6 +191,7 @@ public class InfoRestaurantActivity extends AppCompatActivity implements AlertDi
 
         this.mButtonReview = findViewById(R.id.button_review_restaurant);
         this.mButtonBooking = findViewById(R.id.button_booking_restaurant);
+        this.mButtonRefeicao = findViewById(R.id.button_refeicao);
 
         Query query = this.reviewRef.whereEqualTo("idRestaurant", idRestaurant).orderBy("timestamp", Query.Direction.DESCENDING);
 
@@ -294,12 +295,12 @@ public class InfoRestaurantActivity extends AppCompatActivity implements AlertDi
             }
         });
 
-/*        this.mButtonRefeicao.setOnClickListener(new View.OnClickListener() {
+        this.mButtonRefeicao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 System.out.println("AH");
             }
-        });*/
+        });
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         startLocationUpdates();
@@ -338,7 +339,8 @@ public class InfoRestaurantActivity extends AppCompatActivity implements AlertDi
             case R.id.fav_restaurant:
                 if (!favOff) {
                     FavoriteFirestore favoriteFirestore = new FavoriteFirestore(this.mAuth.getCurrentUser().getUid(), String.valueOf(this.idRestaurant),
-                            this.restaurant.getName(), this.restaurant.getLocation().getCity(), this.restaurant.getCuisines(), this.restaurant.getThumb());
+                            this.restaurant.getName(), this.restaurant.getLocation().getCity(), this.restaurant.getCuisines(), this.restaurant.getThumb(),
+                            this.restaurant.getLocation().getLatitude(), this.restaurant.getLocation().getLongitude());
 
                     this.favRef.add(favoriteFirestore);
                     item.setIcon(R.drawable.ic_baseline_favorite_24);

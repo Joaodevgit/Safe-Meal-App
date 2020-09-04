@@ -8,18 +8,22 @@ public class FavoriteFirestore {
     private String city;
     private String cuisines;
     private String thumb;
+    private String latitude;
+    private String longitude;
 
     public FavoriteFirestore() {
 
     }
 
-    public FavoriteFirestore(String idUser, String idRestaurant, String nameRestaurant, String city, String cuisines, String thumb) {
+    public FavoriteFirestore(String idUser, String idRestaurant, String nameRestaurant, String city, String cuisines, String thumb, String latitude, String longitude) {
         this.idUser = idUser;
         this.idRestaurant = idRestaurant;
         this.nameRestaurant = nameRestaurant;
         this.city = city;
         this.cuisines = cuisines;
         this.thumb = thumb;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
     public String getIdUser() {
@@ -70,15 +74,19 @@ public class FavoriteFirestore {
         this.thumb = thumb;
     }
 
-    @Override
-    public String toString() {
-        return "FavoriteFirestore{" +
-                "idUser='" + idUser + '\'' +
-                ", idRestaurant=" + idRestaurant +
-                ", nameRestaurant='" + nameRestaurant + '\'' +
-                ", city='" + city + '\'' +
-                ", cuisines='" + cuisines + '\'' +
-                ", thumb='" + thumb + '\'' +
-                '}';
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+    }
+
+    public String getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
     }
 }
