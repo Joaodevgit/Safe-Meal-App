@@ -46,7 +46,6 @@
             android:layout_height="match_parent"
             android:gravity="center|center_horizontal"
             android:lines="1"
-            android:text="Number Of Meals"
             app:autoSizeMaxTextSize="22sp"
             app:autoSizeMinTextSize="18sp"
             app:autoSizeTextType="uniform" />

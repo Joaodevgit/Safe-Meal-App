@@ -69,10 +69,12 @@ import java.util.Iterator;
 
 import pt.ipp.estg.covidresolvefoodapp.Adapter.UserReviewAdapter;
 import pt.ipp.estg.covidresolvefoodapp.AlertDialog.AlertDialogBooking;
+import pt.ipp.estg.covidresolvefoodapp.AlertDialog.AlertDialogRefeicao;
 import pt.ipp.estg.covidresolvefoodapp.AlertDialog.AlertDialogReview;
 import pt.ipp.estg.covidresolvefoodapp.DatabaseModels.Restaurant;
 import pt.ipp.estg.covidresolvefoodapp.DatabaseModels.RestaurantViewModel;
 import pt.ipp.estg.covidresolvefoodapp.Model.FavoriteFirestore;
+import pt.ipp.estg.covidresolvefoodapp.Model.MealsFirestore;
 import pt.ipp.estg.covidresolvefoodapp.Model.ReviewFirestore;
 import pt.ipp.estg.covidresolvefoodapp.R;
 import pt.ipp.estg.covidresolvefoodapp.Retrofit.Model.Location;
@@ -85,7 +87,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class InfoRestaurantActivity extends AppCompatActivity implements AlertDialogReview.DialogListener,
-        AlertDialogBooking.DialogBookingListener {
+        AlertDialogBooking.DialogBookingListener, AlertDialogRefeicao.DialogMealsListener {
 
     private FirebaseAuth mAuth;
 
@@ -93,6 +95,7 @@ public class InfoRestaurantActivity extends AppCompatActivity implements AlertDi
 
     private CollectionReference reviewRef = db.collection("Review");
     private CollectionReference favRef = db.collection("Favorite");
+    private CollectionReference mealsRef = db.collection("Meals");
 
     private int idRestaurant;
 
@@ -298,7 +301,9 @@ public class InfoRestaurantActivity extends AppCompatActivity implements AlertDi
         this.mButtonRefeicao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println("AH");
+                AlertDialogRefeicao alertDialogRefeicao = new AlertDialogRefeicao();
+
+                alertDialogRefeicao.show(getSupportFragmentManager(), "dialogMeals");
             }
         });
 
@@ -478,4 +483,11 @@ public class InfoRestaurantActivity extends AppCompatActivity implements AlertDi
         startActivity(intent);
     }
 
+    @Override
+    public void addMeals(String meals) {
+        MealsFirestore mealsFirestore = new MealsFirestore(this.restaurant.getId(), this.restaurant.getName(),
+                this.mAuth.getCurrentUser().getUid(), meals, this.restaurant.getThumb());
+
+        this.mealsRef.add(mealsFirestore);
+    }
 }

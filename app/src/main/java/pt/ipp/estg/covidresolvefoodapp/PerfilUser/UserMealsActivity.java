@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 
+import pt.ipp.estg.covidresolvefoodapp.Adapter.UserMealsAdapter;
 import pt.ipp.estg.covidresolvefoodapp.R;
 
 public class UserMealsActivity extends AppCompatActivity {
@@ -21,10 +22,10 @@ public class UserMealsActivity extends AppCompatActivity {
         setSupportActionBar(this.mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        UserProfileFragment userProfileFragment = new UserProfileFragment();
+        UserMealsFragment userMealsAdapter = new UserMealsFragment();
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.fragment_user_meals, userProfileFragment);
+        fragmentTransaction.replace(R.id.fragment_user_meals, userMealsAdapter);
         fragmentTransaction.commit();
     }
 
