@@ -59,6 +59,14 @@ public class LocationService extends Service {
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private CollectionReference favRef = db.collection("Favorite");
 
+    private FavoriteFirestore favBestRes = null;
+
+    private String nameRestaurant = "";
+    private String city = "";
+    private String thumb = "";
+    private String latitude = "";
+    private String longitude = "";
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -135,16 +143,20 @@ public class LocationService extends Service {
 
                 Log.d(TAG, "cheguei aqui dentro do firestore");
 
-                FavoriteFirestore favBestRes = null;
                 for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
 
                     float distance = distance(location.getLatitude(), location.getLongitude(), Double.parseDouble(documentSnapshot.get("latitude").toString()),
                             Double.parseDouble(documentSnapshot.get("longitude").toString()));
 
                     if (distance < closestDistance) {
-                        favBestRes = new FavoriteFirestore((String) documentSnapshot.get("nameRestaurant"), (String) documentSnapshot.get("city")
-                                , (String) documentSnapshot.get("thumb"), (String) documentSnapshot.get("latitude"),
-                                (String) documentSnapshot.get("longitude"));
+
+                        nameRestaurant = documentSnapshot.get("nameRestaurant").toString();
+                        city = documentSnapshot.get("city").toString();
+                        thumb = documentSnapshot.get("thumb").toString();
+                        latitude = documentSnapshot.get("latitude").toString();
+                        longitude = documentSnapshot.get("longitude").toString();
+
+                        favBestRes = new FavoriteFirestore(nameRestaurant, city, thumb, latitude, longitude);
                         closestDistance = distance;
                     }
                 }
