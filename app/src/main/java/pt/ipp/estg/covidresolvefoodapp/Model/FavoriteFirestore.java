@@ -26,6 +26,14 @@ public class FavoriteFirestore {
         this.longitude = longitude;
     }
 
+    public FavoriteFirestore(String nameRestaurant, String city, String thumb, String latitude, String longitude) {
+        this.nameRestaurant = nameRestaurant;
+        this.city = city;
+        this.thumb = thumb;
+        this.latitude = latitude;
+        this.longitude = longitude;
+    }
+
     public String getIdUser() {
         return idUser;
     }

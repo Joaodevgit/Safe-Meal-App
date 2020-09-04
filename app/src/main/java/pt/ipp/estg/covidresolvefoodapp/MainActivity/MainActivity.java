@@ -20,6 +20,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -39,6 +40,7 @@ import pt.ipp.estg.covidresolvefoodapp.PerfilUser.UserProfileActivity;
 import pt.ipp.estg.covidresolvefoodapp.R;
 import pt.ipp.estg.covidresolvefoodapp.RestaurantMap.RestaurantMapActivity;
 import pt.ipp.estg.covidresolvefoodapp.SearchRestaurant.RestaurantSearch;
+import pt.ipp.estg.covidresolvefoodapp.Service.LocationService;
 
 public class MainActivity extends AppCompatActivity implements LogIn.OnFragmentLogInInteractionListener,
         CreateAccount.OnFragmentCreateAccountInteractionListener, PrincipalPage.onButtonMainMenuClickListener {
