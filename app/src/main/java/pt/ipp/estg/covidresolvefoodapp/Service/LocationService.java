@@ -1,9 +1,9 @@
 package pt.ipp.estg.covidresolvefoodapp.Service;
 
-import android.annotation.TargetApi;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -41,23 +41,23 @@ import java.net.URL;
 
 import pt.ipp.estg.covidresolvefoodapp.Model.FavoriteFirestore;
 import pt.ipp.estg.covidresolvefoodapp.R;
+import pt.ipp.estg.covidresolvefoodapp.SearchRestaurant.InfoRestaurantActivity;
 
 public class LocationService extends Service {
 
     private final String CHANNEL_ID = "001";
-    private final int NOTIFICATION_ID = 001;
-    public static final String channel_name = "ANDROID CHANNEL";
-    public static final String channel_description = "Notificaçao da localizaçao";
+    public static final String CHANNEL_NAME = "ANDROID CHANNEL";
+    public static final String CHANNEL_DESCRIPTION = "Notificaçao da localizaçao";
     public static final String TAG = "SERVICE";
+    public static final int RADIUS = 2; // radius in km
 
     private CountDownTimer countDownTimer;
-    private long timeLeftInMilliseconds = 30000; //5 Segundos
+    private long timeLeftInMilliseconds = 600000; // 10 em 10 mins
     private boolean timerRunning = false;
 
     private FusedLocationProviderClient mFusedLocationClient;
     private LocationRequest mLocationRequest;
     private LocationCallback mLocationCallback;
-    private Location userLocation;
 
     private FirebaseAuth mAuth;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -65,6 +65,7 @@ public class LocationService extends Service {
 
     private FavoriteFirestore favBestRes = null;
 
+    private String idRestaurant = "";
     private String nameRestaurant = "";
     private String city = "";
     private String thumb = "";
@@ -76,6 +77,7 @@ public class LocationService extends Service {
         super.onCreate();
         this.mAuth = FirebaseAuth.getInstance();
         this.createNotificationChannel();
+        //this.closestDistance = Float.MAX_VALUE;
         this.startRestart();
     }
 
@@ -110,7 +112,7 @@ public class LocationService extends Service {
 
         startLocationUpdates();
 
-        return START_NOT_STICKY;
+        return START_STICKY;
     }
 
     @Override
@@ -122,8 +124,8 @@ public class LocationService extends Service {
         // Create the NotificationChannel, but only on API 26+ because
         // the NotificationChannel class is new and not in the support library
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            CharSequence name = channel_name;
-            String description = channel_description;
+            CharSequence name = CHANNEL_NAME;
+            String description = CHANNEL_DESCRIPTION;
             int importance = NotificationManager.IMPORTANCE_DEFAULT;
             NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
             channel.setDescription(description);
@@ -144,6 +146,7 @@ public class LocationService extends Service {
 
     private void startTimer() {
         this.countDownTimer = new CountDownTimer(this.timeLeftInMilliseconds, 6000) {
+
             @Override
             public void onTick(long l) {
                 timeLeftInMilliseconds = l;
@@ -152,8 +155,10 @@ public class LocationService extends Service {
 
             @Override
             public void onFinish() {
-                new NotificationSender(getApplicationContext(), favBestRes.getNameRestaurant(), favBestRes.getCity(), favBestRes.getThumb()).execute();
-                timeLeftInMilliseconds = 30000;
+                if (favBestRes != null) {
+                    new NotificationSender(getApplicationContext(), favBestRes.getIdRestaurant(), favBestRes.getNameRestaurant(), favBestRes.getCity(), favBestRes.getThumb()).execute();
+                }
+                timeLeftInMilliseconds = 600000; // 10 em 10 mins
                 startRestart();
             }
         }.start();
@@ -176,29 +181,30 @@ public class LocationService extends Service {
                 .get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                float closestDistance = Float.MAX_VALUE;
 
-                Log.d(TAG, "cheguei aqui dentro do firestore");
+                if (!queryDocumentSnapshots.isEmpty()) {
+                    float closestDistance = Float.MAX_VALUE;
 
-                for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
+                    for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
 
-                    float distance = distance(location.getLatitude(), location.getLongitude(), Double.parseDouble(documentSnapshot.get("latitude").toString()),
-                            Double.parseDouble(documentSnapshot.get("longitude").toString()));
+                        float distance = (float) (distance(location.getLatitude(), location.getLongitude(), Double.parseDouble(documentSnapshot.get("latitude").toString()),
+                                Double.parseDouble(documentSnapshot.get("longitude").toString())) * 0.001);
 
-                    if (distance < closestDistance) {
+                        if (distance < closestDistance) {
+                            closestDistance = distance;
+                            if (closestDistance <= RADIUS) {
+                                idRestaurant = documentSnapshot.get("idRestaurant").toString();
+                                nameRestaurant = documentSnapshot.get("nameRestaurant").toString();
+                                city = documentSnapshot.get("city").toString();
+                                thumb = documentSnapshot.get("thumb").toString();
+                                latitude = documentSnapshot.get("latitude").toString();
+                                longitude = documentSnapshot.get("longitude").toString();
 
-                        nameRestaurant = documentSnapshot.get("nameRestaurant").toString();
-                        city = documentSnapshot.get("city").toString();
-                        thumb = documentSnapshot.get("thumb").toString();
-                        latitude = documentSnapshot.get("latitude").toString();
-                        longitude = documentSnapshot.get("longitude").toString();
-
-                        favBestRes = new FavoriteFirestore(nameRestaurant, city, thumb, latitude, longitude);
-                        closestDistance = distance;
+                                favBestRes = new FavoriteFirestore(idRestaurant, nameRestaurant, city, thumb, latitude, longitude);
+                            }
+                        }
                     }
                 }
-//                Log.d(TAG, "Nome:" + favBestRes.getNameRestaurant() + "City:" + favBestRes.getCity() + "Url" + favBestRes.getThumb());
-
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -206,21 +212,17 @@ public class LocationService extends Service {
                 System.out.println(e);
             }
         });
-
-   /*     if (userLocation == null || userLocation.getLongitude() != location.getLastLocation().getLongitude()
-                || userLocation.getLatitude() != location.getLastLocation().getLatitude()) {
-            userLocation = locationResult.getLastLocation();
-        }*/
     }
 
     class NotificationSender extends AsyncTask<String, Void, Bitmap> {
 
         private Context mContext;
-        private String name, city, imageUrl;
+        private String name, city, imageUrl, resID;
 
-        public NotificationSender(Context context, String name, String city, String imageUrl) {
+        public NotificationSender(Context context, String resID, String name, String city, String imageUrl) {
             super();
             this.mContext = context;
+            this.resID = resID;
             this.name = name;
             this.city = city;
             this.imageUrl = imageUrl;
@@ -246,22 +248,28 @@ public class LocationService extends Service {
             return null;
         }
 
-        @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
         @Override
         protected void onPostExecute(Bitmap result) {
             super.onPostExecute(result);
 
-            Log.d(TAG, "cheguei aqui notificacao");
+            Intent resIntent = new Intent(mContext, InfoRestaurantActivity.class);
+            resIntent.putExtra("idRestaurant", idRestaurant);
+            PendingIntent resultPendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, resIntent, 0);
+
             NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(mContext, CHANNEL_ID);
-            Notification notification = notificationBuilder.setOngoing(true)
+            Notification notification = notificationBuilder
                     .setSmallIcon(R.drawable.ic_baseline_restaurant_24)
-                    .setContentTitle(name)
-                    .setContentText(city)
-                    .setPriority(Notification.PRIORITY_HIGH)
+                    .setContentTitle("Está próximo de um dos seus restaurantes favoritos!")
+                    .setContentText("Restaurante: " + name + " (" + city + ")")
+                    .setPriority(Notification.PRIORITY_DEFAULT)
+                    .setStyle(new NotificationCompat.BigPictureStyle()
+                            .bigPicture(result)
+                            .bigLargeIcon(result))
+                    .addAction(R.drawable.ic_launcher_background, "+ Info", resultPendingIntent)
                     .setCategory(NotificationCompat.CATEGORY_SERVICE)
                     .build();
 
-            startForeground(1337, notification);
+            startForeground(1, notification);
         }
     }
 
