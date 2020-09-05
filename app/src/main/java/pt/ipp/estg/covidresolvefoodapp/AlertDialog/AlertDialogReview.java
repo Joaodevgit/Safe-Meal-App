@@ -11,6 +11,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RatingBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -69,7 +70,8 @@ public class AlertDialogReview extends AppCompatDialogFragment {
                 .setPositiveButton("Submeter", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        listener.addReview(mRatingBar.getRating(), mEditText.getText().toString());
+                        if (isPadding())
+                            listener.addReview(mRatingBar.getRating(), mEditText.getText().toString());
                     }
                 })
                 .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
@@ -95,5 +97,15 @@ public class AlertDialogReview extends AppCompatDialogFragment {
 
     public interface DialogListener {
         void addReview(float maxNotation, String contentMessage);
+    }
+
+    private boolean isPadding() {
+        boolean isPadding = true;
+
+        if (this.mEditText.getText().length() < 10) {
+            isPadding = false;
+        }
+
+        return isPadding;
     }
 }
