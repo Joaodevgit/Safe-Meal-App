@@ -3,10 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PerfilUser.UserFavResFragment">
+    tools:context=".PerfilUser.UserMealsFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerview_fav_res"
+        android:id="@+id/recyclerview_user_meals"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

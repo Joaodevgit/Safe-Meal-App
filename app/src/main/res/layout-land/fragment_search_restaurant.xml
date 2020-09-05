@@ -1,316 +1,316 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fadeScrollbars="false"
-    android:scrollbarAlwaysDrawHorizontalTrack="false"
     tools:context=".SearchRestaurant.SearchRestaurantFragment">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/title_estabelecimento"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="15dp"
-            android:lines="1"
-            android:text="Estabelecimento"
-            android:textSize="20dp"
-            android:textStyle="bold"
-            app:autoSizeMaxTextSize="24sp"
-            app:autoSizeMinTextSize="20sp"
-            app:autoSizeTextType="uniform" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:lines="1"
-            android:text="(Escolha um estabelecimento)"
-            app:autoSizeMaxTextSize="14sp"
-            app:autoSizeMinTextSize="10sp"
-            app:autoSizeTextType="uniform" />
-
-        <RadioGroup
-            android:id="@+id/radio_group_estabelicimento"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:id="@+id/check_casual_dining"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:lines="1"
-                android:text="Casual Dining"
-                app:autoSizeMaxTextSize="14sp"
-                app:autoSizeMinTextSize="10sp"
-                app:autoSizeTextType="uniform" />
-
-            <RadioButton
-                android:id="@+id/check_snack_bar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:lines="1"
-                android:text="Snack Bar"
-                app:autoSizeMaxTextSize="14sp"
-                app:autoSizeMinTextSize="10sp"
-                app:autoSizeTextType="uniform" />
-
-            <RadioButton
-                android:id="@+id/check_cafe"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:lines="1"
-                android:text="Café"
-                app:autoSizeMaxTextSize="14sp"
-                app:autoSizeMinTextSize="10sp"
-                app:autoSizeTextType="uniform" />
-
-            <RadioButton
-                android:id="@+id/check_bakery"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:lines="1"
-                android:text="Bakery"
-                app:autoSizeMaxTextSize="14sp"
-                app:autoSizeMinTextSize="10sp"
-                app:autoSizeTextType="uniform" />
-
-            <RadioButton
-                android:id="@+id/check_bar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:lines="1"
-                android:text="Bar"
-                app:autoSizeMaxTextSize="14sp"
-                app:autoSizeMinTextSize="10sp"
-                app:autoSizeTextType="uniform" />
-
-            <RadioButton
-                android:id="@+id/check_kiosk"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:lines="1"
-                android:text="Kiosk"
-                app:autoSizeMaxTextSize="14sp"
-                app:autoSizeMinTextSize="10sp"
-                app:autoSizeTextType="uniform" />
-
-        </RadioGroup>
-
-        <TextView
-            android:id="@+id/title_cidade"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:lines="1"
-            android:text="Cidade"
-            android:textSize="20dp"
-            android:textStyle="bold"
-            app:autoSizeMaxTextSize="24sp"
-            app:autoSizeMinTextSize="20sp"
-            app:autoSizeTextType="uniform" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:lines="1"
-            android:text="(Escolha uma cidade)"
-            app:autoSizeMaxTextSize="14sp"
-            app:autoSizeMinTextSize="10sp"
-            app:autoSizeTextType="uniform" />
-
-        <RadioGroup
-            android:id="@+id/radio_group_cidade"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:gravity="center_horizontal"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:id="@+id/check_braga"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:lines="1"
-                android:text="Braga"
-                app:autoSizeMaxTextSize="14sp"
-                app:autoSizeMinTextSize="8sp"
-                app:autoSizeTextType="uniform" />
-
-            <RadioButton
-                android:id="@+id/check_porto"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:lines="1"
-                android:text="Porto"
-                app:autoSizeMaxTextSize="14sp"
-                app:autoSizeMinTextSize="8sp"
-                app:autoSizeTextType="uniform" />
-
-            <RadioButton
-                android:id="@+id/check_lisbon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:lines="1"
-                android:text="Lisboa"
-                app:autoSizeMaxTextSize="14sp"
-                app:autoSizeMinTextSize="8sp"
-                app:autoSizeTextType="uniform" />
-
-            <RadioButton
-                android:id="@+id/check_algarve"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:lines="1"
-                android:text="Algarve"
-                app:autoSizeMaxTextSize="14sp"
-                app:autoSizeMinTextSize="8sp"
-                app:autoSizeTextType="uniform" />
-
-            <RadioButton
-                android:id="@+id/check_santarem"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:lines="1"
-                android:text="Santarém"
-                app:autoSizeMaxTextSize="14sp"
-                app:autoSizeMinTextSize="8sp"
-                app:autoSizeTextType="uniform" />
-
-        </RadioGroup>
-
-        <TextView
-            android:id="@+id/title_cuisine"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:lines="1"
-            android:text="Cozinha"
-            android:textSize="20dp"
-            android:textStyle="bold"
-            app:autoSizeMaxTextSize="24sp"
-            app:autoSizeMinTextSize="20sp"
-            app:autoSizeTextType="uniform" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:lines="1"
-            android:text="(Escolha um ou mais cozinhas)"
-            app:autoSizeMaxTextSize="14sp"
-            app:autoSizeMinTextSize="10sp"
-            app:autoSizeTextType="uniform" />
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <CheckBox
-                android:id="@+id/check_cozinha_chinese"
-                android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/title_estabelecimento"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="15dp"
                 android:lines="1"
-                android:text="Chinese"
-                app:autoSizeMaxTextSize="14sp"
+                android:text="Estabelecimento"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                app:autoSizeMaxTextSize="20sp"
+                app:autoSizeMinTextSize="16sp"
+                app:autoSizeTextType="uniform" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:lines="1"
+                android:text="(Escolha um estabelecimento)"
+                app:autoSizeMaxTextSize="10sp"
                 app:autoSizeMinTextSize="8sp"
                 app:autoSizeTextType="uniform" />
 
-            <CheckBox
-                android:id="@+id/check_cozinha_burger"
+            <RadioGroup
+                android:id="@+id/radio_group_estabelicimento"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_margin="10dp">
+
+                <RadioButton
+                    android:id="@+id/check_casual_dining"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:lines="1"
+                    android:text="Casual Dining"
+                    app:autoSizeMaxTextSize="14sp"
+                    app:autoSizeMinTextSize="10sp"
+                    app:autoSizeTextType="uniform" />
+
+                <RadioButton
+                    android:id="@+id/check_snack_bar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:lines="1"
+                    android:text="Snack Bar"
+                    app:autoSizeMaxTextSize="14sp"
+                    app:autoSizeMinTextSize="10sp"
+                    app:autoSizeTextType="uniform" />
+
+                <RadioButton
+                    android:id="@+id/check_cafe"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:lines="1"
+                    android:text="Café"
+                    app:autoSizeMaxTextSize="14sp"
+                    app:autoSizeMinTextSize="10sp"
+                    app:autoSizeTextType="uniform" />
+
+                <RadioButton
+                    android:id="@+id/check_bakery"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:lines="1"
+                    android:text="Bakery"
+                    app:autoSizeMaxTextSize="14sp"
+                    app:autoSizeMinTextSize="10sp"
+                    app:autoSizeTextType="uniform" />
+
+                <RadioButton
+                    android:id="@+id/check_bar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:lines="1"
+                    android:text="Bar"
+                    app:autoSizeMaxTextSize="14sp"
+                    app:autoSizeMinTextSize="10sp"
+                    app:autoSizeTextType="uniform" />
+
+                <RadioButton
+                    android:id="@+id/check_kiosk"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:lines="1"
+                    android:text="Kiosk"
+                    app:autoSizeMaxTextSize="14sp"
+                    app:autoSizeMinTextSize="10sp"
+                    app:autoSizeTextType="uniform" />
+
+            </RadioGroup>
+
+            <TextView
+                android:id="@+id/title_cidade"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
                 android:lines="1"
-                android:text="Burger"
-                app:autoSizeMaxTextSize="14sp"
+                android:text="Cidade"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                app:autoSizeMaxTextSize="20sp"
+                app:autoSizeMinTextSize="16sp"
+                app:autoSizeTextType="uniform" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:lines="1"
+                android:text="(Escolha uma cidade)"
+                app:autoSizeMaxTextSize="10sp"
                 app:autoSizeMinTextSize="8sp"
                 app:autoSizeTextType="uniform" />
 
-            <CheckBox
-                android:id="@+id/check_cozinha_brazilian"
-                android:layout_width="wrap_content"
+            <RadioGroup
+                android:id="@+id/radio_group_cidade"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_margin="10dp"
+                android:layout_marginEnd="10dp"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/check_braga"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:lines="1"
+                    android:text="Braga"
+                    app:autoSizeMaxTextSize="14sp"
+                    app:autoSizeMinTextSize="8sp"
+                    app:autoSizeTextType="uniform" />
+
+                <RadioButton
+                    android:id="@+id/check_porto"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:lines="1"
+                    android:text="Porto"
+                    app:autoSizeMaxTextSize="14sp"
+                    app:autoSizeMinTextSize="8sp"
+                    app:autoSizeTextType="uniform" />
+
+                <RadioButton
+                    android:id="@+id/check_lisbon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:lines="1"
+                    android:text="Lisboa"
+                    app:autoSizeMaxTextSize="14sp"
+                    app:autoSizeMinTextSize="8sp"
+                    app:autoSizeTextType="uniform" />
+
+                <RadioButton
+                    android:id="@+id/check_algarve"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:lines="1"
+                    android:text="Algarve"
+                    app:autoSizeMaxTextSize="14sp"
+                    app:autoSizeMinTextSize="8sp"
+                    app:autoSizeTextType="uniform" />
+
+                <RadioButton
+                    android:id="@+id/check_santarem"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:lines="1"
+                    android:text="Santarém"
+                    app:autoSizeMaxTextSize="14sp"
+                    app:autoSizeMinTextSize="8sp"
+                    app:autoSizeTextType="uniform" />
+
+            </RadioGroup>
+
+            <TextView
+                android:id="@+id/title_cuisine"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
                 android:lines="1"
-                android:text="Brazilian"
-                app:autoSizeMaxTextSize="14sp"
+                android:text="Cozinha"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                app:autoSizeMaxTextSize="20sp"
+                app:autoSizeMinTextSize="16sp"
+                app:autoSizeTextType="uniform" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:lines="1"
+                android:text="(Escolha um ou mais cozinhas)"
+                app:autoSizeMaxTextSize="10sp"
                 app:autoSizeMinTextSize="8sp"
                 app:autoSizeTextType="uniform" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:orientation="horizontal">
+
+                <CheckBox
+                    android:id="@+id/check_cozinha_chinese"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:lines="1"
+                    android:text="Chinese"
+                    app:autoSizeMaxTextSize="14sp"
+                    app:autoSizeMinTextSize="8sp"
+                    app:autoSizeTextType="uniform" />
+
+                <CheckBox
+                    android:id="@+id/check_cozinha_burger"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:lines="1"
+                    android:text="Burger"
+                    app:autoSizeMaxTextSize="14sp"
+                    app:autoSizeMinTextSize="8sp"
+                    app:autoSizeTextType="uniform" />
+
+                <CheckBox
+                    android:id="@+id/check_cozinha_brazilian"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:lines="1"
+                    android:text="Brazilian"
+                    app:autoSizeMaxTextSize="14sp"
+                    app:autoSizeMinTextSize="8sp"
+                    app:autoSizeTextType="uniform" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:orientation="horizontal">
+
+                <CheckBox
+                    android:id="@+id/check_cozinha_fast_food"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:lines="1"
+                    android:text="Fast Food"
+                    app:autoSizeMaxTextSize="14sp"
+                    app:autoSizeMinTextSize="8sp"
+                    app:autoSizeTextType="uniform" />
+
+                <CheckBox
+                    android:id="@+id/check_cozinha_pizza"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:lines="1"
+                    android:text="Pizza"
+                    app:autoSizeMaxTextSize="14sp"
+                    app:autoSizeMinTextSize="8sp"
+                    app:autoSizeTextType="uniform" />
+
+                <CheckBox
+                    android:id="@+id/check_cozinha_portuguese"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:lines="1"
+                    android:text="Portuguese"
+                    app:autoSizeMaxTextSize="14sp"
+                    app:autoSizeMinTextSize="8sp"
+                    app:autoSizeTextType="uniform" />
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/search_restaurants"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:text="Pesquisar" />
 
         </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-            android:orientation="horizontal">
-
-            <CheckBox
-                android:id="@+id/check_cozinha_fast_food"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:lines="1"
-                android:text="Fast Food"
-                app:autoSizeMaxTextSize="14sp"
-                app:autoSizeMinTextSize="8sp"
-                app:autoSizeTextType="uniform" />
-
-            <CheckBox
-                android:id="@+id/check_cozinha_pizza"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:lines="1"
-                android:text="Pizza"
-                app:autoSizeMaxTextSize="14sp"
-                app:autoSizeMinTextSize="8sp"
-                app:autoSizeTextType="uniform" />
-
-            <CheckBox
-                android:id="@+id/check_cozinha_portuguese"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="2dp"
-                android:layout_weight="1"
-                android:lines="1"
-                android:text="Portuguese"
-                app:autoSizeMaxTextSize="14sp"
-                app:autoSizeMinTextSize="8sp"
-                app:autoSizeTextType="uniform" />
-
-        </LinearLayout>
-
-        <Button
-            android:id="@+id/search_restaurants"
-            android:layout_width="133dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="20dp"
-            android:text="Pesquisar" />
-
-    </LinearLayout>
-
-</ScrollView>
+    </ScrollView>
+</FrameLayout>

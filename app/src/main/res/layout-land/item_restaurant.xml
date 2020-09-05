@@ -75,16 +75,15 @@
                 style="@style/Widget.MaterialComponents.Button.TextButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:layout_marginStart="200dp"
-                android:gravity="center"
+                android:layout_gravity="end|center"
+                android:layout_marginRight="10dp"
                 android:lines="1"
                 android:text="+Info"
                 android:textColor="#00aeff"
                 android:textSize="15dp"
                 android:textStyle="bold"
-                app:autoSizeMaxTextSize="16sp"
-                app:autoSizeMinTextSize="14sp"
+                app:autoSizeMaxTextSize="12sp"
+                app:autoSizeMinTextSize="8sp"
                 app:autoSizeTextType="uniform" />
         </LinearLayout>
 

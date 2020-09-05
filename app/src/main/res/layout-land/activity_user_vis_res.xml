@@ -41,6 +41,7 @@
             android:textAlignment="center"
             app:autoSizeMaxTextSize="12sp"
             app:autoSizeMinTextSize="10sp" />
+
     </LinearLayout>
 
     <LinearLayout

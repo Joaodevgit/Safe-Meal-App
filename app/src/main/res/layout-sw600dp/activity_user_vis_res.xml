@@ -39,8 +39,8 @@
             android:layout_height="wrap_content"
             android:text="Apagar um elemento swipe para direita ou esquerda"
             android:textAlignment="center"
-            app:autoSizeMaxTextSize="14sp"
-            app:autoSizeMinTextSize="12sp" />
+            app:autoSizeMaxTextSize="12sp"
+            app:autoSizeMinTextSize="10sp" />
 
     </LinearLayout>
 

@@ -8,19 +8,19 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/textView"
             android:layout_width="match_parent"
-            android:layout_height="62dp"
+            android:layout_height="42dp"
             android:gravity="center"
             android:lines="1"
             android:text="Criação de uma conta"
-            android:textSize="30dp"
-            app:autoSizeMaxTextSize="50sp"
-            app:autoSizeMinTextSize="40sp"
+            android:textAlignment="center"
+            app:autoSizeMaxTextSize="40sp"
+            app:autoSizeMinTextSize="30sp"
             app:autoSizeTextType="uniform" />
 
         <LinearLayout
@@ -33,39 +33,39 @@
             <EditText
                 android:id="@+id/newUserEmail"
                 android:layout_width="match_parent"
-                android:layout_height="80dp"
+                android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="Email"
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName"
+                android:lines="1"
+                app:autoSizeMaxTextSize="20sp"
+                app:autoSizeMinTextSize="16sp"
+                app:autoSizeTextType="uniform" />
 
             <EditText
                 android:id="@+id/newUserPassword"
                 android:layout_width="match_parent"
-                android:layout_height="80dp"
+                android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="Password"
-                android:inputType="textPassword" />
+                android:inputType="textPassword"
+                android:lines="1"
+                app:autoSizeMaxTextSize="14sp"
+                app:autoSizeMinTextSize="12sp"
+                app:autoSizeTextType="uniform" />
         </LinearLayout>
 
         <Button
             android:id="@+id/creatNewUser"
             android:layout_width="match_parent"
-            android:layout_height="91dp"
-            android:text="Registar"
-            android:lines="1"
-            app:autoSizeMaxTextSize="22sp"
-            app:autoSizeMinTextSize="18sp"
-            app:autoSizeTextType="uniform"/>
+            android:layout_height="wrap_content"
+            android:text="Registar" />
 
         <Button
             android:id="@+id/buttonCancel"
             android:layout_width="match_parent"
-            android:layout_height="91dp"
-            android:lines="1"
-            android:text="Cancelar"
-            app:autoSizeMaxTextSize="22sp"
-            app:autoSizeMinTextSize="18sp"
-            app:autoSizeTextType="uniform" />
+            android:layout_height="wrap_content"
+            android:text="Cancelar" />
 
     </LinearLayout>
 

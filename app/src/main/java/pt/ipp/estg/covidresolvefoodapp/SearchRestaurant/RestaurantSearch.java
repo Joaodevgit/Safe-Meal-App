@@ -12,15 +12,12 @@ import pt.ipp.estg.covidresolvefoodapp.R;
 
 public class RestaurantSearch extends AppCompatActivity implements SearchRestaurantFragment.OnFragmentSearchRestaurantListener {
 
-    private FirebaseAuth mAuth;
     private Toolbar myToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restaurant_search);
-
-        this.mAuth = FirebaseAuth.getInstance();
 
         SearchRestaurantFragment searchRestaurantFragment = new SearchRestaurantFragment();
 

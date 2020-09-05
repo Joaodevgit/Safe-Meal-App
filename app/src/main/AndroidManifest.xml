@@ -37,7 +37,6 @@
         <activity
             android:name=".RestaurantMap.RestaurantMapActivity"
             android:label="@string/title_activity_restaurant_map" />
-        <activity android:name=".PerfilUser.UserReviewActivity" />
         <activity android:name=".PerfilUser.UserVisResActivity" />
         <activity android:name=".PerfilUser.UserFavResActivity" />
         <activity
