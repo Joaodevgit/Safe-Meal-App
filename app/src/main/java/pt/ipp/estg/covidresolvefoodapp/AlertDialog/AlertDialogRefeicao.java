@@ -20,7 +20,6 @@ import pt.ipp.estg.covidresolvefoodapp.R;
 
 public class AlertDialogRefeicao extends AppCompatDialogFragment {
 
-    private TextView mTextView;
     private EditText mEditText;
 
     private DialogMealsListener mealsListener;
@@ -33,7 +32,6 @@ public class AlertDialogRefeicao extends AppCompatDialogFragment {
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.dialog_meals, null);
 
-        this.mTextView = view.findViewById(R.id.dialog_title_refeicao);
         this.mEditText = view.findViewById(R.id.dialog_content_refeicao);
 
         builder.setView(view)
@@ -41,7 +39,8 @@ public class AlertDialogRefeicao extends AppCompatDialogFragment {
                 .setPositiveButton("Submeter", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        mealsListener.addMeals(mEditText.getText().toString());
+                        if (isPadding())
+                            mealsListener.addMeals(mEditText.getText().toString());
                     }
                 })
                 .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
@@ -65,8 +64,17 @@ public class AlertDialogRefeicao extends AppCompatDialogFragment {
         }
     }
 
-
     public interface DialogMealsListener {
         void addMeals(String meals);
+    }
+
+    private boolean isPadding() {
+        boolean isPadding = true;
+
+        if (this.mEditText.getText().length() > 20) {
+            isPadding = false;
+        }
+
+        return isPadding;
     }
 }
