@@ -12,6 +12,7 @@ import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.os.CountDownTimer;
 import android.os.IBinder;
 import android.util.Log;
 
@@ -49,6 +50,9 @@ public class LocationService extends Service {
     public static final String channel_description = "Notificaçao da localizaçao";
     public static final String TAG = "SERVICE";
 
+    private CountDownTimer countDownTimer;
+    private long timeLeftInMilliseconds = 30000; //5 Segundos
+    private boolean timerRunning = false;
 
     private FusedLocationProviderClient mFusedLocationClient;
     private LocationRequest mLocationRequest;
@@ -71,7 +75,8 @@ public class LocationService extends Service {
     public void onCreate() {
         super.onCreate();
         this.mAuth = FirebaseAuth.getInstance();
-        createNotificationChannel();
+        this.createNotificationChannel();
+        this.startRestart();
     }
 
 
@@ -129,6 +134,38 @@ public class LocationService extends Service {
         }
     }
 
+    private void startRestart() {
+        if (this.timerRunning) {
+            this.resetTimer();
+        } else {
+            this.startTimer();
+        }
+    }
+
+    private void startTimer() {
+        this.countDownTimer = new CountDownTimer(this.timeLeftInMilliseconds, 6000) {
+            @Override
+            public void onTick(long l) {
+                timeLeftInMilliseconds = l;
+                System.out.println("Timer: " + timeLeftInMilliseconds);
+            }
+
+            @Override
+            public void onFinish() {
+                new NotificationSender(getApplicationContext(), favBestRes.getNameRestaurant(), favBestRes.getCity(), favBestRes.getThumb()).execute();
+                timeLeftInMilliseconds = 30000;
+                startRestart();
+            }
+        }.start();
+
+        this.timerRunning = true;
+    }
+
+    private void resetTimer() {
+        this.timerRunning = false;
+        this.startRestart();
+    }
+
     private void startLocationUpdates() {
         mFusedLocationClient.requestLocationUpdates(mLocationRequest, mLocationCallback, null);
     }
@@ -160,8 +197,8 @@ public class LocationService extends Service {
                         closestDistance = distance;
                     }
                 }
-                Log.d(TAG, "Nome:" + favBestRes.getNameRestaurant() + "City:" + favBestRes.getCity() + "Url" + favBestRes.getThumb());
-                new NotificationSender(getApplicationContext(), favBestRes.getNameRestaurant(), favBestRes.getCity(), favBestRes.getThumb()).execute();
+//                Log.d(TAG, "Nome:" + favBestRes.getNameRestaurant() + "City:" + favBestRes.getCity() + "Url" + favBestRes.getThumb());
+
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -217,7 +254,7 @@ public class LocationService extends Service {
             Log.d(TAG, "cheguei aqui notificacao");
             NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(mContext, CHANNEL_ID);
             Notification notification = notificationBuilder.setOngoing(true)
-                    .setSmallIcon(R.drawable.notification_icon)
+                    .setSmallIcon(R.drawable.ic_baseline_restaurant_24)
                     .setContentTitle(name)
                     .setContentText(city)
                     .setPriority(Notification.PRIORITY_HIGH)
