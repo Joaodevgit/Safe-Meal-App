@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,24 +7,48 @@
     tools:context=".MainActivity.PrincipalPage">
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <Button
-            android:id="@+id/buttonRestaurantSearch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/pesquisar_restaurantes" />
+        <LinearLayout
+            android:id="@+id/image_view_layout"
+            android:layout_width="match_parent"
+            android:layout_height="235dp"
+            android:gravity="center"
+            android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/buttonRestaurantMap"
+            <ImageView
+                android:id="@+id/image_view_logo_main"
+                android:layout_width="299dp"
+                android:layout_height="187dp"
+                android:layout_gravity="center" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="@string/restaurantes_perto_de_si"
-            app:layout_anchorGravity="center" />
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="20dp"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/buttonRestaurantSearch"
+                android:layout_width="261dp"
+                android:layout_height="wrap_content"
+                android:drawableEnd="@drawable/search"
+                android:text="@string/pesquisar_restaurantes" />
+
+            <Button
+                android:id="@+id/buttonRestaurantMap"
+                android:layout_width="261dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:drawableEnd="@drawable/map"
+                android:text="@string/restaurantes_perto_de_si"
+                app:layout_anchorGravity="center" />
+        </LinearLayout>
     </LinearLayout>
 
-</FrameLayout>
+</ScrollView>

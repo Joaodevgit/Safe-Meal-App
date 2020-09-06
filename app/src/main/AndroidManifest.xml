@@ -15,9 +15,9 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_logo_24dp"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_logo_24dp"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
@@ -41,13 +41,13 @@
         <activity android:name=".PerfilUser.UserFavResActivity" />
         <activity
             android:name=".SearchRestaurant.RestaurantSearch"
-            android:configChanges="keyboardHidden|orientation" />
+            android:configChanges="orientation" />
         <activity
             android:name=".PerfilUser.UserProfileActivity"
-            android:configChanges="keyboardHidden|orientation" />
+            android:configChanges="orientation" />
         <activity
             android:name=".SearchRestaurant.InfoRestaurantActivity"
-            android:configChanges="keyboardHidden|orientation" />
+            android:configChanges="orientation" />
         <activity
             android:name=".MainActivity.MainActivity"
             android:launchMode="standard">

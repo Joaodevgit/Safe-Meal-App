@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">CovidResolveFoodApp</string>
+    <string name="app_name">SafeMeal</string>
     <string name="auth_failed">Autenticação Falhou :(</string>
     <string name="signed_out">Saiu :(</string>
     <!-- TODO: Remove or change this placeholder text -->

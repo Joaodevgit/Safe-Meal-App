@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -31,6 +32,7 @@ public class CreateAccount extends Fragment {
     private EditText mNewUserPassword;
     private Button mCreatNewUser;
     private Button mCancelRegistry;
+    private ImageView mImageLogo;
 
     private OnFragmentCreateAccountInteractionListener mListener;
 
@@ -62,6 +64,8 @@ public class CreateAccount extends Fragment {
         this.mNewUserPassword = view.findViewById(R.id.newUserPassword);
         this.mCreatNewUser = view.findViewById(R.id.creatNewUser);
         this.mCancelRegistry = view.findViewById(R.id.buttonCancel);
+        this.mImageLogo = view.findViewById(R.id.image_view_logo_registry);
+        this.mImageLogo.setImageResource(R.drawable.safe_meal_logo);
 
         // [START initialize_auth]
         // Initialize Firebase Auth

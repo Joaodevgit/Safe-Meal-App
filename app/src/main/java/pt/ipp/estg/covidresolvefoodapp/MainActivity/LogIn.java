@@ -74,7 +74,7 @@ public class LogIn extends Fragment {
         this.mButtonCreat = view.findViewById(R.id.emailCreateAccountButton);
 
         //Image View
-        this.mImageLogo = view.findViewById(R.id.image_view_logo);
+        this.mImageLogo = view.findViewById(R.id.image_view_logo_login);
         this.mImageLogo.setImageResource(R.drawable.safe_meal_logo);
 
         this.mButtonSign.setOnClickListener(new View.OnClickListener() {

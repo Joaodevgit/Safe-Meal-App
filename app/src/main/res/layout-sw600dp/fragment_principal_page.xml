@@ -7,23 +7,44 @@
     tools:context=".MainActivity.PrincipalPage">
 
     <LinearLayout
+        android:id="@+id/image_view_layout"
+        android:layout_width="match_parent"
+        android:layout_height="358dp"
+        android:layout_marginTop="30dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/image_view_logo_main"
+            android:layout_width="374dp"
+            android:layout_height="231dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp" />
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_marginTop="20dp"
         android:orientation="vertical">
 
         <Button
             android:id="@+id/buttonRestaurantSearch"
-            android:layout_width="wrap_content"
+            android:layout_width="335dp"
             android:layout_height="wrap_content"
-            android:text="@string/pesquisar_restaurantes" />
+            android:drawableEnd="@drawable/search"
+            android:text="@string/pesquisar_restaurantes"
+            android:textSize="20sp" />
 
         <Button
             android:id="@+id/buttonRestaurantMap"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
+            android:drawableEnd="@drawable/map"
             android:text="@string/restaurantes_perto_de_si"
+            android:textSize="20sp"
             app:layout_anchorGravity="center" />
     </LinearLayout>
 

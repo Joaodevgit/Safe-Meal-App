@@ -1,7 +1,6 @@
 package pt.ipp.estg.covidresolvefoodapp.MainActivity;
 
 import android.Manifest;
-import android.app.ActivityManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -17,7 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
+import android.widget.ImageView;
 
 import pt.ipp.estg.covidresolvefoodapp.R;
 import pt.ipp.estg.covidresolvefoodapp.Service.LocationService;
@@ -27,6 +26,7 @@ public class PrincipalPage extends Fragment {
 
     private Button btnRestaurantSearch;
     private Button btnRestaurantMap;
+    private ImageView mImageLogo;
     private onButtonMainMenuClickListener mListener;
     private LocationManager locationManager;
 
@@ -38,7 +38,7 @@ public class PrincipalPage extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+        locationManager = (LocationManager) getContext().getSystemService(Context.LOCATION_SERVICE);
 
         if ((locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER))) {
             Intent serviceIntent = new Intent(getContext(), LocationService.class);
@@ -56,6 +56,8 @@ public class PrincipalPage extends Fragment {
 
         btnRestaurantSearch = view.findViewById(R.id.buttonRestaurantSearch);
         btnRestaurantMap = view.findViewById(R.id.buttonRestaurantMap);
+        this.mImageLogo = view.findViewById(R.id.image_view_logo_main);
+        this.mImageLogo.setImageResource(R.drawable.safe_meal_logo);
 
         btnRestaurantSearch.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,7 +115,7 @@ public class PrincipalPage extends Fragment {
                 .setNegativeButton("cancelar", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(getContext(), "Operação cancelada", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getContext(), "Operação cancelada", Toast.LENGTH_SHORT).show();
                         dialog.dismiss();
                     }
                 })
