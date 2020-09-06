@@ -110,10 +110,11 @@ public class RestaurantMapActivity extends FragmentActivity {
                                             if (marker.getPosition().latitude == Double.parseDouble(restaurants.get(i).getRestaurant().getLocation().getLatitude()) &&
                                                     marker.getPosition().longitude == Double.parseDouble(restaurants.get(i).getRestaurant().getLocation().getLongitude())) {
                                                 found = true;
-                                                Intent resIntent = new Intent(getApplicationContext(), InfoRestaurantActivity.class);
-                                                resIntent.putExtra("idRestaurant", restaurants.get(i).getRestaurant().getId());
-                                                startActivity(resIntent);
-                                                //Toast.makeText(getApplicationContext(), "Au tocaste em:" + marker.getTitle(), Toast.LENGTH_SHORT).show();
+                                                if (restaurants.get(i).getRestaurant().getId() != null) {
+                                                    Intent resIntent = new Intent(getApplicationContext(), InfoRestaurantActivity.class);
+                                                    resIntent.putExtra("idRestaurant", restaurants.get(i).getRestaurant().getId());
+                                                    startActivity(resIntent);
+                                                }
                                             }
                                             i++;
                                         }
