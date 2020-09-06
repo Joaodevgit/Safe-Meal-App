@@ -184,7 +184,7 @@ public class MainActivity extends AppCompatActivity implements LogIn.OnFragmentL
             if (gps_enabled) {
                 startActivity(new Intent(this, RestaurantSearch.class));
             } else {
-                verifyGPSPermission();
+                verifyGPSPermission("à pesquisa de restaurantes");
             }
         } else {
             verifyWifiPermission();
@@ -204,20 +204,18 @@ public class MainActivity extends AppCompatActivity implements LogIn.OnFragmentL
                 verifyWifiPermission();
             }
         } else {
-            verifyGPSPermission();
+            verifyGPSPermission("ao mapa");
         }
     }
 
-    private void verifyGPSPermission() {
+    private void verifyGPSPermission(String purpose) {
         new AlertDialog.Builder(this)
                 .setTitle("Permissão GPS necessária")
-                .setMessage("Esta permissão é necessária para poder aceder ao mapa")
+                .setMessage("Esta permissão é necessária para poder aceder " + purpose)
                 .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         //Ir às definições
-                        ActivityCompat.requestPermissions(MainActivity.this,
-                                new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 44);
                         startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
                     }
                 })
@@ -240,8 +238,6 @@ public class MainActivity extends AppCompatActivity implements LogIn.OnFragmentL
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         //Ir às definições
-                        ActivityCompat.requestPermissions(MainActivity.this,
-                                new String[]{Manifest.permission.ACCESS_WIFI_STATE}, 44);
                         startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
                     }
                 })

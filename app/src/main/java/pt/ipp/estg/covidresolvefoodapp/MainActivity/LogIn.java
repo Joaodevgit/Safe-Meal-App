@@ -2,7 +2,10 @@ package pt.ipp.estg.covidresolvefoodapp.MainActivity;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -50,6 +54,7 @@ public class LogIn extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         // [START initialize_auth]
         // Initialize Firebase Auth
         this.mAuth = FirebaseAuth.getInstance();
@@ -138,7 +143,7 @@ public class LogIn extends Fragment {
 
                         // [START_EXCLUDE]
                         if (!task.isSuccessful()) {
-                            mStatusTextView.setText(R.string.auth_failed);
+                            Toast.makeText(getContext(), "Utilizador Inexistente", Toast.LENGTH_SHORT).show();
                         }
                         // [END_EXCLUDE]
                     }
