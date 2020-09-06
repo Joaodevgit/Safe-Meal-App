@@ -54,6 +54,7 @@ public class LocationService extends Service {
     private CountDownTimer countDownTimer;
     private long timeLeftInMilliseconds = 6000; // 10 em 10 mins
     private boolean timerRunning = false;
+    private boolean timerStop = false;
 
     private FusedLocationProviderClient mFusedLocationClient;
     private LocationRequest mLocationRequest;
@@ -63,7 +64,7 @@ public class LocationService extends Service {
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private CollectionReference favRef = db.collection("Favorite");
 
-    private FavoriteFirestore favBestRes = null;
+    private FavoriteFirestore favBestRes = new FavoriteFirestore();
 
     private String idRestaurant = "";
     private String nameRestaurant = "";
@@ -74,16 +75,12 @@ public class LocationService extends Service {
 
     private String userID = "";
 
-    private int varA = 0;
-    private int varB = 0;
-
     @Override
     public void onCreate() {
         super.onCreate();
         this.mAuth = FirebaseAuth.getInstance();
         this.userID = this.mAuth.getCurrentUser().getUid();
         this.createNotificationChannel();
-        this.startRestart();
     }
 
 
@@ -108,11 +105,15 @@ public class LocationService extends Service {
             @Override
             public void onLocationResult(LocationResult locationResult) {
                 if (locationResult != null) {
-                    onNewLocation(locationResult.getLastLocation());
+                    if (mAuth != null) {
+                        onNewLocation(locationResult.getLastLocation());
+                    }
                 }
             }
         };
         startLocationUpdates();
+
+        this.startTimer();
 
         return START_NOT_STICKY;
     }
@@ -120,6 +121,7 @@ public class LocationService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        this.timerStop = true;
     }
 
     private void createNotificationChannel() {
@@ -138,16 +140,8 @@ public class LocationService extends Service {
         }
     }
 
-    private void startRestart() {
-        if (this.timerRunning) {
-            this.resetTimer();
-        } else {
-            this.startTimer();
-        }
-    }
-
     private void startTimer() {
-        this.countDownTimer = new CountDownTimer(this.timeLeftInMilliseconds, 6000) {
+        this.countDownTimer = new CountDownTimer(this.timeLeftInMilliseconds, 600) {
 
             @Override
             public void onTick(long l) {
@@ -158,19 +152,13 @@ public class LocationService extends Service {
             @Override
             public void onFinish() {
                 if (favBestRes != null) {
-                    new NotificationSender(getApplicationContext(), favBestRes.getIdRestaurant(), favBestRes.getNameRestaurant(), favBestRes.getCity(), favBestRes.getThumb()).execute();
+                    System.out.println("ID Restaurant: " + favBestRes.getIdRestaurant());
+                    NotificationSender notificationSender = new NotificationSender(getApplicationContext(), favBestRes.getIdRestaurant(), favBestRes.getNameRestaurant(), favBestRes.getCity(), favBestRes.getThumb());
+                    notificationSender.execute();
                 }
                 timeLeftInMilliseconds = 6000; // 10 em 10 mins
-                startRestart();
             }
         }.start();
-
-        this.timerRunning = true;
-    }
-
-    private void resetTimer() {
-        this.timerRunning = false;
-        this.startRestart();
     }
 
     private void startLocationUpdates() {
@@ -179,9 +167,9 @@ public class LocationService extends Service {
 
     private void onNewLocation(Location location) {
 
-        System.out.println("UserIDD: " + userID);
+//        System.out.println("UserIDD: " + userID);
 
-        favRef.whereEqualTo("idUser", userID)
+        favRef.whereEqualTo("idUser", this.userID)
                 .get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
@@ -203,7 +191,13 @@ public class LocationService extends Service {
                                 latitude = documentSnapshot.get("latitude").toString();
                                 longitude = documentSnapshot.get("longitude").toString();
 
-                                favBestRes = new FavoriteFirestore(idRestaurant, nameRestaurant, city, thumb, latitude, longitude);
+//                                favBestRes = new FavoriteFirestore(idRestaurant, nameRestaurant, city, thumb, latitude, longitude);
+                                favBestRes.setIdRestaurant(idRestaurant);
+                                favBestRes.setNameRestaurant(nameRestaurant);
+                                favBestRes.setCity(city);
+                                favBestRes.setThumb(thumb);
+                                favBestRes.setLatitude(latitude);
+                                favBestRes.setLongitude(longitude);
                             }
                         }
                     }
@@ -218,7 +212,7 @@ public class LocationService extends Service {
     }
 
 
-    class NotificationSender extends AsyncTask<String, Void, Bitmap> {
+    class NotificationSender extends AsyncTask<Integer, Integer, Bitmap> {
 
         private Context mContext;
         private String name, city, imageUrl, resID;
@@ -233,23 +227,43 @@ public class LocationService extends Service {
         }
 
         @Override
-        protected Bitmap doInBackground(String... params) {
+        protected Bitmap doInBackground(Integer... params) {
 
-            InputStream in;
-            try {
-                URL url = new URL(this.imageUrl);
-                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                connection.setDoInput(true);
-                connection.connect();
-                in = connection.getInputStream();
-                Bitmap myBitmap = BitmapFactory.decodeStream(in);
-                return myBitmap;
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
+            Bitmap myBitmap = null;
+
+            for (int i = 0; i < 20; i++) {
+                publishProgress(i);
+
+                try {
+                    Thread.sleep(600);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                InputStream in;
+                try {
+                    URL url = new URL(this.imageUrl);
+                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                    connection.setDoInput(true);
+                    connection.connect();
+                    in = connection.getInputStream();
+                    myBitmap = BitmapFactory.decodeStream(in);
+
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
-            return null;
+
+
+            return myBitmap;
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            super.onProgressUpdate(values);
+            System.out.println("Timer: " + values[0]);
         }
 
         @Override
@@ -257,11 +271,9 @@ public class LocationService extends Service {
             super.onPostExecute(result);
 
             Intent resIntent = new Intent(mContext, InfoRestaurantActivity.class);
-            resIntent.putExtra("idRestaurant", resID);
-            PendingIntent resultPendingIntent = PendingIntent.getActivity(getApplicationContext(), varA, resIntent, varB);
+            resIntent.putExtra("idRestaurant", this.resID);
+            PendingIntent resultPendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, resIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-            varA++;
-            varB++;
             NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(mContext, CHANNEL_ID);
             Notification notification = notificationBuilder
                     .setSmallIcon(R.drawable.ic_baseline_restaurant_24)
@@ -276,6 +288,7 @@ public class LocationService extends Service {
                     .build();
 
             startForeground(1, notification);
+            startTimer();
         }
 
     }

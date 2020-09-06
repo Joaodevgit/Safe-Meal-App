@@ -5,6 +5,7 @@ import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -170,7 +171,9 @@ public class InfoRestaurantActivity extends AppCompatActivity implements AlertDi
 
         };
 
-        this.idRestaurant = Integer.parseInt(getIntent().getStringExtra("idRestaurant"));
+        this.onNewIntent(getIntent());
+
+//        this.idRestaurant = Integer.parseInt(getIntent().getStringExtra("idRestaurant"));
 
         this.myToolbar = findViewById(R.id.toolbar_restaurant_show);
         setSupportActionBar(this.myToolbar);
@@ -309,6 +312,18 @@ public class InfoRestaurantActivity extends AppCompatActivity implements AlertDi
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         startLocationUpdates();
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        Bundle extras = intent.getExtras();
+
+        if (extras != null) {
+            if (extras.containsKey("idRestaurant")) {
+                this.idRestaurant = Integer.parseInt(extras.getString("idRestaurant"));
+            }
+        }
     }
 
     @Override
