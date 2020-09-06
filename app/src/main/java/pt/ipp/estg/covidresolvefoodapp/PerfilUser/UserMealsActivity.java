@@ -6,7 +6,6 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 
-import pt.ipp.estg.covidresolvefoodapp.Adapter.UserMealsAdapter;
 import pt.ipp.estg.covidresolvefoodapp.R;
 
 public class UserMealsActivity extends AppCompatActivity {

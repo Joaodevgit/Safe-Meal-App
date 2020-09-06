@@ -19,7 +19,7 @@
             android:layout_height="?attr/actionBarSize"
             android:background="@color/colorPrimary"
             app:popupTheme="@style/AppTheme.PopupOverlay"
-            app:title="Home" />
+            app:title="SafeFood" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <FrameLayout

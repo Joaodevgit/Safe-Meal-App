@@ -65,7 +65,6 @@ public class UserProfileFragment extends Fragment {
         userNameTxtView.setText(mListener.onFragmentUserName());
 
         totalUserMeals = view.findViewById(R.id.textViewTotalMeals);
-        // Falta fazer a contagem das refeições efetuadas pelo cliente
 
         this.mealsRef.whereEqualTo("idUser", this.mAuth.getCurrentUser().getUid())
                 .get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {

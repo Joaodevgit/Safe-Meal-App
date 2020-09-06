@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -26,16 +25,8 @@ import com.google.firebase.firestore.WriteBatch;
 import com.squareup.picasso.Picasso;
 
 import pt.ipp.estg.covidresolvefoodapp.Model.FavoriteFirestore;
-import pt.ipp.estg.covidresolvefoodapp.Model.Restaurant;
 import pt.ipp.estg.covidresolvefoodapp.R;
-import pt.ipp.estg.covidresolvefoodapp.Retrofit.Model.RestaurantInfoRetro;
-import pt.ipp.estg.covidresolvefoodapp.Retrofit.ZomatoAPI;
 import pt.ipp.estg.covidresolvefoodapp.SearchRestaurant.InfoRestaurantActivity;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class FavResAdapter extends FirestoreRecyclerAdapter<FavoriteFirestore, FavResAdapter.FavResViewHolder> {
 

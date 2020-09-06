@@ -1,16 +1,11 @@
 package pt.ipp.estg.covidresolvefoodapp.Adapter;
 
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.content.Context;
-import android.os.Build;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -53,15 +48,6 @@ public class VisResAdapter extends RecyclerView.Adapter<VisResAdapter.VisResView
             Picasso.get().load("https://i.postimg.cc/zfX7My2F/tt.jpg").into(viewHolder.visResImgView);
         }
 
-/*        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                System.out.println("Nome" + currentVisRes.getName());
-                System.out.println("Cidade" + currentVisRes.getCity());
-                System.out.println("Endereço" + currentVisRes.getAddress());
-
-            }
-        });*/
     }
 
     public int getItemCount() {

@@ -44,6 +44,7 @@ import pt.ipp.estg.covidresolvefoodapp.Retrofit.Model.NearbyRestaurant;
 import pt.ipp.estg.covidresolvefoodapp.Retrofit.Model.RestaurantInfoRetro;
 import pt.ipp.estg.covidresolvefoodapp.Retrofit.Model.RestaurantRetro;
 import pt.ipp.estg.covidresolvefoodapp.Retrofit.ZomatoAPI;
+import pt.ipp.estg.covidresolvefoodapp.SearchRestaurant.InfoRestaurantActivity;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -81,8 +82,6 @@ public class RestaurantMapActivity extends FragmentActivity {
 
         mLocationRequest = new LocationRequest();
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        //mLocationRequest.setInterval(3000);
-        //mLocationRequest.setFastestInterval(5000);
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         supportMapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -111,8 +110,10 @@ public class RestaurantMapActivity extends FragmentActivity {
                                             if (marker.getPosition().latitude == Double.parseDouble(restaurants.get(i).getRestaurant().getLocation().getLatitude()) &&
                                                     marker.getPosition().longitude == Double.parseDouble(restaurants.get(i).getRestaurant().getLocation().getLongitude())) {
                                                 found = true;
-                                                //startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                                                Toast.makeText(getApplicationContext(), "Au tocaste em:" + marker.getTitle(), Toast.LENGTH_SHORT).show();
+                                                Intent resIntent = new Intent(getApplicationContext(), InfoRestaurantActivity.class);
+                                                resIntent.putExtra("idRestaurant", restaurants.get(i).getRestaurant().getId());
+                                                startActivity(resIntent);
+                                                //Toast.makeText(getApplicationContext(), "Au tocaste em:" + marker.getTitle(), Toast.LENGTH_SHORT).show();
                                             }
                                             i++;
                                         }

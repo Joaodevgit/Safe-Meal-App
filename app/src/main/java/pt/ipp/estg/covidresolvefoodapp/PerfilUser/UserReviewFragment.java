@@ -1,6 +1,5 @@
 package pt.ipp.estg.covidresolvefoodapp.PerfilUser;
 
-import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -17,13 +16,8 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
-import java.util.ArrayList;
-
-import pt.ipp.estg.covidresolvefoodapp.Adapter.UserReviewAdapter;
 import pt.ipp.estg.covidresolvefoodapp.Adapter.UserReviewProfileAdapter;
-import pt.ipp.estg.covidresolvefoodapp.Model.FavoriteFirestore;
 import pt.ipp.estg.covidresolvefoodapp.Model.ReviewFirestore;
-import pt.ipp.estg.covidresolvefoodapp.Model.User;
 import pt.ipp.estg.covidresolvefoodapp.R;
 
 public class UserReviewFragment extends Fragment {

@@ -5,8 +5,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.LocationManager;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -20,7 +18,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -30,15 +27,15 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QuerySnapshot;
 
-import java.util.Random;
+
+import java.util.List;
 
 import pt.ipp.estg.covidresolvefoodapp.Model.UserFirestore;
 import pt.ipp.estg.covidresolvefoodapp.PerfilUser.UserProfileActivity;
 import pt.ipp.estg.covidresolvefoodapp.R;
 import pt.ipp.estg.covidresolvefoodapp.RestaurantMap.RestaurantMapActivity;
+import pt.ipp.estg.covidresolvefoodapp.Retrofit.Model.Location;
 import pt.ipp.estg.covidresolvefoodapp.SearchRestaurant.RestaurantSearch;
 import pt.ipp.estg.covidresolvefoodapp.Service.LocationService;
 
@@ -87,7 +84,6 @@ public class MainActivity extends AppCompatActivity implements LogIn.OnFragmentL
 
         if (count == 0) {
             super.onBackPressed();
-            //additional code
         } else {
             getSupportFragmentManager().popBackStack();
         }
@@ -99,24 +95,23 @@ public class MainActivity extends AppCompatActivity implements LogIn.OnFragmentL
             case R.id.action_settings:
                 Intent intent = new Intent(this, UserProfileActivity.class);
                 startActivity(intent);
-
-                // CÓDIGO RELATIVO À ACTIVITY DEFINICOES
-                Toast.makeText(getApplicationContext(), "Clicaste em perfil!", Toast.LENGTH_SHORT).show();
                 break;
 
             case R.id.action_logout:
-                this.mAuth.signOut();
+                Intent i = new Intent(this, LocationService.class);
+                stopService(i);
 
+                this.mAuth.signOut();
                 this.mAppBarLayout.setVisibility(View.INVISIBLE);
+
 
                 LogIn logIn = new LogIn();
                 FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.fragment_container, logIn);
                 fragmentTransaction.commit();
-                // CÓDIGO RELATIVO AO LOGOUT
-                Toast.makeText(getApplicationContext(), "Clicaste em logout!", Toast.LENGTH_SHORT).show();
-                break;
 
+
+                break;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -231,7 +226,6 @@ public class MainActivity extends AppCompatActivity implements LogIn.OnFragmentL
                     public void onClick(DialogInterface dialog, int which) {
                         Toast.makeText(getApplicationContext(), "Operação cancelada", Toast.LENGTH_SHORT).show();
                         dialog.dismiss();
-                        //request.cancel();
                     }
                 })
                 .show();

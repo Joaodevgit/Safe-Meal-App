@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,8 +35,7 @@ public class LogIn extends Fragment {
     private EditText mPasswordField;
     private Button mButtonSign;
     private Button mButtonCreat;
-
-    private static final int REQUEST_WIFI_STATE = 101;
+    private ImageView mImageLogo;
 
     // [START declare_auth]
     private FirebaseAuth mAuth;
@@ -68,9 +68,14 @@ public class LogIn extends Fragment {
         this.mEmailField = view.findViewById(R.id.fieldEmail);
         this.mPasswordField = view.findViewById(R.id.fieldPassword);
 
+
         // Buttons
         this.mButtonSign = view.findViewById(R.id.emailSignInButton);
         this.mButtonCreat = view.findViewById(R.id.emailCreateAccountButton);
+
+        //Image View
+        this.mImageLogo = view.findViewById(R.id.image_view_logo);
+        this.mImageLogo.setImageResource(R.drawable.safe_meal_logo);
 
         this.mButtonSign.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,6 +90,7 @@ public class LogIn extends Fragment {
                 mListener.onFragmentCreateAccountInteractionLogIn();
             }
         });
+
 
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
@@ -101,9 +107,6 @@ public class LogIn extends Fragment {
         } else {
             this.mStatusTextView.setText(R.string.signed_out);
             this.mDetailTextView.setText(null);
-
-//            view.findViewById(R.id.emailPasswordButtons).setVisibility(View.VISIBLE);
-//            view.findViewById(R.id.emailPasswordFields).setVisibility(View.VISIBLE);
         }
     }
 
@@ -113,8 +116,6 @@ public class LogIn extends Fragment {
         if (!validateForm()) {
             return;
         }
-
-        //showProgressBar();
 
         // [START sign_in_with_email]
         mAuth.signInWithEmailAndPassword(email, password)
@@ -139,7 +140,6 @@ public class LogIn extends Fragment {
                         if (!task.isSuccessful()) {
                             mStatusTextView.setText(R.string.auth_failed);
                         }
-                        //hideProgressBar();
                         // [END_EXCLUDE]
                     }
                 });

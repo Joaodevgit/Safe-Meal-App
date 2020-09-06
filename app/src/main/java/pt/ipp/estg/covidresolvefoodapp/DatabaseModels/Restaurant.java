@@ -2,7 +2,6 @@ package pt.ipp.estg.covidresolvefoodapp.DatabaseModels;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
-import androidx.room.PrimaryKey;
 
 @Entity(tableName = "restaurant_table", primaryKeys = {"userName", "address"})
 public class Restaurant {
@@ -17,7 +16,6 @@ public class Restaurant {
     private String city;
 
     @NonNull
-
     private String address;
 
     private String image;

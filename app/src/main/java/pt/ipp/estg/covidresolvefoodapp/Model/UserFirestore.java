@@ -1,7 +1,5 @@
 package pt.ipp.estg.covidresolvefoodapp.Model;
 
-import com.google.firebase.firestore.Exclude;
-
 public class UserFirestore {
 
     private String idUser;

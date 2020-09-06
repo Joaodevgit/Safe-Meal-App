@@ -52,7 +52,7 @@ public class LocationService extends Service {
     public static final int RADIUS = 2; // radius in km
 
     private CountDownTimer countDownTimer;
-    private long timeLeftInMilliseconds = 600000; // 10 em 10 mins
+    private long timeLeftInMilliseconds = 6000; // 10 em 10 mins
     private boolean timerRunning = false;
 
     private FusedLocationProviderClient mFusedLocationClient;
@@ -72,12 +72,17 @@ public class LocationService extends Service {
     private String latitude = "";
     private String longitude = "";
 
+    private String userID = "";
+
+    private int varA = 0;
+    private int varB = 0;
+
     @Override
     public void onCreate() {
         super.onCreate();
         this.mAuth = FirebaseAuth.getInstance();
+        this.userID = this.mAuth.getCurrentUser().getUid();
         this.createNotificationChannel();
-        //this.closestDistance = Float.MAX_VALUE;
         this.startRestart();
     }
 
@@ -90,8 +95,6 @@ public class LocationService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-
-        Log.d(TAG, "cheguei aqui startCommand");
 
         mLocationRequest = new LocationRequest();
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
@@ -109,10 +112,9 @@ public class LocationService extends Service {
                 }
             }
         };
-
         startLocationUpdates();
 
-        return START_STICKY;
+        return START_NOT_STICKY;
     }
 
     @Override
@@ -158,7 +160,7 @@ public class LocationService extends Service {
                 if (favBestRes != null) {
                     new NotificationSender(getApplicationContext(), favBestRes.getIdRestaurant(), favBestRes.getNameRestaurant(), favBestRes.getCity(), favBestRes.getThumb()).execute();
                 }
-                timeLeftInMilliseconds = 600000; // 10 em 10 mins
+                timeLeftInMilliseconds = 6000; // 10 em 10 mins
                 startRestart();
             }
         }.start();
@@ -177,11 +179,12 @@ public class LocationService extends Service {
 
     private void onNewLocation(Location location) {
 
-        favRef.whereEqualTo("idUser", mAuth.getCurrentUser().getUid())
+        System.out.println("UserIDD: " + userID);
+
+        favRef.whereEqualTo("idUser", userID)
                 .get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-
                 if (!queryDocumentSnapshots.isEmpty()) {
                     float closestDistance = Float.MAX_VALUE;
 
@@ -213,6 +216,7 @@ public class LocationService extends Service {
             }
         });
     }
+
 
     class NotificationSender extends AsyncTask<String, Void, Bitmap> {
 
@@ -253,9 +257,11 @@ public class LocationService extends Service {
             super.onPostExecute(result);
 
             Intent resIntent = new Intent(mContext, InfoRestaurantActivity.class);
-            resIntent.putExtra("idRestaurant", idRestaurant);
-            PendingIntent resultPendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, resIntent, 0);
+            resIntent.putExtra("idRestaurant", resID);
+            PendingIntent resultPendingIntent = PendingIntent.getActivity(getApplicationContext(), varA, resIntent, varB);
 
+            varA++;
+            varB++;
             NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(mContext, CHANNEL_ID);
             Notification notification = notificationBuilder
                     .setSmallIcon(R.drawable.ic_baseline_restaurant_24)
@@ -271,6 +277,7 @@ public class LocationService extends Service {
 
             startForeground(1, notification);
         }
+
     }
 
     private float distance(double lat1, double lng1, double lat2, double lng2) {

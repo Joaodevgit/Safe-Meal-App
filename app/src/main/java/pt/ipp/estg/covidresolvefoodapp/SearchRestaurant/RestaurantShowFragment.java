@@ -56,11 +56,6 @@ public class RestaurantShowFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_restaurant_show, container, false);
 
-//        System.out.println("lat: " + this.contentQueryLatCity);
-//        System.out.println("lon: " + this.contentQueryLonCity);
-//        System.out.println("Cuisines: " + this.contentQueryCuisines);
-//        System.out.println("Estabelecimento: " + this.contentQueryEstablishment);
-
         this.mRecyclerView = view.findViewById(R.id.mRecyclerview_show_restaurants);
 
         this.mTextView = view.findViewById(R.id.message_not_found);

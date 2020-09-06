@@ -17,7 +17,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
 import pt.ipp.estg.covidresolvefoodapp.Adapter.UserMealsAdapter;
-import pt.ipp.estg.covidresolvefoodapp.Model.FavoriteFirestore;
 import pt.ipp.estg.covidresolvefoodapp.Model.MealsFirestore;
 import pt.ipp.estg.covidresolvefoodapp.R;
 
