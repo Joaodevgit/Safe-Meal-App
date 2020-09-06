@@ -98,4 +98,18 @@ public class FavoriteFirestore {
     public void setLongitude(String longitude) {
         this.longitude = longitude;
     }
+
+    @Override
+    public String toString() {
+        return "FavoriteFirestore{" +
+                "idUser='" + idUser + '\'' +
+                ", idRestaurant='" + idRestaurant + '\'' +
+                ", nameRestaurant='" + nameRestaurant + '\'' +
+                ", city='" + city + '\'' +
+                ", cuisines='" + cuisines + '\'' +
+                ", thumb='" + thumb + '\'' +
+                ", latitude='" + latitude + '\'' +
+                ", longitude='" + longitude + '\'' +
+                '}';
+    }
 }

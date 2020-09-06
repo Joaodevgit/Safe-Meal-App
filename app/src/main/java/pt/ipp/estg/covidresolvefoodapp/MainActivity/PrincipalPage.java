@@ -1,16 +1,23 @@
 package pt.ipp.estg.covidresolvefoodapp.MainActivity;
 
+import android.Manifest;
 import android.app.ActivityManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.location.LocationManager;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
+import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import pt.ipp.estg.covidresolvefoodapp.R;
 import pt.ipp.estg.covidresolvefoodapp.Service.LocationService;
@@ -21,6 +28,7 @@ public class PrincipalPage extends Fragment {
     private Button btnRestaurantSearch;
     private Button btnRestaurantMap;
     private onButtonMainMenuClickListener mListener;
+    private LocationManager locationManager;
 
     public PrincipalPage() {
         // Required empty public constructor
@@ -29,22 +37,16 @@ public class PrincipalPage extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (!isMyServiceRunning(LocationService.class)) {
+
+        locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+
+        if ((locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER))) {
             Intent serviceIntent = new Intent(getContext(), LocationService.class);
             getContext().startService(serviceIntent);
+        } else {
+            verifyGPSPermission();
         }
     }
-
-    private boolean isMyServiceRunning(Class<?> serviceClass) {
-        ActivityManager manager = (ActivityManager) getActivity().getSystemService(Context.ACTIVITY_SERVICE);
-        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
-            if (serviceClass.getName().equals(service.service.getClassName())) {
-                return true;
-            }
-        }
-        return false;
-    }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -93,6 +95,30 @@ public class PrincipalPage extends Fragment {
         void onButtonRestaurantSearchClick();
 
         void onButtonRestaurantMapClick();
+    }
+
+    private void verifyGPSPermission() {
+        new AlertDialog.Builder(getContext())
+                .setTitle("Permissão GPS necessária")
+                .setMessage("Esta permissão é necessária para poder avisar dos seus restaurantes favoritos")
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //Ir às definições
+                        ActivityCompat.requestPermissions(getActivity(),
+                                new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 44);
+                        startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+                    }
+                })
+                .setNegativeButton("cancelar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(getContext(), "Operação cancelada", Toast.LENGTH_SHORT).show();
+                        dialog.dismiss();
+                    }
+                })
+                .show();
+
     }
 
 }

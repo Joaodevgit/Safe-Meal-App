@@ -113,8 +113,6 @@ public class LocationService extends Service {
         };
         startLocationUpdates();
 
-        this.startTimer();
-
         return START_NOT_STICKY;
     }
 
@@ -122,7 +120,9 @@ public class LocationService extends Service {
     public void onDestroy() {
         super.onDestroy();
         this.timerStop = true;
+        mFusedLocationClient.removeLocationUpdates(mLocationCallback);
     }
+
 
     private void createNotificationChannel() {
         // Create the NotificationChannel, but only on API 26+ because
@@ -138,27 +138,6 @@ public class LocationService extends Service {
             NotificationManager notificationManager = getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(channel);
         }
-    }
-
-    private void startTimer() {
-        this.countDownTimer = new CountDownTimer(this.timeLeftInMilliseconds, 600) {
-
-            @Override
-            public void onTick(long l) {
-                timeLeftInMilliseconds = l;
-                System.out.println("Timer: " + timeLeftInMilliseconds);
-            }
-
-            @Override
-            public void onFinish() {
-                if (favBestRes != null) {
-                    System.out.println("ID Restaurant: " + favBestRes.getIdRestaurant());
-                    NotificationSender notificationSender = new NotificationSender(getApplicationContext(), favBestRes.getIdRestaurant(), favBestRes.getNameRestaurant(), favBestRes.getCity(), favBestRes.getThumb());
-                    notificationSender.execute();
-                }
-                timeLeftInMilliseconds = 6000; // 10 em 10 mins
-            }
-        }.start();
     }
 
     private void startLocationUpdates() {
@@ -201,6 +180,8 @@ public class LocationService extends Service {
                             }
                         }
                     }
+                    NotificationSender notificationSender = new NotificationSender(getApplicationContext(), favBestRes.getIdRestaurant(), favBestRes.getNameRestaurant(), favBestRes.getCity(), favBestRes.getThumb());
+                    notificationSender.execute();
                 }
             }
         }).addOnFailureListener(new OnFailureListener() {
@@ -231,7 +212,7 @@ public class LocationService extends Service {
 
             Bitmap myBitmap = null;
 
-            for (int i = 0; i < 20; i++) {
+            for (int i = 0; i < 600; i++) {
                 publishProgress(i);
 
                 try {
@@ -255,7 +236,6 @@ public class LocationService extends Service {
                     e.printStackTrace();
                 }
             }
-
 
             return myBitmap;
         }
@@ -288,7 +268,6 @@ public class LocationService extends Service {
                     .build();
 
             startForeground(1, notification);
-            startTimer();
         }
 
     }
