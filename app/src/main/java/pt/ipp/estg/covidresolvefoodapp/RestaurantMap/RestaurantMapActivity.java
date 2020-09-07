@@ -42,6 +42,7 @@ import pt.ipp.estg.covidresolvefoodapp.R;
 import pt.ipp.estg.covidresolvefoodapp.Retrofit.Model.NearbyRestaurant;
 import pt.ipp.estg.covidresolvefoodapp.Retrofit.Model.RestaurantInfoRetro;
 import pt.ipp.estg.covidresolvefoodapp.Retrofit.Model.RestaurantRetro;
+import pt.ipp.estg.covidresolvefoodapp.Retrofit.Model.RestaurantsRetro;
 import pt.ipp.estg.covidresolvefoodapp.Retrofit.ZomatoAPI;
 import pt.ipp.estg.covidresolvefoodapp.SearchRestaurant.InfoRestaurantActivity;
 import retrofit2.Call;
@@ -135,16 +136,16 @@ public class RestaurantMapActivity extends FragmentActivity {
 
     private List<RestaurantRetro> callRestaurants(final Location userLocation, final GoogleMap googleMap) {
         final List<RestaurantRetro> nearbyRestaurants = new ArrayList<>();
-        this.getAPIZomato().geocodeRestaurants(userLocation.getLatitude(), userLocation.getLongitude())
-                .enqueue(new Callback<NearbyRestaurant>() {
+        this.getAPIZomato().nearbyRestaurants(userLocation.getLatitude(), userLocation.getLongitude(),"real_distance","asc")
+                .enqueue(new Callback<RestaurantsRetro>() {
                     @Override
-                    public void onResponse(Call<NearbyRestaurant> call, Response<NearbyRestaurant> response) {
-                        for (int i = 0; i < response.body().getNearby_restaurants().size(); i++) {
+                    public void onResponse(Call<RestaurantsRetro> call, Response<RestaurantsRetro> response) {
+                        for (int i = 0; i < response.body().getRestaurants().size(); i++) {
                             if (distance(userLocation.getLatitude(), userLocation.getLongitude()
-                                    , Double.parseDouble(response.body().getNearby_restaurants().get(i).getRestaurant().getLocation().getLatitude()),
-                                    Double.parseDouble(response.body().getNearby_restaurants().get(i).getRestaurant().getLocation().getLongitude()))
+                                    , Double.parseDouble(response.body().getRestaurants().get(i).getRestaurant().getLocation().getLatitude()),
+                                    Double.parseDouble(response.body().getRestaurants().get(i).getRestaurant().getLocation().getLongitude()))
                                     <= RADIUS) {
-                                nearbyRestaurants.add(response.body().getNearby_restaurants().get(i));
+                                nearbyRestaurants.add(response.body().getRestaurants().get(i));
                             }
                         }
                         nearbyRestaurants.add(new RestaurantRetro(new RestaurantInfoRetro("Estou aqui", USER_MARK_IMG
@@ -154,7 +155,7 @@ public class RestaurantMapActivity extends FragmentActivity {
                     }
 
                     @Override
-                    public void onFailure(Call<NearbyRestaurant> call, Throwable t) {
+                    public void onFailure(Call<RestaurantsRetro> call, Throwable t) {
                         System.out.println(call.request());
                     }
                 });
@@ -203,7 +204,7 @@ public class RestaurantMapActivity extends FragmentActivity {
                                         .position(pos)
                                         .title(restaurants.get(temp).getRestaurant().getName())
                                         .icon(BitmapDescriptorFactory.fromBitmap(getMarkerBitmapFromView(mCustomMarkerView, bitmap))));
-                                googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(pos, 15));
+                                googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(pos, 17));
                             }
                         });
             }

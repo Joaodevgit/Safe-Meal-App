@@ -18,17 +18,6 @@ public interface ZomatoAPI {
                                              @Query("establishment_type") String estabelecimento);
 
     @Headers("user-key: e11bb0aef95db8820287691d71f0e616")
-    @GET("search")
-    Call<RestaurantsRetro> mapa(@Query("lat") double latitude,
-                                @Query("lon") double longitude,
-                                @Query("radius") double radius);
-
-    @Headers("user-key: e11bb0aef95db8820287691d71f0e616")
-    @GET("geocode")
-    Call<NearbyRestaurant> geocodeRestaurants(@Query("lat") double latitude,
-                                              @Query("lon") double longitude);
-
-    @Headers("user-key: e11bb0aef95db8820287691d71f0e616")
     @GET("restaurant")
     Call<RestaurantInfoRetro> getRestaurant(@Query("res_id") int res_id);
 
