@@ -12,10 +12,7 @@ import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Build;
-import android.os.CountDownTimer;
 import android.os.IBinder;
-import android.util.Log;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -50,13 +47,9 @@ public class LocationService extends Service {
     private final int NOTIFICATION_ID = 001;
     public static final String CHANNEL_NAME = "ANDROID CHANNEL";
     public static final String CHANNEL_DESCRIPTION = "Notificaçao da localizaçao";
-    public static final String TAG = "SERVICE";
     public static final int RADIUS = 2; // raio de restaurantens (em km)
     private static final String DEFAULT_RESTAURANT_IMG = "https://i.postimg.cc/zfX7My2F/tt.jpg";// -> USAR QUANDO UM RESTAURANTE NÃO TIVER THUMB
 
-    private CountDownTimer countDownTimer;
-    private long timeLeftInMilliseconds = 6000; // 10 em 10 mins
-    private boolean timerRunning = false;
     private boolean timerStop = false;
 
     private FusedLocationProviderClient mFusedLocationClient;
@@ -220,7 +213,7 @@ public class LocationService extends Service {
 
             Bitmap myBitmap = null;
 
-            for (int i = 0; i < 10; i++) {
+            for (int i = 0; i < 600; i++) {
                 publishProgress(i);
 
                 try {

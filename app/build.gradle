@@ -61,9 +61,6 @@ dependencies {
 
     implementation 'com.squareup.picasso:picasso:2.71828'
 
-    //EasyPermissions (EasyPermissions is a wrapper library to simplify basic system permissions logic when targeting Android M or higher.)
-    implementation 'pub.devrel:easypermissions:3.0.0'
-
     //Cloud Firestore (Firebase)
     // FirebaseUI for Cloud Firestore
     implementation 'com.firebaseui:firebase-ui-firestore:6.3.0'
