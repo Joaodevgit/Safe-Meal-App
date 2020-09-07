@@ -5,16 +5,12 @@ import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-
 import android.graphics.Color;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
-
-import android.provider.Settings;
-
 import android.provider.CalendarContract;
-
+import android.provider.Settings;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,7 +18,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -156,8 +151,6 @@ public class InfoRestaurantActivity extends AppCompatActivity implements AlertDi
         };
 
         this.onNewIntent(getIntent());
-
-//        this.idRestaurant = Integer.parseInt(getIntent().getStringExtra("idRestaurant"));
 
         this.myToolbar = findViewById(R.id.toolbar_restaurant_show);
         setSupportActionBar(this.myToolbar);
@@ -438,7 +431,6 @@ public class InfoRestaurantActivity extends AppCompatActivity implements AlertDi
                 .setNegativeButton("cancelar", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(getApplicationContext(), "Operação cancelada", Toast.LENGTH_SHORT).show();
                         dialog.dismiss();
                     }
                 }).show();
@@ -465,7 +457,7 @@ public class InfoRestaurantActivity extends AppCompatActivity implements AlertDi
     public void bookingReview(long date, long timeStart, long timeEnd, String description) {
         Intent intent = new Intent(Intent.ACTION_INSERT);
 
-        System.out.println("DATE: " + date);
+        System.out.println("DATE-After: " + date);
 
         intent.setData(CalendarContract.Events.CONTENT_URI);
         intent.putExtra(CalendarContract.Events.TITLE, "Booking: " + this.restaurant.getName());

@@ -3,8 +3,6 @@ package pt.ipp.estg.covidresolvefoodapp.Model;
 
 import com.google.firebase.Timestamp;
 
-import java.time.Instant;
-
 public class ReviewFirestore {
 
     private float avaliation;

@@ -31,4 +31,11 @@ public interface ZomatoAPI {
     @Headers("user-key: e11bb0aef95db8820287691d71f0e616")
     @GET("restaurant")
     Call<RestaurantInfoRetro> getRestaurant(@Query("res_id") int res_id);
+
+    @Headers("user-key: e11bb0aef95db8820287691d71f0e616")
+    @GET("search")
+    Call<RestaurantsRetro> nearbyRestaurants(@Query("lat") double latitude,
+                                             @Query("lon") double longitude,
+                                             @Query("sort") String sort,
+                                             @Query("order") String order);
 }

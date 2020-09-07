@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -76,7 +75,6 @@ public class UserVisResActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.delete_all_vis_res:
                 restaurantViewModel.deleteAllVisitedRestaurants();
-                Toast.makeText(this, "Histórico limpo", Toast.LENGTH_SHORT).show();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

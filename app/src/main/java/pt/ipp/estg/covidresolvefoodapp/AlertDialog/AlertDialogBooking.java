@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CalendarView;
 import android.widget.RadioGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -30,6 +29,7 @@ public class AlertDialogBooking extends AppCompatDialogFragment {
 
     private DialogBookingListener mListener;
     private long date = -1;
+    private long dateCurrent = -1;
     private long timeStart = -1;
     private long timeEnd = -1;
 
@@ -72,19 +72,20 @@ public class AlertDialogBooking extends AppCompatDialogFragment {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView calendarView, int i, int i1, int i2) {
 
+                int mounth = i1 + 1;
+
                 contentDay = String.valueOf(i2);
-                contentMonth = String.valueOf(i1);
+                contentMonth = String.valueOf(mounth);
 
                 if (i2 < 10) {
                     contentDay = "0" + i2;
                 }
 
-                if (i1 < 10) {
-                    contentMonth = "0" + i1;
+                if (mounth < 10) {
+                    contentMonth = "0" + mounth;
                 }
 
                 contentDate = contentDay + "/" + contentMonth + "/" + i;
-                Toast.makeText(getContext(), "Data: " + contentDate, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -100,7 +101,6 @@ public class AlertDialogBooking extends AppCompatDialogFragment {
                         timeStart = tStart.getTime();
                         timeEnd = tEnd.getTime();
 
-                        Toast.makeText(getContext(), "TimeST: " + timeStart + " TimeEnd: " + timeEnd, Toast.LENGTH_SHORT).show();
                         break;
 
                     case R.id.jantar_choice:
@@ -110,7 +110,6 @@ public class AlertDialogBooking extends AppCompatDialogFragment {
 
                         timeStart = tStart.getTime();
                         timeEnd = tEnd.getTime();
-                        Toast.makeText(getContext(), "TimeST: " + timeStart + " TimeEnd: " + timeEnd, Toast.LENGTH_SHORT).show();
                         break;
                 }
             }
@@ -121,40 +120,85 @@ public class AlertDialogBooking extends AppCompatDialogFragment {
                 .setPositiveButton("Marcação", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        Date dateLong = new Date();
+                        long moment = System.currentTimeMillis();
 
+                        Date dateLong = new Date();
+                        Date dateFormatCurrent = new Date(moment);
+
+                        String contentDateCurrent = String.valueOf(dateFormatCurrent.getDate());
+                        String contentMonthCurrent = String.valueOf(dateFormatCurrent.getMonth());
+                        String contentYearCurrent = String.valueOf(dateFormatCurrent.getYear() + 1900);
+
+                        if (dateFormatCurrent.getDate() < 10) {
+                            contentDateCurrent = "0" + dateFormatCurrent.getDate();
+                        }
+
+                        if ((dateFormatCurrent.getMonth() + 1) < 10) {
+                            contentMonthCurrent = "0" + (dateFormatCurrent.getMonth() + 1);
+                        }
+
+                        String currentDateFormat = contentDateCurrent + "/" + contentMonthCurrent + "/" + contentYearCurrent;
+
+                        System.out.println("CurrentDateFormat: " + currentDateFormat);
                         try {
                             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
                             dateLong = sdf.parse(contentDate);
+                            dateFormatCurrent = sdf.parse(currentDateFormat);
                         } catch (ParseException e) {
                             e.printStackTrace();
                         }
 
-                        long moment = System.currentTimeMillis();
                         date = dateLong.getTime();
+                        dateCurrent = dateFormatCurrent.getTime();
 
+                        System.out.println("Convert CurrentTime: " + dateCurrent);
+
+                        System.out.println("DATE: " + date);
                         System.out.println("Moment: " + moment);
 
-                        //02/09/2020 - 23:30 > 02/09/2020 - 14:00
-                        if (moment >= (date + timeEnd) && timeEnd == 50400000) {
-                            timeStart = 68400000; //19:00
-                            timeEnd = 79200000; //22:00
+                        //Ver a data actual dd/mm/yyyy é superior a data escolhido dd/mm/yyyy e impedir de escolher datas anteriores do cá de hoje
+                        if (dateCurrent > date) {
+                            date = dateCurrent;
+
+                            if (dateFormatCurrent.getTime() <= 50400000) {
+                                timeStart = 43200000; //12:00
+                                timeEnd = 50400000; //14:00
+                            } else {
+                                timeStart = 68400000; //19:00
+                                timeEnd = 79200000; //22:00
+                            }
+
+                            mListener.bookingReview(date, timeStart, timeEnd, eatChoice);
+                        } else {
+                            //Data + Almoço 14:00
+                            long dateAlmocoJantarCompare = date + timeEnd;
+
+                            System.out.println("SUM-DATE-TIME: " + dateAlmocoJantarCompare);
+
+                            //02/09/2020 - 23:30 > 02/09/2020 - 14:00
+                            if (moment >= dateAlmocoJantarCompare) {
+                                timeStart = 68400000; //19:00
+                                timeEnd = 79200000; //22:00
+                            }
+
+                            //Data + Jantar 22:00
+                            dateAlmocoJantarCompare = date + timeEnd;
+
+                            //02/09/2020 - 23:30 > 02/09/2020 - 22:00
+                            if (moment >= dateAlmocoJantarCompare) {
+                                date += TimeUnit.DAYS.toMillis(1);
+                                timeStart = 43200000; //12:00
+                                timeEnd = 50400000; //14:00
+                            }
+
+                            mListener.bookingReview(date, timeStart, timeEnd, eatChoice);
                         }
 
-                        //02/09/2020 - 23:30 > 02/09/2020 - 22:00
-                        if (moment >= (date + timeEnd) && timeEnd == 79200000) {
-                            date += TimeUnit.DAYS.toMillis(1);
-                            timeStart = 43200000; //12:00
-                            timeEnd = 50400000; //14:00
-                        }
-
-                        mListener.bookingReview(date, timeStart, timeEnd, eatChoice);
                     }
                 })
                 .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        Toast.makeText(getContext(), "Aconteceu um erro", Toast.LENGTH_SHORT).show();
                     }
                 });
 

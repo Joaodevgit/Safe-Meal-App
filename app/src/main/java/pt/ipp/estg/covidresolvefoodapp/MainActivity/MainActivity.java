@@ -11,7 +11,6 @@ import android.provider.Settings;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -28,14 +27,10 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-
-import java.util.List;
-
 import pt.ipp.estg.covidresolvefoodapp.Model.UserFirestore;
 import pt.ipp.estg.covidresolvefoodapp.PerfilUser.UserProfileActivity;
 import pt.ipp.estg.covidresolvefoodapp.R;
 import pt.ipp.estg.covidresolvefoodapp.RestaurantMap.RestaurantMapActivity;
-import pt.ipp.estg.covidresolvefoodapp.Retrofit.Model.Location;
 import pt.ipp.estg.covidresolvefoodapp.SearchRestaurant.RestaurantSearch;
 import pt.ipp.estg.covidresolvefoodapp.Service.LocationService;
 
@@ -156,7 +151,6 @@ public class MainActivity extends AppCompatActivity implements LogIn.OnFragmentL
         userRef.add(userFirestore).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
             @Override
             public void onSuccess(DocumentReference documentReference) {
-                Toast.makeText(getApplicationContext(), "Acabou de ser adicionado", Toast.LENGTH_SHORT).show();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -228,7 +222,6 @@ public class MainActivity extends AppCompatActivity implements LogIn.OnFragmentL
                 .setNegativeButton("cancelar", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(getApplicationContext(), "Operação cancelada", Toast.LENGTH_SHORT).show();
                         dialog.dismiss();
                     }
                 })
@@ -250,7 +243,6 @@ public class MainActivity extends AppCompatActivity implements LogIn.OnFragmentL
                 .setNegativeButton("cancelar", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(getApplicationContext(), "Operação cancelada", Toast.LENGTH_SHORT).show();
                         dialog.dismiss();
                     }
                 })

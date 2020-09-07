@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -70,7 +69,6 @@ public class UserVisResFragment extends Fragment {
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 restaurantViewModel.delete(mResAdapter.getRestaurantAt(viewHolder.getAdapterPosition()));
-                Toast.makeText(getContext(), "Restaurante eliminado", Toast.LENGTH_SHORT).show();
             }
         }).attachToRecyclerView(mRecyclerViewVisRes);
 

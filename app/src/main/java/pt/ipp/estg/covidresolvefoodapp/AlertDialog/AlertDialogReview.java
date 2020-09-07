@@ -11,7 +11,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RatingBar;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -47,7 +46,6 @@ public class AlertDialogReview extends AppCompatDialogFragment {
                     int stars = (int) starsf + 1;
                     mRatingBar.setRating(stars);
 
-                    Toast.makeText(getContext(), String.valueOf("test"), Toast.LENGTH_SHORT).show();
                     v.setPressed(false);
                 }
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
@@ -76,7 +74,6 @@ public class AlertDialogReview extends AppCompatDialogFragment {
                 .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        Toast.makeText(getContext(), "Cancelou", Toast.LENGTH_SHORT).show();
                     }
                 });
 
