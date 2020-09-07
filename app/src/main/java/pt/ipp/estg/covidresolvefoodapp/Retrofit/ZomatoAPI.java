@@ -1,6 +1,5 @@
 package pt.ipp.estg.covidresolvefoodapp.Retrofit;
 
-import pt.ipp.estg.covidresolvefoodapp.Retrofit.Model.NearbyRestaurant;
 import pt.ipp.estg.covidresolvefoodapp.Retrofit.Model.RestaurantInfoRetro;
 import pt.ipp.estg.covidresolvefoodapp.Retrofit.Model.RestaurantsRetro;
 import retrofit2.Call;
