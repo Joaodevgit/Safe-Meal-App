@@ -213,7 +213,7 @@ public class LocationService extends Service {
 
             Bitmap myBitmap = null;
 
-            for (int i = 0; i < 10; i++) {
+            for (int i = 0; i < 600; i++) {
                 publishProgress(i);
 
                 try {
