@@ -56,6 +56,7 @@ public class RestaurantMapActivity extends FragmentActivity {
     private static final int REQUEST_FINE_LOCATION = 100;
     private static final String DEFAULT_RESTAURANT_IMG = "https://i.postimg.cc/zfX7My2F/tt.jpg";// -> USAR QUANDO UM RESTAURANTE NÃO TIVER THUMB
     private static final String USER_MARK_IMG = "https://i.postimg.cc/FHf3J06q/you-Are-Here-Img.jpg";// -> USAR PARA MARCAR A POSIÇÃO DO UTILIZADOR
+    public static final int RADIUS = 3000; // (3 KM)
 
     //private GoogleMap mMap;
     private LocationRequest mLocationRequest;
@@ -142,7 +143,8 @@ public class RestaurantMapActivity extends FragmentActivity {
                         for (int i = 0; i < response.body().getNearby_restaurants().size(); i++) {
                             if (distance(userLocation.getLatitude(), userLocation.getLongitude()
                                     , Double.parseDouble(response.body().getNearby_restaurants().get(i).getRestaurant().getLocation().getLatitude()),
-                                    Double.parseDouble(response.body().getNearby_restaurants().get(i).getRestaurant().getLocation().getLongitude())) <= 3000) {
+                                    Double.parseDouble(response.body().getNearby_restaurants().get(i).getRestaurant().getLocation().getLongitude()))
+                                    <= RADIUS) {
                                 nearbyRestaurants.add(response.body().getNearby_restaurants().get(i));
                             }
                         }
@@ -160,11 +162,6 @@ public class RestaurantMapActivity extends FragmentActivity {
 
         return nearbyRestaurants;
     }
-
-
-/*    private void stopLocationUpdates() {
-        mFusedLocationClient.removeLocationUpdates(mLocationCallback);
-    }*/
 
     private void startLocationUpdates() {
         mFusedLocationClient.requestLocationUpdates(mLocationRequest, mLocationCallback, null);

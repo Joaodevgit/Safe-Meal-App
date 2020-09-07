@@ -15,6 +15,7 @@ import android.os.Build;
 import android.os.CountDownTimer;
 import android.os.IBinder;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -46,10 +47,12 @@ import pt.ipp.estg.covidresolvefoodapp.SearchRestaurant.InfoRestaurantActivity;
 public class LocationService extends Service {
 
     private final String CHANNEL_ID = "001";
+    private final int NOTIFICATION_ID = 001;
     public static final String CHANNEL_NAME = "ANDROID CHANNEL";
     public static final String CHANNEL_DESCRIPTION = "Notificaçao da localizaçao";
     public static final String TAG = "SERVICE";
-    public static final int RADIUS = 2; // radius in km
+    public static final int RADIUS = 2; // raio de restaurantens (em km)
+    private static final String DEFAULT_RESTAURANT_IMG = "https://i.postimg.cc/zfX7My2F/tt.jpg";// -> USAR QUANDO UM RESTAURANTE NÃO TIVER THUMB
 
     private CountDownTimer countDownTimer;
     private long timeLeftInMilliseconds = 6000; // 10 em 10 mins
@@ -95,9 +98,9 @@ public class LocationService extends Service {
 
         mLocationRequest = new LocationRequest();
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        //de 5 em 5 min
-        mLocationRequest.setInterval(5000);
-        mLocationRequest.setFastestInterval(5000);
+        //de 10 em 10 min
+        mLocationRequest.setInterval(10000);
+        mLocationRequest.setFastestInterval(10000);
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
@@ -146,8 +149,6 @@ public class LocationService extends Service {
 
     private void onNewLocation(Location location) {
 
-//        System.out.println("UserIDD: " + userID);
-
         favRef.whereEqualTo("idUser", this.userID)
                 .get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
@@ -170,7 +171,6 @@ public class LocationService extends Service {
                                 latitude = documentSnapshot.get("latitude").toString();
                                 longitude = documentSnapshot.get("longitude").toString();
 
-//                                favBestRes = new FavoriteFirestore(idRestaurant, nameRestaurant, city, thumb, latitude, longitude);
                                 favBestRes.setIdRestaurant(idRestaurant);
                                 favBestRes.setNameRestaurant(nameRestaurant);
                                 favBestRes.setCity(city);
@@ -182,6 +182,14 @@ public class LocationService extends Service {
                     }
                     NotificationSender notificationSender = new NotificationSender(getApplicationContext(), favBestRes.getIdRestaurant(), favBestRes.getNameRestaurant(), favBestRes.getCity(), favBestRes.getThumb());
                     notificationSender.execute();
+                } else {
+                    NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(getApplicationContext(), CHANNEL_ID)
+                            .setSmallIcon(R.drawable.ic_baseline_restaurant_24)
+                            .setContentTitle("Não tem restaurantes favoritos")
+                            .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+
+                    NotificationManager notificationMgr = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+                    notificationMgr.notify(NOTIFICATION_ID, notificationBuilder.build());
                 }
             }
         }).addOnFailureListener(new OnFailureListener() {
@@ -212,7 +220,7 @@ public class LocationService extends Service {
 
             Bitmap myBitmap = null;
 
-            for (int i = 0; i < 600; i++) {
+            for (int i = 0; i < 10; i++) {
                 publishProgress(i);
 
                 try {
@@ -221,19 +229,25 @@ public class LocationService extends Service {
                     e.printStackTrace();
                 }
 
-                InputStream in;
-                try {
-                    URL url = new URL(this.imageUrl);
-                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                    connection.setDoInput(true);
-                    connection.connect();
-                    in = connection.getInputStream();
-                    myBitmap = BitmapFactory.decodeStream(in);
+                if (this.imageUrl != null) {
+                    if (this.imageUrl.equals("")) {
+                        this.imageUrl = DEFAULT_RESTAURANT_IMG;
+                    }
 
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
+                    InputStream in;
+                    try {
+                        URL url = new URL(this.imageUrl);
+                        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                        connection.setDoInput(true);
+                        connection.connect();
+                        in = connection.getInputStream();
+                        myBitmap = BitmapFactory.decodeStream(in);
+
+                    } catch (MalformedURLException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
 
@@ -250,24 +264,28 @@ public class LocationService extends Service {
         protected void onPostExecute(Bitmap result) {
             super.onPostExecute(result);
 
-            Intent resIntent = new Intent(mContext, InfoRestaurantActivity.class);
-            resIntent.putExtra("idRestaurant", this.resID);
-            PendingIntent resultPendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, resIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+            if (this.name != null && this.city != null && this.imageUrl != null && this.resID != null) {
 
-            NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(mContext, CHANNEL_ID);
-            Notification notification = notificationBuilder
-                    .setSmallIcon(R.drawable.ic_baseline_restaurant_24)
-                    .setContentTitle("Está próximo de um dos seus restaurantes favoritos!")
-                    .setContentText("Restaurante: " + name + " (" + city + ")")
-                    .setPriority(Notification.PRIORITY_DEFAULT)
-                    .setStyle(new NotificationCompat.BigPictureStyle()
-                            .bigPicture(result)
-                            .bigLargeIcon(result))
-                    .addAction(R.drawable.ic_launcher_background, "+ Info", resultPendingIntent)
-                    .setCategory(NotificationCompat.CATEGORY_SERVICE)
-                    .build();
+                Intent resIntent = new Intent(mContext, InfoRestaurantActivity.class);
+                resIntent.putExtra("idRestaurant", this.resID);
+                PendingIntent resultPendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, resIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-            startForeground(1, notification);
+                NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(mContext, CHANNEL_ID);
+                Notification notification = notificationBuilder
+                        .setSmallIcon(R.drawable.ic_baseline_restaurant_24)
+                        .setContentTitle("Está próximo de um dos seus restaurantes favoritos!")
+                        .setContentText("Restaurante: " + name + " (" + city + ")")
+                        .setPriority(Notification.PRIORITY_DEFAULT)
+                        .setStyle(new NotificationCompat.BigPictureStyle()
+                                .bigPicture(result)
+                                .bigLargeIcon(result))
+                        .addAction(R.drawable.ic_launcher_background, "+ Info", resultPendingIntent)
+                        .setCategory(NotificationCompat.CATEGORY_SERVICE)
+                        .build();
+
+                startForeground(1, notification);
+
+            }
         }
 
     }
