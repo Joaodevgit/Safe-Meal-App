@@ -50,10 +50,16 @@ public class MainActivity extends AppCompatActivity implements LogIn.OnFragmentL
     private Toolbar myToolbar;
     private AppBarLayout mAppBarLayout;
 
+    private static final int REQUEST_FINE_LOCATION = 100;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                REQUEST_FINE_LOCATION);
 
         this.mAuth = FirebaseAuth.getInstance();
 

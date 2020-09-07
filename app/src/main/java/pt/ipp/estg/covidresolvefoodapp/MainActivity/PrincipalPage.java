@@ -30,7 +30,6 @@ public class PrincipalPage extends Fragment {
     private onButtonMainMenuClickListener mListener;
     private LocationManager locationManager;
 
-    private static final int REQUEST_FINE_LOCATION = 100;
 
     public PrincipalPage() {
         // Required empty public constructor
@@ -39,9 +38,6 @@ public class PrincipalPage extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                REQUEST_FINE_LOCATION);
 
         locationManager = (LocationManager) getContext().getSystemService(Context.LOCATION_SERVICE);
 
