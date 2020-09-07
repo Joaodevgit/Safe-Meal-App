@@ -213,7 +213,7 @@ public class LocationService extends Service {
 
             Bitmap myBitmap = null;
 
-            for (int i = 0; i < 600; i++) {
+            for (int i = 0; i < 10; i++) {
                 publishProgress(i);
 
                 try {
@@ -266,7 +266,7 @@ public class LocationService extends Service {
                 NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(mContext, CHANNEL_ID);
                 Notification notification = notificationBuilder
                         .setSmallIcon(R.drawable.ic_baseline_restaurant_24)
-                        .setContentTitle("Está próximo de um dos seus restaurantes favoritos!")
+                        .setContentTitle("Restaurante Favorito Perto de Si!")
                         .setContentText("Restaurante: " + name + " (" + city + ")")
                         .setPriority(Notification.PRIORITY_DEFAULT)
                         .setStyle(new NotificationCompat.BigPictureStyle()
