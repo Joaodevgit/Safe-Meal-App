@@ -13,7 +13,7 @@ Some of the project screenshots
 
 | Map | Restaurants List | Nearby Restaurant Notification |
 | :---: |:---:|:---:| 
-| <img src="https://user-images.githubusercontent.com/44362304/94713629-fbabd780-0342-11eb-85c9-e67a8d096328.png" width="225" height="400"> |<img src="https://user-images.githubusercontent.com/44362304/94713629-fbabd780-0342-11eb-85c9-e67a8d096328.png" width="225" height="400"> | <img src="https://user-images.githubusercontent.com/44362304/94713641-ffd7f500-0342-11eb-930d-d7f3586d1402.png" width="225" height="400"> |
+| <img src="https://user-images.githubusercontent.com/44362304/94713629-fbabd780-0342-11eb-85c9-e67a8d096328.png" width="225" height="400"> |<img src="https://user-images.githubusercontent.com/44362304/94715534-8261b400-0345-11eb-8eeb-463db2b03688.png" width="225" height="400"> | <img src="https://user-images.githubusercontent.com/44362304/94713641-ffd7f500-0342-11eb-930d-d7f3586d1402.png" width="225" height="400"> |
 | Restaurant Information | User Favorite Restaurants | User Restaurants Reviews |
 | <img src="https://user-images.githubusercontent.com/44362304/94713651-023a4f00-0343-11eb-8835-e553b6dff5bc.png" width="225" height="400"> | <img src="https://user-images.githubusercontent.com/44362304/94713670-06666c80-0343-11eb-835a-5356ac94f2f5.png" width="225" height="400"> | <img src="https://user-images.githubusercontent.com/44362304/94715083-e9329d80-0344-11eb-8741-ee988f8ee174.png" width="225" height="400"> |
 
