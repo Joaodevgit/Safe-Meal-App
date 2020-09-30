@@ -6,7 +6,10 @@
 ## Safe Meal
 ![Safe Meal Logo](https://user-images.githubusercontent.com/44362304/94711378-f39e6880-033f-11eb-99d0-e920b6a64ed0.png)
 
-### School android project developed in **Java** language for unit course "Mobile and Ubiquitous Computing"
+### School android project developed in Java language for unit course "Mobile and Ubiquitous Computing"
+
+Android application that improves the experience of visiting restaurants and registers those considered “preferred” by the user, which establishments he has already visited and which score is provided in compliance with public health standards related to COVID-19.
+
 
 ## Project Screenshots
 Some of the project screenshots
