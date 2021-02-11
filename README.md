@@ -1,4 +1,4 @@
-## Polytechnic of Porto, School of Management and Technology 18/19
+## Polytechnic of Porto, School of Management and Technology 19/20
 <a href="https://www.estg.ipp.pt/"><img src="https://user-images.githubusercontent.com/44362304/94424125-9f4d8a00-0181-11eb-84cb-174d8dbde5ec.png" title="ESTG"></a>
 
  (Click on the above image for more school's details)
