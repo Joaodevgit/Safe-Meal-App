@@ -9,18 +9,20 @@ import retrofit2.http.Query;
 
 public interface ZomatoAPI {
 
-    @Headers("user-key: e11bb0aef95db8820287691d71f0e616")
+    String YOUR_ZOMATO_API_KEY = "";
+
+    @Headers("user-key: YOUR_ZOMATO_API_KEY")
     @GET("search")
     Call<RestaurantsRetro> searchRestaurants(@Query("lat") double latitude,
                                              @Query("lon") double longitude,
                                              @Query("cuisines") String cuisines,
                                              @Query("establishment_type") String estabelecimento);
 
-    @Headers("user-key: e11bb0aef95db8820287691d71f0e616")
+    @Headers("user-key: YOUR_ZOMATO_API_KEY")
     @GET("restaurant")
     Call<RestaurantInfoRetro> getRestaurant(@Query("res_id") int res_id);
 
-    @Headers("user-key: e11bb0aef95db8820287691d71f0e616")
+    @Headers("user-key: YOUR_ZOMATO_API_KEY")
     @GET("search")
     Call<RestaurantsRetro> nearbyRestaurants(@Query("lat") double latitude,
                                              @Query("lon") double longitude,
