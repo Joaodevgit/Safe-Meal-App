@@ -24,7 +24,7 @@
                 android:layout_height="?attr/actionBarSize"
                 android:background="@color/colorPrimary"
                 app:popupTheme="@style/AppTheme.PopupOverlay"
-                app:title="Histórico Visitas" />
+                app:title="@string/visit_history_tool" />
         </com.google.android.material.appbar.AppBarLayout>
 
     </LinearLayout>
@@ -37,7 +37,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Apagar um elemento swipe para direita ou esquerda"
+            android:text="Swipe right or left to remove an element"
             android:textAlignment="center"
             app:autoSizeMaxTextSize="12sp"
             app:autoSizeMinTextSize="10sp" />

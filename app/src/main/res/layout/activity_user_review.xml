@@ -23,7 +23,7 @@
                 android:layout_height="?attr/actionBarSize"
                 android:background="@color/colorPrimary"
                 app:popupTheme="@style/AppTheme.PopupOverlay"
-                app:title="Reviews" />
+                app:title="@string/reviews_tool" />
         </com.google.android.material.appbar.AppBarLayout>
 
     </LinearLayout>

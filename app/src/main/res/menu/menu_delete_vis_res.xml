@@ -4,7 +4,7 @@
 
     <item
         android:id="@+id/delete_all_vis_res"
-        android:title="Apagar histórico"
+        android:title="@string/remove_history"
         app:showAsAction="never" />
 
 </menu>

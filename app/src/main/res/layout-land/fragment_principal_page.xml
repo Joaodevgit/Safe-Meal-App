@@ -38,7 +38,7 @@
                 android:layout_width="261dp"
                 android:layout_height="wrap_content"
                 android:drawableEnd="@drawable/search"
-                android:text="@string/pesquisar_restaurantes" />
+                android:text="@string/search_restaurants" />
 
             <Button
                 android:id="@+id/buttonRestaurantMap"
@@ -46,7 +46,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:drawableEnd="@drawable/map"
-                android:text="@string/restaurantes_perto_de_si"
+                android:text="@string/restaurants_near_to_you"
                 app:layout_anchorGravity="center" />
         </LinearLayout>
     </LinearLayout>

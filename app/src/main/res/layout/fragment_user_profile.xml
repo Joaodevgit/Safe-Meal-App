@@ -65,7 +65,7 @@
             android:layout_marginTop="50dp"
             android:drawableEnd="@drawable/ic_user_favorite_restaurants_24"
             android:lines="1"
-            android:text="@string/restaurantes_favoritos"
+            android:text="@string/favorite_restaurants"
             app:autoSizeMaxTextSize="14sp"
             app:autoSizeMinTextSize="12sp"
             app:autoSizeTextType="uniform" />
@@ -78,7 +78,7 @@
             android:layout_marginTop="20dp"
             android:drawableEnd="@drawable/ic_user_restaurant_visit_24"
             android:lines="1"
-            android:text="@string/restaurantes_visitados"
+            android:text="@string/restaurants_visited"
             app:autoSizeMaxTextSize="14sp"
             app:autoSizeMinTextSize="12sp"
             app:autoSizeTextType="uniform" />
@@ -105,7 +105,7 @@
             android:layout_marginBottom="50dp"
             android:drawableEnd="@drawable/ic_baseline_restaurant_24"
             android:lines="1"
-            android:text="Refeições"
+            android:text="@string/meals"
             app:autoSizeMaxTextSize="14sp"
             app:autoSizeMinTextSize="12sp"
             app:autoSizeTextType="uniform" />

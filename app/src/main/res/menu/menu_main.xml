@@ -6,7 +6,7 @@
     <item
         android:id="@+id/action_settings"
         android:icon="@drawable/ic_settings_white_24dp"
-        android:title="Perfil"
+        android:title="@string/profile_tool"
         app:showAsAction="withText"></item>
 
     <item

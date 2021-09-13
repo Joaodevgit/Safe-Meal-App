@@ -18,7 +18,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="15dp"
             android:lines="1"
-            android:text="Estabelecimento"
+            android:text="@string/restaurant"
             android:textSize="20dp"
             android:textStyle="bold"
             app:autoSizeMaxTextSize="20sp"
@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:lines="1"
-            android:text="(Escolha um estabelecimento)"
+            android:text="(Please choose a restaurant type)."
             app:autoSizeMaxTextSize="10sp"
             app:autoSizeMinTextSize="8sp"
             app:autoSizeTextType="uniform" />
@@ -66,7 +66,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:lines="1"
-                android:text="Café"
+                android:text="Coffe Shop"
                 app:autoSizeMaxTextSize="14sp"
                 app:autoSizeMinTextSize="10sp"
                 app:autoSizeTextType="uniform" />
@@ -109,7 +109,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:lines="1"
-            android:text="Cidade"
+            android:text="@string/city_"
             android:textSize="20dp"
             android:textStyle="bold"
             app:autoSizeMaxTextSize="20sp"
@@ -121,7 +121,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:lines="1"
-            android:text="(Escolha uma cidade)"
+            android:text="(Please choose a city)"
             app:autoSizeMaxTextSize="10sp"
             app:autoSizeMinTextSize="8sp"
             app:autoSizeTextType="uniform" />
@@ -198,7 +198,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:lines="1"
-            android:text="Cozinha"
+            android:text="@string/cooking"
             android:textSize="20dp"
             android:textStyle="bold"
             app:autoSizeMaxTextSize="20sp"
@@ -210,7 +210,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:lines="1"
-            android:text="(Escolha um ou mais cozinhas)"
+            android:text="(Please choose 1 or more cookings)"
             app:autoSizeMaxTextSize="10sp"
             app:autoSizeMinTextSize="8sp"
             app:autoSizeTextType="uniform" />
@@ -305,7 +305,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
-            android:text="Pesquisar" />
+            android:text="@string/search" />
 
     </LinearLayout>
 

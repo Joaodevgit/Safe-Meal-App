@@ -23,7 +23,7 @@
                 android:layout_height="?attr/actionBarSize"
                 android:background="@color/colorPrimary"
                 app:popupTheme="@style/AppTheme.PopupOverlay"
-                app:title="Restaurante" />
+                app:title="@string/restaurant_tool" />
         </com.google.android.material.appbar.AppBarLayout>
 
         <TextView
@@ -34,7 +34,7 @@
             android:lines="1"
             android:paddingStart="5dp"
             android:paddingEnd="5dp"
-            android:text="@string/nome"
+            android:text="@string/name"
             app:autoSizeMaxTextSize="14sp"
             app:autoSizeMinTextSize="12sp"
             app:autoSizeTextType="uniform" />
@@ -61,7 +61,7 @@
                     android:layout_height="wrap_content"
                     android:lines="1"
                     android:paddingLeft="5dp"
-                    android:text="Cidade: "
+                    android:text="@string/city"
                     app:autoSizeMaxTextSize="14sp"
                     app:autoSizeMinTextSize="12sp"
                     app:autoSizeTextType="uniform" />
@@ -72,7 +72,7 @@
                     android:layout_height="wrap_content"
                     android:lines="1"
                     android:paddingLeft="5dp"
-                    android:text="Estabelecimento: "
+                    android:text="@string/restaurant"
                     app:autoSizeMaxTextSize="14sp"
                     app:autoSizeMinTextSize="12sp"
                     app:autoSizeTextType="uniform" />
@@ -117,7 +117,7 @@
             android:lines="2"
             android:paddingStart="5dp"
             android:paddingEnd="5dp"
-            android:text="Endereço: "
+            android:text="@string/address"
             app:autoSizeMaxTextSize="14sp"
             app:autoSizeMinTextSize="12sp"
             app:autoSizeTextType="uniform" />
@@ -131,7 +131,7 @@
             android:lines="2"
             android:paddingStart="5dp"
             android:paddingEnd="5dp"
-            android:text="Horarios: "
+            android:text="@string/schedules_"
             app:autoSizeMaxTextSize="14sp"
             app:autoSizeMinTextSize="12sp"
             app:autoSizeTextType="uniform" />
@@ -151,7 +151,7 @@
                 android:lines="1"
                 android:paddingStart="5dp"
                 android:paddingEnd="5dp"
-                android:text="Possibilidade De Marcações: "
+                android:text="@string/booking_possibilities"
                 app:autoSizeMaxTextSize="14sp"
                 app:autoSizeMinTextSize="12sp"
                 app:autoSizeTextType="uniform" />
@@ -176,7 +176,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
                 android:lines="1"
-                android:text="Possibilidade de Review: "
+                android:text="@string/reviews_possibilities"
                 app:autoSizeMaxTextSize="14sp"
                 app:autoSizeMinTextSize="12sp"
                 app:autoSizeTextType="uniform" />
@@ -212,7 +212,7 @@
                 android:lines="1"
                 android:paddingStart="5dp"
                 android:paddingEnd="5dp"
-                android:text="Distância: "
+                android:text="@string/distance"
                 app:autoSizeMaxTextSize="14sp"
                 app:autoSizeMinTextSize="12sp"
                 app:autoSizeTextType="uniform" />
@@ -226,7 +226,7 @@
                 android:lines="1"
                 android:paddingStart="5dp"
                 android:paddingEnd="5dp"
-                android:text="Reviews: "
+                android:text="@string/reviews"
                 app:autoSizeMaxTextSize="14sp"
                 app:autoSizeMinTextSize="12sp"
                 app:autoSizeTextType="uniform" />
@@ -271,7 +271,7 @@
                 android:layout_gravity="center"
                 android:drawableEnd="@drawable/ic_user_booking"
                 android:padding="5dp"
-                android:text="Marcação" />
+                android:text="@string/booking" />
 
             <Button
                 android:id="@+id/button_refeicao"
@@ -280,7 +280,7 @@
                 android:layout_gravity="center"
                 android:drawableEnd="@drawable/ic_user_meal"
                 android:padding="5dp"
-                android:text="Refeição" />
+                android:text="@string/meal" />
         </LinearLayout>
 
     </LinearLayout>

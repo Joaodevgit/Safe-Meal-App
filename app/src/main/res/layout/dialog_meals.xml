@@ -9,7 +9,7 @@
         android:id="@+id/dialog_title_refeicao"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Refeição escolhida no restaurante" />
+        android:text="@string/chosen_meal" />
 
     <EditText
         android:id="@+id/dialog_content_refeicao"

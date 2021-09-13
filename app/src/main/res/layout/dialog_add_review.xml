@@ -8,7 +8,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="5dp"
-        android:text="Avaliação" />
+        android:text="@string/rating" />
 
     <RatingBar
         android:id="@+id/notation_review_add"
@@ -20,7 +20,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="5dp"
-        android:text="Comentário" />
+        android:text="@string/comment" />
 
     <EditText
         android:id="@+id/content_message_review_add"

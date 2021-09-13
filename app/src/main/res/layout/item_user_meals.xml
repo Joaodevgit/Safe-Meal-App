@@ -45,7 +45,7 @@
                 android:layout_marginEnd="10dp"
                 android:layout_weight="1"
                 android:lines="1"
-                android:text="Refeição"
+                android:text="@string/meal"
                 app:autoSizeMaxTextSize="16sp"
                 app:autoSizeMinTextSize="14sp"
                 app:autoSizeTextType="uniform" />
