@@ -63,7 +63,7 @@ public class FavResAdapter extends FirestoreRecyclerAdapter<FavoriteFirestore, F
     protected void onBindViewHolder(FavResViewHolder favResViewHolder, int position, FavoriteFirestore infoRetro) {
 
         TextView textView = favResViewHolder.favResNameTxtView;
-        textView.setText("Restaurante: " + infoRetro.getNameRestaurant() + "\nCidade: " + infoRetro.getCity() + "\nCozinha: " + infoRetro.getCuisines());
+        textView.setText("Restaurant: " + infoRetro.getNameRestaurant() + "\nCity: " + infoRetro.getCity() + "\nCooking: " + infoRetro.getCuisines());
 
         ImageView imageView = favResViewHolder.favResImageView;
 

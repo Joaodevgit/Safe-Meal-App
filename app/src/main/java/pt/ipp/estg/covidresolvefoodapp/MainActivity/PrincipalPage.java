@@ -99,8 +99,8 @@ public class PrincipalPage extends Fragment {
 
     private void verifyGPSPermission() {
         new AlertDialog.Builder(getContext())
-                .setTitle("Permissão GPS necessária")
-                .setMessage("Esta permissão é necessária para poder avisar dos seus restaurantes favoritos")
+                .setTitle("Necessary GPS permission")
+                .setMessage("This permission is necessary to alert about your favorite restaurants")
                 .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -108,7 +108,7 @@ public class PrincipalPage extends Fragment {
                         startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
                     }
                 })
-                .setNegativeButton("cancelar", new DialogInterface.OnClickListener() {
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();

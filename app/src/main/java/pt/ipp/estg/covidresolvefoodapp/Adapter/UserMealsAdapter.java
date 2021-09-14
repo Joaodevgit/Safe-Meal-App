@@ -46,10 +46,10 @@ public class UserMealsAdapter extends FirestoreRecyclerAdapter<MealsFirestore, U
 
 
         TextView restaurantName = holder.restaurantName;
-        restaurantName.setText("Restaurante: " + model.getRestaurantName());
+        restaurantName.setText("Restaurant: " + model.getRestaurantName());
 
         TextView contentMessage = holder.contentMessage;
-        contentMessage.setText("Refeição escolhida: " + model.getContentMeals());
+        contentMessage.setText("Chosen meal: " + model.getContentMeals());
 
     }
 

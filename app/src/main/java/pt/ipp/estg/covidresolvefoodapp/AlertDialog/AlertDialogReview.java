@@ -64,14 +64,14 @@ public class AlertDialogReview extends AppCompatDialogFragment {
 
         builder.setView(view)
                 .setTitle("Add Review")
-                .setPositiveButton("Submeter", new DialogInterface.OnClickListener() {
+                .setPositiveButton("Submit", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         if (isPadding())
                             listener.addReview(mRatingBar.getRating(), mEditText.getText().toString());
                     }
                 })
-                .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                     }

@@ -116,8 +116,8 @@ public class AlertDialogBooking extends AppCompatDialogFragment {
         });
 
         builder.setView(view)
-                .setTitle("Marcação")
-                .setPositiveButton("Marcação", new DialogInterface.OnClickListener() {
+                .setTitle("Booking")
+                .setPositiveButton("Booking", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         long moment = System.currentTimeMillis();
@@ -196,7 +196,7 @@ public class AlertDialogBooking extends AppCompatDialogFragment {
 
                     }
                 })
-                .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                     }

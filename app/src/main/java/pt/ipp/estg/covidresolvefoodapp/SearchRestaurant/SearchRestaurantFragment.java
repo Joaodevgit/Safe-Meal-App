@@ -224,7 +224,7 @@ public class SearchRestaurantFragment extends Fragment {
                 !this.contentQueryCuisines.equals("")) {
             this.mButton.setEnabled(true);
         } else {
-            System.out.println("Preenche tudo !");
+            System.out.println("Fill everything!");
         }
     }
 }

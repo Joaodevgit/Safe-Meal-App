@@ -46,7 +46,7 @@ public class LocationService extends Service {
     private final String CHANNEL_ID = "001";
     private final int NOTIFICATION_ID = 001;
     public static final String CHANNEL_NAME = "ANDROID CHANNEL";
-    public static final String CHANNEL_DESCRIPTION = "Notificaçao da localizaçao";
+    public static final String CHANNEL_DESCRIPTION = "Localization notification";
     public static final int RADIUS = 2; // raio de restaurantens (em km)
     private static final String DEFAULT_RESTAURANT_IMG = "https://i.postimg.cc/zfX7My2F/tt.jpg";// -> USAR QUANDO UM RESTAURANTE NÃO TIVER THUMB
 
@@ -178,7 +178,7 @@ public class LocationService extends Service {
                 } else {
                     NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(getApplicationContext(), CHANNEL_ID)
                             .setSmallIcon(R.drawable.ic_baseline_restaurant_24)
-                            .setContentTitle("Não tem restaurantes favoritos")
+                            .setContentTitle("You dont have any favorite restaurant")
                             .setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
                     NotificationManager notificationMgr = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
@@ -266,8 +266,8 @@ public class LocationService extends Service {
                 NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(mContext, CHANNEL_ID);
                 Notification notification = notificationBuilder
                         .setSmallIcon(R.drawable.ic_baseline_restaurant_24)
-                        .setContentTitle("Restaurante Favorito Perto de Si!")
-                        .setContentText("Restaurante: " + name + " (" + city + ")")
+                        .setContentTitle("Favorite Restaurante Near To You!")
+                        .setContentText("Restaurant: " + name + " (" + city + ")")
                         .setPriority(Notification.PRIORITY_DEFAULT)
                         .setStyle(new NotificationCompat.BigPictureStyle()
                                 .bigPicture(result)

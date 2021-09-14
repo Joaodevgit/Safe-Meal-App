@@ -184,7 +184,7 @@ public class MainActivity extends AppCompatActivity implements LogIn.OnFragmentL
             if (gps_enabled) {
                 startActivity(new Intent(this, RestaurantSearch.class));
             } else {
-                verifyGPSPermission("à pesquisa de restaurantes");
+                verifyGPSPermission("searching for restaurants");
             }
         } else {
             verifyWifiPermission();
@@ -204,14 +204,14 @@ public class MainActivity extends AppCompatActivity implements LogIn.OnFragmentL
                 verifyWifiPermission();
             }
         } else {
-            verifyGPSPermission("ao mapa");
+            verifyGPSPermission("to map");
         }
     }
 
     private void verifyGPSPermission(String purpose) {
         new AlertDialog.Builder(this)
-                .setTitle("Permissão GPS necessária")
-                .setMessage("Esta permissão é necessária para poder aceder " + purpose)
+                .setTitle("Necessary GPS permission")
+                .setMessage("This permission is necessary to access " + purpose)
                 .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -219,7 +219,7 @@ public class MainActivity extends AppCompatActivity implements LogIn.OnFragmentL
                         startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
                     }
                 })
-                .setNegativeButton("cancelar", new DialogInterface.OnClickListener() {
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
@@ -231,8 +231,8 @@ public class MainActivity extends AppCompatActivity implements LogIn.OnFragmentL
 
     private void verifyWifiPermission() {
         new AlertDialog.Builder(this)
-                .setTitle("Permissão Wifi necessária")
-                .setMessage("Esta permissão é necessária para poder fazer a pesquisa")
+                .setTitle("Necessary Wifi permission")
+                .setMessage("This permission is necessary to make search")
                 .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -240,7 +240,7 @@ public class MainActivity extends AppCompatActivity implements LogIn.OnFragmentL
                         startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
                     }
                 })
-                .setNegativeButton("cancelar", new DialogInterface.OnClickListener() {
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();

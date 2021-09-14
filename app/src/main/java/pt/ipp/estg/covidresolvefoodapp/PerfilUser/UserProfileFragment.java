@@ -70,7 +70,7 @@ public class UserProfileFragment extends Fragment {
                 .get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                totalUserMeals.setText("Nº total de refeições efetuadas: " + queryDocumentSnapshots.size());
+                totalUserMeals.setText("Total number of meals booked: " + queryDocumentSnapshots.size());
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override

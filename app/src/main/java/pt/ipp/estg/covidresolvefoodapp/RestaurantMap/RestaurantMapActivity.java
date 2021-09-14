@@ -148,7 +148,7 @@ public class RestaurantMapActivity extends FragmentActivity {
                                 nearbyRestaurants.add(response.body().getRestaurants().get(i));
                             }
                         }
-                        nearbyRestaurants.add(new RestaurantRetro(new RestaurantInfoRetro("Estou aqui", USER_MARK_IMG
+                        nearbyRestaurants.add(new RestaurantRetro(new RestaurantInfoRetro("Im here", USER_MARK_IMG
                                 , new pt.ipp.estg.covidresolvefoodapp.Retrofit.Model.Location(String.valueOf(userLocation.getLatitude()),
                                 String.valueOf(userLocation.getLongitude())))));
                         addCustomMarker(nearbyRestaurants, googleMap);

@@ -32,15 +32,15 @@ public class AlertDialogRefeicao extends AppCompatDialogFragment {
         this.mEditText = view.findViewById(R.id.dialog_content_refeicao);
 
         builder.setView(view)
-                .setTitle("Refeição")
-                .setPositiveButton("Submeter", new DialogInterface.OnClickListener() {
+                .setTitle("Meal")
+                .setPositiveButton("Submit", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         if (isPadding())
                             mealsListener.addMeals(mEditText.getText().toString());
                     }
                 })
-                .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                     }

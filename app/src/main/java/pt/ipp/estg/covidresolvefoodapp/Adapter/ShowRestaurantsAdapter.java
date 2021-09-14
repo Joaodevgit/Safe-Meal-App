@@ -51,10 +51,10 @@ public class ShowRestaurantsAdapter extends RecyclerView.Adapter<ShowRestaurants
         }
 
         TextView nameRestaurant = viewHolder.nameRestaurant;
-        nameRestaurant.setText("Nome do restaurante: " + restaurant.getName());
+        nameRestaurant.setText("Restaurant name: " + restaurant.getName());
 
         TextView cityRestaurant = viewHolder.cityRestaurant;
-        cityRestaurant.setText("Cidade: " + restaurant.getLocation().getCity());
+        cityRestaurant.setText("City: " + restaurant.getLocation().getCity());
 
         RatingBar starsNotation = viewHolder.starsNotation;
         starsNotation.setRating(Float.parseFloat(restaurant.getUser_rating().getAggregate_rating()));

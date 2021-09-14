@@ -3,8 +3,8 @@
     <string name="registration">Registration</string>
     <string name="register">Register</string>
     <string name="cancel">Cancel</string>
-    <string name="auth_failed">Autenticação Falhou :(</string>
-    <string name="signed_out">Saiu :(</string>
+    <string name="auth_failed">Authentication Failed :(</string>
+    <string name="signed_out">Exited :(</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="restaurant_tool">Restaurant</string>

@@ -196,7 +196,7 @@ public class InfoRestaurantActivity extends AppCompatActivity implements AlertDi
 
                 restaurantLocation = restaurant.getLocation();
 
-                mTextName.setText("Nome: " + restaurant.getName());
+                mTextName.setText("Name: " + restaurant.getName());
 
                 if (!restaurant.getThumb().equals("")) {
                     Picasso.get().load(restaurant.getThumb()).into(mImageViewRestaurant);
@@ -204,7 +204,7 @@ public class InfoRestaurantActivity extends AppCompatActivity implements AlertDi
                     Picasso.get().load("https://i.postimg.cc/zfX7My2F/tt.jpg").into(mImageViewRestaurant);
                 }
 
-                mTextCity.setText("Cidade: " + restaurant.getLocation().getCity());
+                mTextCity.setText("City: " + restaurant.getLocation().getCity());
 
                 Iterator<String> itr = response.body().getEstablishment().iterator();
                 String contentEstab = "";
@@ -213,14 +213,14 @@ public class InfoRestaurantActivity extends AppCompatActivity implements AlertDi
                     contentEstab += itr.next();
                 }
 
-                mTextEstab.setText("Estabelecimento: " + contentEstab);
+                mTextEstab.setText("Restaurant: " + contentEstab);
 
                 mRatingBar.setRating(Float.parseFloat(restaurant.getUser_rating().getAggregate_rating()));
                 mTextNota.setText("(" + restaurant.getUser_rating().getAggregate_rating() + ")");
 
-                mTextAdress.setText("Endereço: " + restaurant.getLocation().getAddress());
+                mTextAdress.setText("Address: " + restaurant.getLocation().getAddress());
 
-                mTextHorarios.setText("Horarios: " + restaurant.getTimings());
+                mTextHorarios.setText("Schedules: " + restaurant.getTimings());
 
                 if (restaurant.getHas_table_booking() == 1) {
                     mImageViewIsBooking.setImageResource(R.drawable.tick);
@@ -234,13 +234,13 @@ public class InfoRestaurantActivity extends AppCompatActivity implements AlertDi
                         Double.parseDouble(restaurant.getLocation().getLongitude())) * 0.001;
 
                 if (atualDistance <= 1) {
-                    mDistanceRes.setText("Distância: " + Math.round(atualDistance * 100.0) / 100.0 + " km");
-                    mReviewJust.setText("(Distância <= 1 km)");
+                    mDistanceRes.setText("Distance: " + Math.round(atualDistance * 100.0) / 100.0 + " km");
+                    mReviewJust.setText("(Distance <= 1 km)");
                     mReviewJust.setTextColor(Color.GREEN);
                     mImageViewIsReview.setImageResource(R.drawable.tick);
                 } else {
-                    mDistanceRes.setText("Distância: " + Math.round(atualDistance * 100.0) / 100.0 + " km");
-                    mReviewJust.setText("(Distância > 1 km)");
+                    mDistanceRes.setText("Distance: " + Math.round(atualDistance * 100.0) / 100.0 + " km");
+                    mReviewJust.setText("(Distance > 1 km)");
                     mReviewJust.setTextColor(Color.RED);
                     mImageViewIsReview.setImageResource(R.drawable.close);
                     mButtonReview.setEnabled(false);
@@ -417,8 +417,8 @@ public class InfoRestaurantActivity extends AppCompatActivity implements AlertDi
     private void verifyGPSPermission(String purpose) {
 
         new AlertDialog.Builder(this)
-                .setTitle("Permissão GPS necessária")
-                .setMessage("Esta permissão é necessária para poder fazer " + purpose)
+                .setTitle("Necessary GPS Permission")
+                .setMessage("This permission is necessary to do " + purpose)
                 .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -428,7 +428,7 @@ public class InfoRestaurantActivity extends AppCompatActivity implements AlertDi
                         startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
                     }
                 })
-                .setNegativeButton("cancelar", new DialogInterface.OnClickListener() {
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
@@ -463,7 +463,7 @@ public class InfoRestaurantActivity extends AppCompatActivity implements AlertDi
         intent.putExtra(CalendarContract.Events.TITLE, "Booking: " + this.restaurant.getName());
         intent.putExtra(CalendarContract.Events.EVENT_LOCATION, this.restaurant.getLocation().getAddress());
         intent.putExtra(CalendarContract.Events.EVENT_LOCATION, this.restaurant.getLocation().getAddress());
-        intent.putExtra(CalendarContract.Events.DESCRIPTION, description + " No restaurante " + this.restaurant.getName());
+        intent.putExtra(CalendarContract.Events.DESCRIPTION, description + " No restaurant " + this.restaurant.getName());
         intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, (date + timeStart));
         intent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, (date + timeEnd));
 
